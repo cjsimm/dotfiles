@@ -3,7 +3,7 @@ return {
 	build = ":TSUpdate",
 	config = function()
 		require("nvim-treesitter.configs").setup {
-			ensure_installed = { 
+			ensure_installed = {
 				-- treesitter required
 				"c",
 				"vim",
@@ -11,7 +11,7 @@ return {
 				"lua",
 				"query",
 				-- programming languages
-				"bash", 
+				"bash",
 				"javascript",
 				"typescript",
 				"tsx",
@@ -23,7 +23,7 @@ return {
 				--data formats
 				"json",
 				"regex",
-				"yaml", 
+				"yaml",
 				--doc formats
 				"markdown",
 				"jsdoc",
@@ -31,8 +31,8 @@ return {
 				"css"
 			},
 			sync_install = false,
-			auto_install = true, 
-			highlight = { 
+			auto_install = true,
+			highlight = {
 				enable = true,
 				additional_vim_regex_highlighting = false,
 			},

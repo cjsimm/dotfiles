@@ -23,7 +23,7 @@ return {
             --diagnostics
             opts.desc = "Show buffer diagnostics"
             vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
-            opts.desc = ~~"Show line diagnostics"
+            opts.desc = "Show line diagnostics"
             vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
             opts.desc = "Go to previous diagnostic"
             vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
