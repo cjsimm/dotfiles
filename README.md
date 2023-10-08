@@ -6,10 +6,17 @@ Configuration dotfiles for my UNIX systems.
 
 # Installed Neovim Plugins 
 
-lazy.nvim 
+lazy.nvim - Plugin manager
+
+## LSP Plugins
+
 lsp-config
 mason
+
+## Others
+
 telescope
+lualine
 
 # Guide
 
