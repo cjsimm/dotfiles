@@ -6,7 +6,7 @@ return {
     config = function()
         require("NeoSolarized").setup({
             style = "dark",
-            transparent = true,
+            transparent = false,
         })
         -- Load the colorscheme
         vim.cmd([[ colorscheme NeoSolarized ]])
