@@ -43,7 +43,7 @@ return {
             }),
             --sources for autocompletion. order of sources control priority in completion
             sources = cmp.config.sources({
-                { name = "nvim-lsp" }, --language server 
+                { name = "nvim_lsp" }, --language server 
                 { name = "luasnip" }, --snippets
                 { name = "buffer" }, -- text inside buffer
                 { name = "path" }, -- system paths
