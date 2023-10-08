@@ -11,7 +11,7 @@ return {
     config = function()
         local cmp = require("cmp")
         local luasnip = require("luasnip")
-        --ensures comparatibilty of friendly snipets with luasnip
+        --ensures comparatibilty of friendly snippets with luasnip
         require("luasnip.loaders.from_vscode").lazy_load()
 
         --setup for nvim cmp
