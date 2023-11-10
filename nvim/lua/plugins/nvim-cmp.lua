@@ -8,6 +8,7 @@ return {
         "L3MON4D3/LuaSnip", --snippet engine
         "saadparwaiz1/cmp_luasnip", --auto completion source for snippets
         "rafamadriz/friendly-snippets", --better snippets 
+        "cjsimm/custom-snippets" -- custom snippets from my public repo 
     },
     config = function()
         local cmp = require("cmp")
