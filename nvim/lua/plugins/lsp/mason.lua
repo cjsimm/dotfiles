@@ -17,7 +17,6 @@ return {
                 },
             }
         })
-        
         --setup to pass downloaded language servers to lspconfig.
         mason_lspconfig.setup({
             ensure_installed = {
@@ -25,6 +24,7 @@ return {
                 "html",
                 "cssls",
                 "emmet_ls",
+                "tailwindcss",
                 --js/ts
                 "tsserver",
                 "eslint",
