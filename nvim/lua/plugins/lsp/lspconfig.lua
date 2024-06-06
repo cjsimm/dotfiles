@@ -89,6 +89,10 @@ return {
             capabilities = capabilities,
             on_attach = on_attach,
         })
+        lspconfig["bashls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach
+        })
         --specific config for lua to help with nvim config
         lspconfig["lua_ls"].setup({
             capabilities = capabilities,

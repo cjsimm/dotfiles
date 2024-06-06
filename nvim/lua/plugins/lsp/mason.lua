@@ -33,6 +33,7 @@ return {
                 "lua_ls",
                 "clangd",
                 "rust_analyzer",
+                "bashls",
             },
             --setting to automatically servers that are configured 
             automatic_installations = true,
