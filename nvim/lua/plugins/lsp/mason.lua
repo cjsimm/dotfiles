@@ -28,6 +28,7 @@ return {
                 --js/ts
                 "tsserver",
                 "eslint",
+                "volar",
                 --other
                 "pyright",
                 "lua_ls",
