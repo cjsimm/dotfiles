@@ -35,6 +35,8 @@ return {
                 "clangd",
                 "rust_analyzer",
                 "bashls",
+                -- IAC
+                "ansiblels",
             },
             --setting to automatically servers that are configured 
             automatic_installations = true,
