@@ -9,8 +9,14 @@ base_install() {
         libssl-dev zlib1g-dev \
         libbz2-dev libreadline-dev libsqlite3-dev curl git \
         libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
-        libffi-dev liblzma-dev cmake htop
+        libffi-dev liblzma-dev cmake htop curl
     echo "Installations complete."
+}
+
+rust_up() {
+    echo "Installing rust"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    echo "Rust installed"
 }
 
 install_nvim() {
@@ -81,6 +87,7 @@ install_docker() {
 
 cd "$HOME"
 base_install
+rust_up
 install_nvim
 install_config
 amend_bashrc
