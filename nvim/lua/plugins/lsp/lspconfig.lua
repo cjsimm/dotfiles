@@ -93,6 +93,12 @@ return {
             capabilities = capabilities,
             on_attach = on_attach
         })
+        lspconfig["ansiblels"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "yaml", "yml", "ansible" },
+            root_dir = lspconfig.util.root_pattern("roles", "playbooks")
+        })
         --specific config for lua to help with nvim config
         lspconfig["lua_ls"].setup({
             capabilities = capabilities,

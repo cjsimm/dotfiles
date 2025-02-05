@@ -28,12 +28,15 @@ return {
                 --js/ts
                 "tsserver",
                 "eslint",
+                "volar",
                 --other
                 "pyright",
                 "lua_ls",
                 "clangd",
                 "rust_analyzer",
                 "bashls",
+                -- IAC
+                "ansiblels",
             },
             --setting to automatically servers that are configured 
             automatic_installations = true,
