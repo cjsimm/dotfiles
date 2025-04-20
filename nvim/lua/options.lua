@@ -1,4 +1,12 @@
 --------------------------------------------------
+-- File Settings
+--------------------------------------------------
+vim.opt.autoread = true  -- refresh the buffer when the file has been changed outside vim
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, { -- force refresh if pane refocused 
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = "*",
+})
+--------------------------------------------------
 -- Line Numbering
 --------------------------------------------------
 vim.opt.number = true
