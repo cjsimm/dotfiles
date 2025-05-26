@@ -21,4 +21,19 @@ return {
             log_level = "DEBUG",
         },
     },
+   config = function()
+        require("codecompanion").setup({})
+        vim.keymap.set(
+            { "n", "v" },            
+            "<leader>a",
+            "<cmd>CodeCompanionChat Toggle<cr>",
+            { desc = "Toggle a chat buffer" }
+        )
+        vim.keymap.set(
+            { "n", "v" },
+            "<C-a>",
+            "<cmd>CodeCompanionActions<CR>",
+            {desc = "Open the action palette"}
+        )
+   end
 }
