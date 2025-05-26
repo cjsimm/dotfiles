@@ -13,5 +13,5 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 --setup function installs each string/table inside the outer function passed to the table 
-require("lazy").setup({ {import = "plugins"}, {import = "plugins.lsp"} })
+require("lazy").setup({ {import = "plugins"}, {import = "plugins.lsp"}, {import = "plugins.ai"}, })
 
