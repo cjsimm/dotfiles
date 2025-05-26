@@ -27,6 +27,7 @@ return {
 				"yaml",
 				--doc formats
 				"markdown",
+                "markdown_inline",
 				"jsdoc",
 				"html",
 				"css"
