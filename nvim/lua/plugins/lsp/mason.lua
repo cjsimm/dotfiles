@@ -26,9 +26,8 @@ return {
                 "emmet_ls",
                 "tailwindcss",
                 --js/ts
-                "tsserver",
+                "ts_ls",
                 "eslint",
-                "volar",
                 --other
                 "pyright",
                 "lua_ls",

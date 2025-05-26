@@ -6,6 +6,7 @@ return {
 			ensure_installed = {
 				-- treesitter required
 				"c",
+                "cpp",
 				"vim",
 				"vimdoc",
 				"lua",
