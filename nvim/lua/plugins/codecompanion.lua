@@ -8,13 +8,13 @@ return {
         --Define which model to be used for each functionality
         strategies = {
             chat = {
-                adapter = "openai",
+                adapter = "copilot",
             },
             inline = {
-                adapter = "openai",
+                adapter = "copilot",
             },
             cmd = {
-                adapter = "openai",
+                adapter = "copilot",
             },
         },
         opts = {
