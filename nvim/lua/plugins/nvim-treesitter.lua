@@ -11,6 +11,7 @@ return {
 				"vimdoc",
 				"lua",
 				"query",
+                "dockerfile",
 				-- programming languages
 				"bash",
 				"javascript",
