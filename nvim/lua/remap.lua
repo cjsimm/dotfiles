@@ -14,6 +14,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "Q", "<nop>") --unbind Q (useless and prone to misclicks) 
 -- global replace current word under cursor 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- splits
+vim.keymap.set("n", "<leader>sv", "<cmd>vsplit<CR>", {desc="Split: Create Vertical"})
+vim.keymap.set("n", "<leader>sh", "<cmd>split<CR>", {desc="Split: Create Horizontal" })
 ------------------------------------------------------
 --- Visual Mode
 ------------------------------------------------------
