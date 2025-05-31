@@ -31,7 +31,9 @@ return {
                 "markdown_inline",
 				"jsdoc",
 				"html",
-				"css"
+				"css",
+                -- tools/infrastructure
+                "just"
 			},
 			sync_install = false,
 			auto_install = true,
