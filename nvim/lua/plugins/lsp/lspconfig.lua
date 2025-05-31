@@ -23,17 +23,12 @@ return {
             opts.desc = "Smart rename"
             vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
             --diagnostics
+            -- show float on diagnostic jumps (default [d and ]d)
+            vim.diagnostic.config({ jump = { float = true } })
             opts.desc = "Show buffer diagnostics"
             vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
             opts.desc = "Show line diagnostics"
             vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
-            opts.desc = "Go to previous diagnostic"
-            vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-            opts.desc = "Go to next diagnostic"
-            vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-            --lsp management
-            opts.desc = "Restart LSP"
-            vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>", opts)
         end
         --default capabilities from the completion engine that we will assign to most language servers
         local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -93,7 +88,7 @@ return {
             capabilities = capabilities,
             on_attach = on_attach
         })
-        lspconfig["docker_compose-language_service"].setup({
+        lspconfig["docker_compose_language_service"].setup({
             capabilities = capabilities,
             on_attach = on_attach
         })
