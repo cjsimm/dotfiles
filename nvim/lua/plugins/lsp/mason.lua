@@ -36,6 +36,8 @@ return {
                 "bashls",
                 -- IAC
                 "ansiblels",
+                "docker_compose_language_service",
+                "dockerls"
             },
             --setting to automatically servers that are configured 
             automatic_installations = true,
