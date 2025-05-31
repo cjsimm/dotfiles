@@ -41,6 +41,8 @@ return {
             },
             --setting to automatically servers that are configured 
             automatic_installations = true,
+            -- stop mason from enabling servers and let lspconfig take care of it
+            automatic_enable = false,
         })
 
     end,
