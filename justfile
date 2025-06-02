@@ -1,23 +1,23 @@
 import 'installation/macos.just'
 import 'installation/debian.just'
+import 'installation/misc.just'
 import 'misc/utils.just'
-
-test-file:
-    echo 'this is a recipe'
 
 # Future default task. running 
 backup:
     @echo 'Backup the installation'
 
-setup-dev: install 
-    # figure out operating system and install appropriate one
+# Setup a full developer environment from base for an automatically detected target platform
+setup-dev:
+    just divider "Initial Setup"
+    just symlink-config -f
+    just divider "Installing packages, toolchains, and applications"
+    just installation
+    just divider "Setup Complete!"
+    echo "call the ssh-keygen command to gen keys for ssh connections!" 
 
-
-    # curl https://sh.rustup.rs -sSf | sh    
-    @echo 'and the next one doesnt...'
-    @just divider
-
-
+# Install packages, toolchains, and applications for development
+installation: install install-globals install-pypi
 
 # Symlink the .config dir to the appropriate system location
 symlink-config override_flag="":
