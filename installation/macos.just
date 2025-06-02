@@ -1,6 +1,51 @@
-[doc('Installs a full developer setup on MacOS')]
-[macos]
-install:
-    # add [macos] attribute in the future so that install only runs on macos systems
-    @echo 'Installing Brew Packages'
+HEAD_FORMULAE := "neovim"
+BREW_TAP_FILE := source_dir() + "./packages/taps.txt"
+BREW_PACKAGE_FILE := source_dir() + "./packages/brew.txt"
+BREW_CASK_FILE := source_dir() + "/packages/brew_cask.txt"
 
+# Install a full developer environment on MacOS
+[macos]
+install: install-homebrew install-taps install-packages install-casks
+
+
+# Install homebrew and set zsh profile to enable its use
+install-homebrew:
+    #!/usr/bin/env sh
+    echo 'Installing homebrew...'
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo 'Adding post-install configuration to .zprofile...'
+    echo >> /Users/$(whoami)/.zprofile
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$(whoami)/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Install taps defined in packages/taps.txt for use with brew
+install-taps:
+    #!/usr/bin/env sh
+    echo 'Adding homebrew taps listed in taps.txt...'
+    while read -r tap; do
+        brew tap "$tap"
+        echo "Added '$tap' tap."
+    done < {{BREW_TAP_FILE}}
+
+
+# Install brew packages defined in packages/brew.txt
+install-packages:
+    #!/usr/bin/env sh
+    echo 'Installing brew packages listed in brew.txt...'
+    while read -r package; do
+        echo "Installing $package..."
+        if printf "%s\n" {{HEAD_FORMULAE}} | grep -q $package; then
+            brew install --HEAD "$package"
+        else
+            brew install "$package"
+        fi
+    done < {{BREW_PACKAGE_FILE}}
+
+# Install brew casks defined in packages/brew_cask.txt
+install-casks:
+    #!/usr/bin/env sh
+    echo 'Installing applications listed in cask.txt file...'
+    while read -r cask; do
+        echo "installing $cask..."
+        brew install --cask "$cask"
+    done < {{BREW_CASK_FILE}}
