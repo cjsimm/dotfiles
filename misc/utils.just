@@ -1,10 +1,16 @@
-[doc('Prints a divider, with an intermediate message if a message argument is provided')]
-divider MESSAGE="":
-  @echo "--------------------------------------------------"
-  @if [ -n "{{MESSAGE}}" ]; then \
-    echo "--- {{MESSAGE}} ---"; \
-  fi
-  @echo "--------------------------------------------------"
+# Symlink the .config dir to the appropriate system location. Takes -f as an argument to force
+symlink-config override_flag="":
+    @if [ -e ~/.config ] && [ "{{override_flag}}" != "-f" ]; then \
+    echo "Warning: ~/.config already exists."; \
+    echo "This command will remove the existing ~/.config directory"; \
+    echo "A symlink to the 'dotfiles/.config' directory will be made in its place."; \
+    echo "Ensure you have backedup any files you with to preserve in '~/.config', then run 'just symlink-config -f' to proceed with overwrite."; \
+    exit 1; \
+    else \
+    rm -rf ~/.config; \
+    ln -s ~/dotfiles/.config ~/.config; \
+    echo 'Symlinked dotfiles config directory to system config'; \
+    fi
 
 # Generate an RSA4096 public/private key pair. Add host information to .ssh/config, copy public key to clipboard and delete from system
 ssh-keygen:
