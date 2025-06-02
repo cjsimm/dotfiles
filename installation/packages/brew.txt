@@ -1,1 +1,13 @@
+curl
+docker
+ffmpeg
+git
+gpg
+just
+mackup
+mise
+neofetch
 neovim
+ripgrep
+tmux
+wget

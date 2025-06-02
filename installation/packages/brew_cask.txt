@@ -1,1 +1,4 @@
+alacritty
+anki
 discord
+firefox
