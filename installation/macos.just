@@ -5,8 +5,7 @@ BREW_CASK_FILE := source_dir() + "/packages/brew_cask.txt"
 
 # Install a full developer environment on MacOS
 [macos]
-install: install-homebrew install-taps install-packages install-casks
-
+_install: install-homebrew install-taps install-packages install-casks
 
 # Install homebrew and set zsh profile to enable its use
 install-homebrew:
@@ -26,7 +25,6 @@ install-taps:
         brew tap "$tap"
         echo "Added '$tap' tap."
     done < {{BREW_TAP_FILE}}
-
 
 # Install brew packages defined in packages/brew.txt
 install-packages:
