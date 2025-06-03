@@ -1,6 +1,6 @@
 HEAD_FORMULAE := "neovim"
-BREW_TAP_FILE := source_dir() + "./packages/taps.txt"
-BREW_PACKAGE_FILE := source_dir() + "./packages/brew.txt"
+BREW_TAP_FILE := source_dir() + "/packages/taps.txt"
+BREW_PACKAGE_FILE := source_dir() + "/packages/brew.txt"
 BREW_CASK_FILE := source_dir() + "/packages/brew_cask.txt"
 
 # Install a full developer environment on MacOS
