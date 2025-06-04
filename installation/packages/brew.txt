@@ -6,6 +6,7 @@ gpg
 just
 mackup
 mise
+ncspot
 neofetch
 neovim
 ripgrep
