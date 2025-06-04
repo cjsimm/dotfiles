@@ -1,4 +1,4 @@
 [tools]
-node = 'latest'
-python = 'latest'
-go = 'latest'
+node = "latest"
+python = "latest"
+go = "latest"
