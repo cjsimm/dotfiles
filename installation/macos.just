@@ -55,6 +55,7 @@ change-hostname hostname="":
         echo "Failed to change hostname. Add a hostname argument."
         exit 1
     fi
+    echo "Changing hostname on system to '{{hostname}}'"
     system_names=(
         ComputerName
         HostName
