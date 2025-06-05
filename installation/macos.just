@@ -64,3 +64,11 @@ change-hostname hostname="":
         sudo scutil --set "$name" {{hostname}}
     done
     sudo dscacheutil -flushcache
+
+[macos]
+set-aliases:
+    #!/usr/bin/env sh
+    echo >> /Users/$(whoami)/.zshrc
+    echo "alias la='ls -a'" >> /Users/$(whoami)/.zshrc
+    echo "alias vi='nvim'" >> /Users/$(whoami)/.zshrc
+    source /Users/$(whoami)/.zshrc
