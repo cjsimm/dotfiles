@@ -22,6 +22,9 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - the env doesnt reload after rust is installed so that cargo is useable
 - the mise command is incorrect - it doesnt install unprompted or work at all
 - the install packages loop seems to jump over to other iteration before the command has finished working
+- ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
+- alacritty loses opacity settings if fullscreened
+- alacritty doesnt have pretty colours
 
 ## Installation automation improvements
 
