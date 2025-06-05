@@ -19,6 +19,7 @@ setup-dev:
     just installation
     just divider "System Settings"
     just change-hostname hostname="$hostname"
+    just set-aliases
     just divider "Setup Complete!"
     echo "call the ssh-keygen command to gen keys for ssh connections!" 
 
