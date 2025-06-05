@@ -10,10 +10,15 @@ backup:
 
 # Setup a full developer environment from base for an automatically detected target platform
 setup-dev:
+    #!/usr/bin/env sh
     just divider "Initial Setup"
+    echo "Enter hostname for the system:"
+    read hostname
     just symlink-config -f
     just divider "Installing packages, toolchains, and applications"
     just installation
+    just divider "System Settings"
+    just change-hostname hostname="$hostname"
     just divider "Setup Complete!"
     echo "call the ssh-keygen command to gen keys for ssh connections!" 
 
