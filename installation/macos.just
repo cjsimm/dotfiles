@@ -47,3 +47,20 @@ install-casks:
         echo "installing $cask..."
         brew install --cask "$cask"
     done < {{BREW_CASK_FILE}}
+
+[macos]
+change-hostname hostname="":
+    #!/usr/bin/env sh
+    if [ -z "{{hostname}}" ]; then
+        echo "Failed to change hostname. Add a hostname argument."
+        exit 1
+    fi
+    system_names=(
+        ComputerName
+        HostName
+        LocalHostName
+    )
+    for name in "${system_names[@]}"; do
+        sudo scutil --set "$name" {{hostname}}
+    done
+    sudo dscacheutil -flushcache
