@@ -1,6 +1,8 @@
 alacritty
 anki
 discord
-firefox
-obsidian
 eloston-chromium
+firefox
+font-fira-code-nerd-font
+obsidian
+spotify
