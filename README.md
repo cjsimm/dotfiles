@@ -32,6 +32,8 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 - api keys arent being stored securely. should be able to get them into the apple keychain and store them there.
     
+- ssh keys are removed from the agent on restart
+    - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
 
 ## Installation automation improvements
 
