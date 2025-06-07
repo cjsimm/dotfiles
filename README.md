@@ -24,7 +24,14 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - the install packages loop seems to jump over to other iteration before the command has finished working
 - ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
 - alacritty loses opacity settings if fullscreened
-- alacritty doesnt have pretty colours
+    - is this a bug? is this a good thing?
+
+- nerd fonts arent installed 
+
+- dont know how to use ncspot or how the keybinds work. figure them out
+
+- api keys arent being stored securely. should be able to get them into the apple keychain and store them there.
+    
 
 ## Installation automation improvements
 
