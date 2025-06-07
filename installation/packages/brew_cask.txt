@@ -3,3 +3,4 @@ anki
 discord
 firefox
 obsidian
+eloston-chromium
