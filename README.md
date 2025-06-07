@@ -31,9 +31,16 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - dont know how to use ncspot or how the keybinds work. figure them out
 
 - api keys arent being stored securely. should be able to get them into the apple keychain and store them there.
+    - export LLM_API_KEY=$(security find-generic-password -a "$USER" -s "LLM_API_KEY" -w)
+
     
 - ssh keys are removed from the agent on restart
     - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
+
+- symlinked files arent included in telescope fuzzy search in neovim
+
+- Is the neovim theme now messing with the alacritty settings? switch it off
+to check
 
 ## Installation automation improvements
 
