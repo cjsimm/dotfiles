@@ -25,8 +25,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
 - alacritty loses opacity settings if fullscreened
     - is this a bug? is this a good thing?
-
-- nerd fonts arent installed 
+- alacritty doesnt support ligatures - consider switching 
 
 - dont know how to use ncspot or how the keybinds work. figure them out
 
