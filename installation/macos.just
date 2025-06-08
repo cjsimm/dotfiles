@@ -2,6 +2,8 @@ HEAD_FORMULAE := "neovim"
 BREW_TAP_FILE := source_dir() + "/packages/taps.txt"
 BREW_PACKAGE_FILE := source_dir() + "/packages/brew.txt"
 BREW_CASK_FILE := source_dir() + "/packages/brew_cask.txt"
+ZSHRC_FILE := home_dir() + "/.zshrc"
+
 
 # Install a full developer environment on MacOS
 [macos]
@@ -67,19 +69,51 @@ change-hostname hostname="":
     sudo dscacheutil -flushcache
 
 [macos]
-set-aliases:
+configure-rc-file:
     #!/usr/bin/env sh
-    echo >> /Users/$(whoami)/.zshrc
-    echo "alias la='ls -a'" >> /Users/$(whoami)/.zshrc
-    echo "alias vi='nvim'" >> /Users/$(whoami)/.zshrc
-    echo 'eval "$(starship init zsh)"' >> /Users/$(whoami)/.zshrc
-    echo "source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    echo "source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-    just zsh-history
-    source /Users/$(whoami)/.zshrc
+    echo >> {{ZSHRC_FILE}}
+    just _zsh-eval
+    just _zsh-alias
+    just _zsh-history
+    just _zsh-plugins
+    source {{ZSHRC_FILE}}
+
+# Adds zshrc plugin initialization to the .zshrc file
+_zsh-plugins:
+    #!/usr/bin/env sh
+    lines=(
+        "source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+        "source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    )
+    for line in "${lines[@]}"; do
+        echo "$line" >> {{ZSHRC_FILE}}
+    done
+    source {{ZSHRC_FILE}}
+
+
+    
+# Adds eval commands required by packages to the .zshrc file
+_zsh-eval:
+    echo 'eval "$(starship init zsh)"' >> {{ZSHRC_FILE}}
+
+# Adds alias changes appropriate for the zsh config to the .zshrc file
+_zsh-alias:
+    #!/usr/bin/env sh
+    lines=(
+        "# Aliases"
+        "alias ls='eza'"
+        "alias la='eza -a'"
+        "alias vi='nvim'"
+    )
+    for line in "${lines[@]}"; do
+        echo "$line" >> {{ZSHRC_FILE}}
+    done
+    source {{ZSHRC_FILE}}
+        
+
 
 # Adds configuration into .zshrc to use historical commands when scrolling up and down through suggested commands
-zsh-history:
+_zsh-history:
     #!/usr/bin/env sh
     HOME="/Users/$(whoami)"
     ZSHRC_FILE="$HOME/.zshrc"
@@ -98,3 +132,4 @@ zsh-history:
     for line in "${lines[@]}"; do
         echo "$line" >> "$ZSHRC_FILE"
     done
+    source {{ZSHRC_FILE}}
