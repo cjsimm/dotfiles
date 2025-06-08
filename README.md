@@ -20,12 +20,10 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 - rust installer isnt auto installable
 - the env doesnt reload after rust is installed so that cargo is useable
-- the mise command is incorrect - it doesnt install unprompted or work at all
 - the install packages loop seems to jump over to other iteration before the command has finished working
 - ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
 - alacritty loses opacity settings if fullscreened
     - is this a bug? is this a good thing?
-- alacritty doesnt support ligatures - consider switching 
 
 - dont know how to use ncspot or how the keybinds work. figure them out
 
@@ -36,9 +34,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - ssh keys are removed from the agent on restart
     - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
 
-- symlinked files arent included in telescope fuzzy search in neovim
 
-- install wezterm
 - configure starship with preferred settings
 
 ## Installation automation improvements
