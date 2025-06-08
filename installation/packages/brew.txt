@@ -13,3 +13,5 @@ ripgrep
 starship
 tmux
 wget
+zsh-autosuggestions
+zsh-syntax-highlighting
