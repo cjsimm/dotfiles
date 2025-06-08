@@ -38,8 +38,8 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 - symlinked files arent included in telescope fuzzy search in neovim
 
-- Is the neovim theme now messing with the alacritty settings? switch it off
-to check
+- install wezterm
+- configure starship with preferred settings
 
 ## Installation automation improvements
 

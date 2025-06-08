@@ -10,5 +10,6 @@ ncspot
 neofetch
 neovim
 ripgrep
+starship
 tmux
 wget
