@@ -1,5 +1,6 @@
 curl
 docker
+eza
 ffmpeg
 git
 gpg
