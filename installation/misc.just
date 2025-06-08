@@ -3,6 +3,7 @@ PYTHON_PACKAGE_FILE := source_dir() + "packages/python.txt"
 # Install the global tools defined in dotfiles mise.toml config file
 install-globals:
     mise install --force --verbose
+    # this isnt a platform independent implementation
     echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
     src ~/.zshrc
 
