@@ -73,4 +73,28 @@ set-aliases:
     echo "alias la='ls -a'" >> /Users/$(whoami)/.zshrc
     echo "alias vi='nvim'" >> /Users/$(whoami)/.zshrc
     echo 'eval "$(starship init zsh)"' >> /Users/$(whoami)/.zshrc
+    echo "source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    echo "source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    just zsh-history
     source /Users/$(whoami)/.zshrc
+
+# Adds configuration into .zshrc to use historical commands when scrolling up and down through suggested commands
+zsh-history:
+    #!/usr/bin/env sh
+    HOME="/Users/$(whoami)"
+    ZSHRC_FILE="$HOME/.zshrc"
+    lines=(
+        "# History Settings - U/D Arrow keys through shared history file"
+        "HISTFILE=$HOME/.zhistory"
+        "SAVEHIST=1000"
+        "HISTSIZE=999"
+        "setopt share_history"
+        "setopt hist_expire_dups_first"
+        "setopt hist_ignore_dups"
+        "setopt hist_verify"
+        "bindkey '^[[A' history-search-backward"
+        "bindkey '^[[B' history-search-forward"
+    )
+    for line in "${lines[@]}"; do
+        echo "$line" >> "$ZSHRC_FILE"
+    done
