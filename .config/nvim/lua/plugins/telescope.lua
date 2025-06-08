@@ -11,7 +11,7 @@ return {
       config = function()
         local telescope = require("telescope")
 	    local builtin = require("telescope.builtin")
-        local actions = require("telescope.actions") 
+        local actions = require("telescope.actions")
         telescope.setup({
             defaults = {
                 path_display = { "truncate " },
@@ -27,9 +27,22 @@ return {
         --extensions
         telescope.load_extension("fzf")
         telescope.load_extension("undo")
+        -- picker functions
+        local function find_files()
+            builtin.find_files({
+                hidden = true, 
+                follow = true,
+                no_ignore = true,
+            })
+        end
+        local function live_grep()
+            builtin.live_grep({
+                additional_args = { "--hidden", "--follow" }
+            })
+        end
         --keymaps
-	    vim.keymap.set('n', '<leader>ff', builtin.find_files, {}) --fuzzy find all files in open directories 
-        vim.keymap.set('n', '<leader>fg', builtin.live_grep, {}) --grep for all files in directory 
+	    vim.keymap.set('n', '<leader>ff', find_files, { desc = "Telescope find files" })
+        vim.keymap.set('n', '<leader>fg', live_grep, {}) --grep for all files in directory 
         vim.keymap.set('n', '<leader>fb', builtin.buffers, {}) -- show all currently open buffers
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, {}) --show all docs entries with defined vim :helptags
         vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, {}) --show every high level symbols
