@@ -15,6 +15,15 @@ executing `setup.sh` on your machine. This will rustup your system, install `jus
 
 Run `xcode-select --install` in your terminal to get access to a version of git. It's recommended to install all offered toolchains with this command to act as system fallbacks. Brew will install and manage newer versions of many of these tools (including git). Brew-managed versions will be found and invoked first when called on the command-line.
 
+## Todo
+
+- configure startship with desired settings
+- adapt gitconfig file with some minor changes
+- choose a new theme that applies across alacritty and neovim
+    - kanagawa wave?
+- store api keys in the apple keychain and pull them from there during shell init
+
+
 
 ## Outstanding issues
 
@@ -33,9 +42,6 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
     
 - ssh keys are removed from the agent on restart
     - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
-
-
-- configure starship with preferred settings
 
 ## Installation automation improvements
 
