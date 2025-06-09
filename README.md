@@ -17,12 +17,13 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 ## Todo
 
+- set new seashells colour palette across neovim to match alacritty theme
+- set tmux text bar to use a lighter colour to offset the blue
+- change git_status ascii symbols to nerdfont versions to get size uniformity
+- introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
-- choose a new theme that applies across alacritty and neovim
-    - kanagawa wave?
 - store api keys in the apple keychain and pull them from there during shell init
 - look for a cat rust rewrite with improvements -> treesitter syntax highlighting or something like that
-- introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 
 
 
