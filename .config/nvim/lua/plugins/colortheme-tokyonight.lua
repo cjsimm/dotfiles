@@ -1,5 +1,5 @@
 return {}
---return {
+-- return {
 --    "folke/tokyonight.nvim",
 --    name = "tokyonight",
 --    lazy = false,
@@ -7,5 +7,5 @@ return {}
 --    configure = function()
 --        vim.cmd([[ colorscheme tokyonight-night ]])
 --    end
---}
+-- }
 

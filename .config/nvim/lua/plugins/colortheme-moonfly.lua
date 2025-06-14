@@ -1,5 +1,5 @@
 return {}
---return {
+-- return {
 --    "bluz71/vim-moonfly-colors",
 --    name = "moonfly",
 --    lazy = false, -- make sure we load this during startup if it is your main colorscheme
@@ -8,4 +8,4 @@ return {}
 --        -- Load the colorscheme
 --        vim.cmd [[ colorscheme moonfly ]]
 --    end
---}
+-- }
