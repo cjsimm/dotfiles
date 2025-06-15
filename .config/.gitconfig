@@ -3,3 +3,6 @@
 [user]
     name = cjsimm
     email = cjsimm@github.com
+[branch]
+    autoSetupMerge = true
+    
