@@ -7,38 +7,36 @@ title = "nerd-portal"
 normal = { family = "FiraCode Nerd Font Mono", style = "Regular" }
 
 # Colors (SeaShells)
-# Source  https//raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/SeaShells.itermcolors
+# https://github.com/mbadolato/iTerm2-Color-Schemes/blob/master/alacritty/SeaShells.toml
 
-[colors.primary]
-background = '#061923'
-foreground = '#e5c49e'
+[colors.bright]
+black = '#434b53'
+blue = '#1bbcdd'
+cyan = '#87acb4'
+green = '#628d98'
+magenta = '#bbe3ee'
+red = '#d48678'
+white = '#fee4ce'
+yellow = '#fdd39f'
 
 [colors.cursor]
-text = '#061822'
-cursor = '#feaf3c'
+cursor = '#fca02f'
+text = '#08131a'
+
+[colors.normal]
+black = '#17384c'
+blue = '#1e4950'
+cyan = '#50a3b5'
+green = '#027c9b'
+magenta = '#68d4f1'
+red = '#d15123'
+white = '#deb88d'
+yellow = '#fca02f'
+
+[colors.primary]
+background = '#09141b'
+foreground = '#deb88d'
 
 [colors.selection]
-text = '#ffe9d7'
-background = '#265b75'
-
-# Normal colors
-[colors.normal]
-black = '#1d485f'
-red = '#db662d'
-green = '#008eab'
-yellow = '#feaf3c'
-blue = '#255a62'
-magenta = '#77dbf4'
-cyan = '#5fb1c2'
-white = '#e5c49e'
-
-# Bright colors
-[colors.bright]
-black = '#545d65'
-red = '#dd998a'
-green = '#739da8'
-yellow = '#fedaae'
-blue = '#0bc7e3'
-magenta = '#c6e8f1'
-cyan = '#97b9c0'
-white = '#ffe9d7'
+background = '#1e4962'
+text = '#fee4ce'
