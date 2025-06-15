@@ -18,6 +18,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 ## Todo
 
 - set new seashells colour palette across neovim to match alacritty theme
+    - need to design my whole own theme, possibly
 - set tmux text bar to use a lighter colour to offset the blue
 - introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
@@ -37,6 +38,9 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - api keys arent being stored securely. should be able to get them into the apple keychain and store them there.
     - export LLM_API_KEY=$(security find-generic-password -a "$USER" -s "LLM_API_KEY" -w)
 
+- neofetch doesnt show the correct terminal or font
+    - something to do with neofetch not being able to read the terminal through macos
+    - neofetch was discontinued, go looking for a new program instead maybe that forks it
     
 - ssh keys are removed from the agent on restart
     - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
