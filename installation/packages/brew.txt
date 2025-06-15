@@ -5,6 +5,7 @@ ffmpeg
 git
 gpg
 just
+lua
 mackup
 mise
 ncspot
