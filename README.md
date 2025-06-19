@@ -23,7 +23,6 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
 - store api keys in the apple keychain and pull them from there during shell init
-- look for a cat rust rewrite with improvements -> treesitter syntax highlighting or something like that
 
 
 
@@ -33,6 +32,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - the env doesnt reload after rust is installed so that cargo is useable
 - the install packages loop seems to jump over to other iteration before the command has finished working
 - ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
+    - this seems to be a problem in an underlying library that is quite hard to fix
 - dont know how to use ncspot or how the keybinds work. figure them out
 
 - api keys arent being stored securely. should be able to get them into the apple keychain and store them there.
@@ -47,4 +47,4 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 ## Installation automation improvements
 
-- Pull macos settings from somewhere (first research whether theyr epersisted over icloud)
+- Pull macos settings from somewhere (first research whether theyre persisted over icloud)
