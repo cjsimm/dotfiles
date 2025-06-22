@@ -28,7 +28,7 @@ pyenv_prefix = ''
 
 [rust]
 style = 'orange'
-symbol = ''
+symbol = ''
 format = '[${symbol} ${version}]($style)'
 
 [lua]
