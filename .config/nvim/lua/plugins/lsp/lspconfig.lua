@@ -83,6 +83,15 @@ return {
         lspconfig["rust_analyzer"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
+            settings = {
+                ["rust-analyzer"] = {
+                    checkOnSave = {
+                        enable = true,
+                        command = "clippy"
+                    }
+                }
+            }
+
         })
         lspconfig["bashls"].setup({
             capabilities = capabilities,
