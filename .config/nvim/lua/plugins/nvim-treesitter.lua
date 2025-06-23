@@ -26,6 +26,7 @@ return {
 				"json",
 				"regex",
 				"yaml",
+                "toml",
 				--doc formats
 				"markdown",
                 "markdown_inline",
