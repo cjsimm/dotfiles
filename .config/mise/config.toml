@@ -2,3 +2,4 @@
 node = "latest"
 python = "latest"
 go = "latest"
+lua = "latest"

@@ -24,6 +24,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - adapt gitconfig file with some minor changes
 - store api keys in the apple keychain and pull them from there during shell init
 - add stylua to the install list for lua linting. integrate it with the nvim lua lsp on save
+- swap lua management to mise and install both 5.1 and latest by default
 
 
 
