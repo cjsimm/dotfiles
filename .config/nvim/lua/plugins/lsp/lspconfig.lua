@@ -1,18 +1,18 @@
 return {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" }, -- Load LS when opening existing or new file 
+    event = { "BufReadPre", "BufNewFile" }, -- Load LS when opening existing or new file
     dependencies = {
-        "hrsh7th/cmp-nvim-lsp", --completion source
+        "hrsh7th/cmp-nvim-lsp",             --completion source
     },
     config = function()
-        --required imports 
+        --required imports
         local lspconfig = require("lspconfig")
         local cmp_nvim_lsp = require("cmp_nvim_lsp")
-        --set keybinds for language server features. modify opts before each bind to describe what it does 
+        --set keybinds for language server features. modify opts before each bind to describe what it does
         local opts = { noremap = true, silent = true }
         local on_attach = function(client, bufnr)
             opts.buffer = bufnr
-            --display information 
+            --display information
             opts.desc = "Go to declaration"
             vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
             opts.desc = "Show LSP Definitions"
@@ -29,6 +29,15 @@ return {
             vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
             opts.desc = "Show line diagnostics"
             vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+
+            -- set nvim to format on save using default formatter associated with lsp
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                callback = function()
+                    vim.lsp.buf.format({ async = false })
+                end,
+                desc = "Format on save",
+            })
         end
         --default capabilities from the completion engine that we will assign to most language servers
         local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -41,7 +50,7 @@ return {
         --individual language server configurations
         lspconfig["html"].setup({
             capabilities = capabilities, --pass the completion engine capabilities in
-            on_attach = on_attach, -- pass our on-attach keybinds in, 
+            on_attach = on_attach,       -- pass our on-attach keybinds in,
         })
         lspconfig["cssls"].setup({
             capabilities = capabilities,
