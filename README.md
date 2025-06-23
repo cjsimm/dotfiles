@@ -23,6 +23,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
 - store api keys in the apple keychain and pull them from there during shell init
+- add stylua to the install list for lua linting. integrate it with the nvim lua lsp on save
 
 
 
