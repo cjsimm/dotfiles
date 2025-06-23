@@ -17,14 +17,14 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 ## Todo
 
-- set new seashells colour palette across neovim to match alacritty theme
-    - need to design my whole own theme, possibly
 - set tmux text bar to use a lighter colour to offset the blue
 - introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
 - store api keys in the apple keychain and pull them from there during shell init
 - add stylua to the install list for lua linting. integrate it with the nvim lua lsp on save
-- swap lua management to mise and install both 5.1 and latest by default
+- get font and other additional information into neofetch correctly 
+    - font doesnt show up
+    - terminal is set to tmux instead of alacritty or Terminal: /dev/ttys004 if outside tmux
 
 
 
