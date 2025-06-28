@@ -105,6 +105,7 @@ _zsh-alias:
         "alias la='eza -a'"
         "alias vi='nvim'"
         "alias cat='bat'"
+        "alias lg='lazygit'"
     )
     for line in "${lines[@]}"; do
         echo "$line" >> {{ZSHRC_FILE}}

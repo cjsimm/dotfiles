@@ -28,7 +28,6 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - consider swapping python lanfuage server to ruff instead of pyright
 
 
-
 ## Outstanding issues
 
 - rust installer isnt auto installable

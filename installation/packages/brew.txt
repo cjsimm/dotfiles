@@ -6,6 +6,7 @@ ffmpeg
 git
 gpg
 just
+lazygit
 mackup
 mise
 ncspot
