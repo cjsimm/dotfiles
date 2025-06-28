@@ -137,6 +137,9 @@ return {
                             [vim.fn.stdpath("config") .. "/lua"] = true,
                         },
                     },
+                    format = {
+                        enable = true,
+                    }
                 },
             },
         })
