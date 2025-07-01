@@ -1,50 +1,51 @@
 return {
-	'nvim-treesitter/nvim-treesitter',
-	build = ":TSUpdate",
-	config = function()
-		require("nvim-treesitter.configs").setup {
-			ensure_installed = {
-				-- treesitter required
-				"c",
+    'nvim-treesitter/nvim-treesitter',
+    build = ":TSUpdate",
+    config = function()
+        require("nvim-treesitter.configs").setup {
+            ensure_installed = {
+                -- treesitter required
+                "c",
                 "cpp",
-				"vim",
-				"vimdoc",
-				"lua",
-				"query",
+                "vim",
+                "vimdoc",
+                "lua",
+                "query",
                 "dockerfile",
-				-- programming languages
-				"bash",
-				"javascript",
-				"typescript",
-				"tsx",
-				"python",
-				"rust",
-				"glsl",
-				"hlsl",
-				"terraform",
-				--data formats
-				"json",
-				"regex",
-				"yaml",
+                -- programming languages
+                "bash",
+                "javascript",
+                "typescript",
+                "tsx",
+                "python",
+                "rust",
+                "glsl",
+                "hlsl",
+                "terraform",
+                "vue",
+                --data formats
+                "json",
+                "regex",
+                "yaml",
                 "toml",
-				--doc formats
-				"markdown",
+                --doc formats
+                "markdown",
                 "markdown_inline",
-				"jsdoc",
-				"html",
-				"css",
+                "jsdoc",
+                "html",
+                "css",
                 -- tools/infrastructure
                 "just"
-			},
-			sync_install = false,
-			auto_install = true,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = false,
-			},
-			indent = {
-				enable = true
-			}
-		}
-	end
+            },
+            sync_install = false,
+            auto_install = true,
+            highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false,
+            },
+            indent = {
+                enable = true
+            }
+        }
+    end
 }
