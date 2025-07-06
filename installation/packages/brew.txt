@@ -14,6 +14,7 @@ neofetch
 neovim
 ripgrep
 starship
+syncthing
 tmux
 wget
 zsh-autosuggestions
