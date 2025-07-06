@@ -26,6 +26,9 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
     - font doesnt show up
     - terminal is set to tmux instead of alacritty or Terminal: /dev/ttys004 if outside tmux
 - consider swapping python lanfuage server to ruff instead of pyright
+- add an alias to zshrc that launches a venv
+
+*Big todo: * Implement the dotfile setup for wsl 
 
 
 ## Outstanding issues
