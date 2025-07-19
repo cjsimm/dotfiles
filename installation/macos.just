@@ -106,6 +106,8 @@ _zsh-alias:
         "alias vi='nvim'"
         "alias cat='bat'"
         "alias lg='lazygit'"
+        "alias venv-new='python -m venv .venv'"
+        "alias venv='source .venv/bin/activate'"
     )
     for line in "${lines[@]}"; do
         echo "$line" >> {{ZSHRC_FILE}}
