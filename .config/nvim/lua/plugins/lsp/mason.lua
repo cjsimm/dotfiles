@@ -1,7 +1,7 @@
 return {
     "williamboman/mason.nvim",
     dependencies = {
-    "williamboman/mason-lspconfig.nvim", --lets mason-sourced servers be configured with lsp-config plugin
+        "williamboman/mason-lspconfig.nvim", --lets mason-sourced servers be configured with lsp-config plugin
     },
     config = function()
         local mason = require("mason")
@@ -28,6 +28,7 @@ return {
                 --js/ts
                 "ts_ls",
                 "eslint",
+                "vue_ls",
                 --other
                 "pyright",
                 "lua_ls",
@@ -39,11 +40,10 @@ return {
                 "docker_compose_language_service",
                 "dockerls"
             },
-            --setting to automatically servers that are configured 
+            --setting to automatically servers that are configured
             automatic_installations = true,
             -- stop mason from enabling servers and let lspconfig take care of it
             automatic_enable = false,
         })
-
     end,
 }

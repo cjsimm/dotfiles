@@ -51,6 +51,7 @@ return {
         lspconfig["html"].setup({
             capabilities = capabilities, --pass the completion engine capabilities in
             on_attach = on_attach,       -- pass our on-attach keybinds in,
+            filetypes = { "html", "templ", "vue" },
         })
         lspconfig["cssls"].setup({
             capabilities = capabilities,
@@ -76,6 +77,19 @@ return {
         lspconfig["ts_ls"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
+            init_options = {
+                plugins = {
+                    {
+                        name = "@vue/typescript-plugin",
+                        location = vim.fn.expand("$MASON/packages/vue-language-server") ..
+                            "/node_modules/@vue/language-server",
+                        languages = { "vue" },
+                    },
+                },
+            },
+            filetypes = {
+                "typescript", "javascript", "javascriptreact", "typescriptreact", "vue"
+            }
         })
         lspconfig["eslint"].setup({
             capabilities = capabilities,
