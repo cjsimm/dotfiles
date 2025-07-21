@@ -1,5 +1,6 @@
 import 'installation/macos.just'
 import 'installation/debian.just'
+import 'installation/shell.just'
 import 'installation/misc.just'
 import 'misc/utils.just'
 import 'misc/formatting.just'
@@ -19,7 +20,7 @@ setup-dev:
     just installation
     just divider "System Settings"
     just change-hostname hostname="$hostname"
-    just configure-rc-file
+    just configure-zshrc-file
     just install-alacritty-themes
     just divider "Setup Complete!"
     echo "call the `ssh-keygen` command to gen keys for ssh connections!" 
