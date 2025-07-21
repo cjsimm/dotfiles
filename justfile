@@ -22,7 +22,7 @@ setup-dev:
     just configure-rc-file
     just install-alacritty-themes
     just divider "Setup Complete!"
-    echo "call the ssh-keygen command to gen keys for ssh connections!" 
+    echo "call the `ssh-keygen` command to gen keys for ssh connections!" 
 
 # Install packages, toolchains, and applications for development
 installation: _install install-globals install-pypi
