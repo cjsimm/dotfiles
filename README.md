@@ -17,16 +17,15 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 ## Todo
 
+- implement an ubuntu/linux version of the installation flow, refactoring if required
 - set tmux text bar to use a lighter colour to offset the blue
 - introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
 - store api keys in the apple keychain and pull them from there during shell init
-- add stylua to the install list for lua linting. integrate it with the nvim lua lsp on save
 - get font and other additional information into neofetch correctly 
     - font doesnt show up
     - terminal is set to tmux instead of alacritty or Terminal: /dev/ttys004 if outside tmux
 - consider swapping python lanfuage server to ruff instead of pyright
-- add an alias to zshrc that launches a venv
 
 *Big todo: * Implement the dotfile setup for wsl 
 
@@ -35,7 +34,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 
 - rust installer isnt auto installable
 - the env doesnt reload after rust is installed so that cargo is useable
-- the install packages loop seems to jump over to other iteration before the command has finished working
+- the install packages loop seems to jump over to other iteration before the command has finished working (macos)
 - ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
     - this seems to be a problem in an underlying library that is quite hard to fix
 - dont know how to use ncspot or how the keybinds work. figure them out
@@ -47,9 +46,30 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
     - something to do with neofetch not being able to read the terminal through macos
     - neofetch was discontinued, go looking for a new program instead maybe that forks it
     
-- ssh keys are removed from the agent on restart
+- ssh keys are removed from the agent on restart (macos)
     - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
 
 ## Installation automation improvements
 
 - Pull macos settings from somewhere (first research whether theyre persisted over icloud)
+
+## Linux Setup Feature
+
+## Todo
+
+- find out how to handle multiple flavours of linux and package managers
+- Update readme with any linux specific information required
+
+## Linux specifc implementations
+
+- _install (master command in debian.just) 
+
+- configure-rc-file (can be factored out into own file)
+    - add command that downloads or updates zsh
+    - add command that ensure zsh is the default shell
+
+- change-hostname
+
+## Notes
+
+- just implement debian for now, and figure out how to refactor for other flavours and package managers at a later date
