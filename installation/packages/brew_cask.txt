@@ -1,5 +1,6 @@
 alacritty
 anki
+calibre
 discord
 eloston-chromium
 firefox
