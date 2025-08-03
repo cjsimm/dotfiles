@@ -40,6 +40,19 @@ install-packages:
             brew install "$package"
         fi
     done < {{BREW_PACKAGE_FILE}}
+    just _set-path
+
+# Set path for any packages that require overriding native macos versions
+_set-path:
+    #!/usr/bin/env sh
+    lines=(
+        '# PATH'
+        'export PATH="/opt/homebrew/opt/bison/bin:$PATH"'
+    )
+    for line in "${lines[@]}"; do
+        echo "$line" >> {{ZSHRC_FILE}}
+    done
+    source {{ZSHRC_FILE}}
 
 # Install brew casks defined in packages/brew_cask.txt
 install-casks:
@@ -119,8 +132,6 @@ _zsh-alias:
 # Adds configuration into .zshrc to use historical commands when scrolling up and down through suggested commands
 _zsh-history:
     #!/usr/bin/env sh
-    HOME="/Users/$(whoami)"
-    ZSHRC_FILE="$HOME/.zshrc"
     lines=(
         "# History Settings - U/D Arrow keys through shared history file"
         "HISTFILE=$HOME/.zhistory"
@@ -134,6 +145,6 @@ _zsh-history:
         "bindkey '^[[B' history-search-forward"
     )
     for line in "${lines[@]}"; do
-        echo "$line" >> "$ZSHRC_FILE"
+        echo "$line" >> {{ZSHRC_FILE}}
     done
     source {{ZSHRC_FILE}}
