@@ -26,6 +26,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
     - font doesnt show up
     - terminal is set to tmux instead of alacritty or Terminal: /dev/ttys004 if outside tmux
 - consider swapping python lanfuage server to ruff instead of pyright
+- add calibre to software list 
 - add beancount to software list
 
 *Big todo: * Implement the dotfile setup for wsl/debian
@@ -70,6 +71,8 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
     - add command that ensure zsh is the default shell
 
 - change-hostname
+
+- install docker via a build from source
 
 ## Notes
 
