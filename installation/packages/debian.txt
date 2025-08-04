@@ -2,8 +2,8 @@ bison
 build-essential
 cmake
 curl
-curl
 git
+gpg
 htop
 libbz2-dev
 libffi-dev
