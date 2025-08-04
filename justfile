@@ -19,7 +19,7 @@ setup-dev:
     just symlink-config -f
     just divider "Installing packages, toolchains, and applications"
     just installation
-    just divider "System Settings"
+    just divider "System Setting Configuration"
     just change-hostname hostname="$hostname"
     just configure-zshrc-file
     just install-alacritty-themes
