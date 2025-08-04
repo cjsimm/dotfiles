@@ -3,10 +3,13 @@ ZSHRC_FILE := home_dir() + "/.zshrc"
 # Download latest versions of zsh and set as default shell
 zsh-setup:
     #!/usr/bin/env sh
-    echo "Setting zsh as default shell"
     # check if zsh install, if not install
+    # check if zsh install, if not install
+    echo "Setting zsh as default shell"
     # update to latest version 
     # set as shell default 
+    # configure
+    just configure-zshrc-file
 
 configure-zshrc-file:
     #!/usr/bin/env sh
