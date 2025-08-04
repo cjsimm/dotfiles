@@ -1,18 +1,9 @@
+set shell := ["zsh", "-cu"]
 ZSHRC_FILE := home_dir() + "/.zshrc"
 
-# Download latest versions of zsh and set as default shell
-zsh-setup:
-    #!/usr/bin/env sh
-    # check if zsh install, if not install
-    # check if zsh install, if not install
-    echo "Setting zsh as default shell"
-    # update to latest version 
-    # set as shell default 
-    # configure
-    just configure-zshrc-file
 
+# Configure zsh with plugins, appropriate aliases, and evaluations
 configure-zshrc-file:
-    #!/usr/bin/env sh
     echo >> {{ZSHRC_FILE}}
     just _zsh-eval
     just _zsh-tab-complete
@@ -21,14 +12,23 @@ configure-zshrc-file:
     just _zsh-plugins
     source {{ZSHRC_FILE}}
 
+# Adds zshrc plugin initialization to the .zshrc file
+[linux]
 _zsh-plugins:
-    #!/usr/bin/env sh
-    echo "Linux implementation"
+    @echo "Adding configuration for zsh plugins to source file..."
+    lines=(
+        "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+        "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    )
+    for line in "${lines[@]}"; do
+        echo "$line" >> {{ZSHRC_FILE}}
+    done
+    source {{ZSHRC_FILE}}
 
 # Adds zshrc plugin initialization to the .zshrc file
 [macos]
 _zsh-plugins:
-    #!/usr/bin/env sh
+    @echo "Adding configuration for zsh plugins to source file..."
     lines=(
         "source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
         "source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
@@ -37,16 +37,17 @@ _zsh-plugins:
         echo "$line" >> {{ZSHRC_FILE}}
     done
     source {{ZSHRC_FILE}}
-
-
     
 # Adds eval commands required by packages to the .zshrc file. This should be factored out so that some kind of starship command takes care of getting this into the zshrc file
 _zsh-eval:
+    @echo "Adding binary evaluations to source file..."
     echo 'eval "$(starship init zsh)"' >> {{ZSHRC_FILE}}
+    echo 'eval "$(mise activate zsh)"' >> {{zshrc_file}}
+
 
 # Enables tab complete and directory cycling in zsh shell
 _zsh-tab-complete:
-    #!/usr/bin/env sh
+    @echo "Enabling tab-complete..."
     lines=(
         "autoload -Uz compinit"
         "compinit"
@@ -58,7 +59,7 @@ _zsh-tab-complete:
 
 # Adds alias changes appropriate for the zsh config to the .zshrc file
 _zsh-alias:
-    #!/usr/bin/env sh
+    @echo "Setting aliases in .zshrc file..."
     lines=(
         "# Aliases"
         "alias ls='eza'"
@@ -74,11 +75,9 @@ _zsh-alias:
     done
     source {{ZSHRC_FILE}}
         
-
-
 # Adds configuration into .zshrc to use historical commands when scrolling up and down through suggested commands
 _zsh-history:
-    #!/usr/bin/env sh
+    @echo "Enabling zsh history on arrow u/d..."
     HOME="/Users/$(whoami)"
     ZSHRC_FILE="$HOME/.zshrc"
     lines=(
