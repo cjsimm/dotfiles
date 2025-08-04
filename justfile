@@ -21,11 +21,10 @@ setup-dev:
     just installation
     just divider "System Setting Configuration"
     just change-hostname hostname="$hostname"
-    just configure-zshrc-file
     just install-alacritty-themes
     just divider "Setup Complete!"
     echo "call the `ssh-keygen` command to gen keys for ssh connections!" 
 
 # Install packages, toolchains, and applications for development
-installation: _install install-globals install-pypi
+installation: _install configure-zshrc-file install-globals install-pypi
 
