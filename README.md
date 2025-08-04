@@ -29,6 +29,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - add calibre to software list 
 - add beancount to software list
 - add shbang universal snippet to all file editing, or .just, .sh files
+- add nvim keybind that adds merge conflict cycling, preferebly mixed with LSP error/issue cycling
 
 *Big todo: * Implement the dotfile setup for wsl/debian
 

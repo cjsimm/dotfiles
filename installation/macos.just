@@ -40,6 +40,19 @@ install-packages:
             brew install "$package"
         fi
     done < {{BREW_PACKAGE_FILE}}
+    just _set-path
+
+# Set path for any packages that require overriding native macos versions
+_set-path:
+    #!/usr/bin/env sh
+    lines=(
+        '# PATH'
+        'export PATH="/opt/homebrew/opt/bison/bin:$PATH"'
+    )
+    for line in "${lines[@]}"; do
+        echo "$line" >> {{ZSHRC_FILE}}
+    done
+    source {{ZSHRC_FILE}}
 
 # Install brew casks defined in packages/brew_cask.txt
 install-casks:

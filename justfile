@@ -2,6 +2,7 @@ import 'installation/macos.just'
 import 'installation/debian.just'
 import 'installation/shell.just'
 import 'installation/misc.just'
+import 'installation/python.just'
 import 'misc/utils.just'
 import 'misc/formatting.just'
 
