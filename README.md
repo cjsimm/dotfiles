@@ -28,6 +28,7 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
 - consider swapping python lanfuage server to ruff instead of pyright
 - add calibre to software list 
 - add beancount to software list
+- add shbang universal snippet to all file editing, or .just, .sh files
 
 *Big todo: * Implement the dotfile setup for wsl/debian
 
