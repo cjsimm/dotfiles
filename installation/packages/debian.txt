@@ -22,3 +22,6 @@ tk-dev
 tmux
 xz-utils
 zlib1g-dev
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
