@@ -7,22 +7,10 @@ ARCHITECTURE := `dpkg --print-architecture`
 [linux]
 _install: system-update install-packages install-mise install-docker install-neovim
 
-    # add any keyrings/custom repositories necessary
-
-
-    # install software from a list with apt-get
-
-    # possibly have a separate install command for docker
-
-    # build neovim from source. store this in own file so that a 
-    # macos implementation can be made in the future and not be managed 
-    # by brew
-
 # Perform standard debian system package update and upgrade
 [linux]
 system-update:
     #!/usr/bin/env sh
-    @just divider "Updating system packages"
     echo "Updating package lists..."
     @sudo apt update
     echo "Upgrading installed packages..."
@@ -33,12 +21,9 @@ system-update:
     @sudo apt clean
     echo "System update complete!"
 
-
-
 # Install packages defined in packages/debian.txt
 [linux]
 install-packages:
-    #!/usr/bin/env sh
     echo "Installing debian repo packages listed in {{DEBIAN_PACKAGE_FILE}}"
     while read -r package; do
         echo "Installing $package..."
@@ -52,14 +37,12 @@ install-packages:
 # Install docker engine and related packages via the docker install convenience script
 [linux]
 install-docker:
-    #!/usr/bin/env sh
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
 
 # Install mise for debian based system via non-official apt repo signed with mise gpgp key
 [linux]
 install-mise:
-    #!/usr/bin/env sh
     sudo install -dm 755 /etc/apt/keyrings
     curl -fsSL https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg > /dev/null
     echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch={{ARCHITECTURE}}] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
@@ -86,6 +69,12 @@ install-neovim:
     cd ../..
     rm -rf neovim
 
+# Download latest versions of zsh and set as default shell
+[linux]
+zsh-setup:
+    echo "Setting zsh as default shell"
+    chsh -s $(which zsh)
+    just configure-zshrc-file
 
 [linux]
 change-hostname hostname="":
