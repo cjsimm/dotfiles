@@ -1,8 +1,8 @@
 DEBIAN_PACKAGE_FILE := source_dir() + "/packages/debian.txt"
-
+ARCHITECTURE := `dpkg --print-architecture` 
 # Install a full developer environment on a debian-based distro
 [linux]
-_install: system-update install-packages install-docker
+_install: system-update install-packages install-mise install-docker
 
     # add any keyrings/custom repositories necessary
 
@@ -51,6 +51,17 @@ install-docker:
     #!/usr/bin/env sh
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
+
+# Install mise for debian based system via non-official apt repo signed with mise gpgp key
+[linux]
+install-mise:
+    #!/usr/bin/env sh
+    sudo install -dm 755 /etc/apt/keyrings
+    curl -fsSL https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg > /dev/null
+    echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch={{ARCHITECTURE}}] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
+    sudo apt update
+    sudo apt install -y mise
+
 
 [linux]
 change-hostname hostname="":
