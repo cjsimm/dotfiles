@@ -2,6 +2,7 @@ bison
 build-essential
 cmake
 curl
+gettext
 git
 gpg
 htop
@@ -15,6 +16,8 @@ libssl-dev
 libxml2-dev
 libxmlsec1-dev
 neofetch
+ninja-build
+unzip
 tk-dev
 tmux
 xz-utils

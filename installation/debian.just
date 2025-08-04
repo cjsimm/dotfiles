@@ -1,8 +1,11 @@
+import '../misc/formatting.just'
+
 DEBIAN_PACKAGE_FILE := source_dir() + "/packages/debian.txt"
 ARCHITECTURE := `dpkg --print-architecture` 
+
 # Install a full developer environment on a debian-based distro
 [linux]
-_install: system-update install-packages install-mise install-docker
+_install: system-update install-packages install-mise install-docker install-neovim
 
     # add any keyrings/custom repositories necessary
 
@@ -15,6 +18,7 @@ _install: system-update install-packages install-mise install-docker
     # macos implementation can be made in the future and not be managed 
     # by brew
 
+# Perform standard debian system package update and upgrade
 [linux]
 system-update:
     #!/usr/bin/env sh
@@ -61,6 +65,26 @@ install-mise:
     echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch={{ARCHITECTURE}}] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
     sudo apt update
     sudo apt install -y mise
+
+# build neovim from source for debian-based systems
+[linux]
+install-neovim:
+    @just divider "Building and Installing Neovim From Source..."
+    echo "cloning into neovim repo..."
+    git clone https://github.com/neovim/neovim
+    # nvim build arg requires different value for amd64
+    if [ "{{ARCHITECTURE}}" = 'amd64' ]; then
+        NVIM_ARCH_BUILD_ARG="x86_64"
+    else
+        NVIM_ARCH_BUILD_ARG={{ARCHITECTURE}}
+    fi
+    echo "architecture flag set to ${NVIM_ARCH_BUILD_ARG}"
+    echo "building neovim from source..."
+    cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
+    cd build && cpack -G DEB && sudo dpkg -i nvim-linux-${NVIM_ARCH_BUILD_ARG}.deb
+    echo "build complete. removing src from system..."
+    cd ../..
+    rm -rf neovim
 
 
 [linux]
