@@ -12,6 +12,7 @@ configure-zshrc-file:
     #!/usr/bin/env sh
     echo >> {{ZSHRC_FILE}}
     just _zsh-eval
+    just _zsh-tab-complete
     just _zsh-alias
     just _zsh-history
     just _zsh-plugins
@@ -36,9 +37,21 @@ _zsh-plugins:
 
 
     
-# Adds eval commands required by packages to the .zshrc file
+# Adds eval commands required by packages to the .zshrc file. This should be factored out so that some kind of starship command takes care of getting this into the zshrc file
 _zsh-eval:
     echo 'eval "$(starship init zsh)"' >> {{ZSHRC_FILE}}
+
+# Enables tab complete and directory cycling in zsh shell
+_zsh-tab-complete:
+    #!/usr/bin/env sh
+    lines=(
+        "autoload -Uz compinit"
+        "compinit"
+    )
+    for line in "${lines[@]}"; do
+        echo "$line" >> {{ZSHRC_FILE}}
+    done
+    source {{ZSHRC_FILE}}
 
 # Adds alias changes appropriate for the zsh config to the .zshrc file
 _zsh-alias:
