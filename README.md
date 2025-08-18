@@ -69,8 +69,9 @@ sudo apt install build-essential -y
 ## Todo
 
 - find out how to handle multiple flavours of linux and package managers
-- Update readme with any linux specific information required
 - docker recommends docccker desktop for wsl
+
+- starship isnt being installed
 
 
 

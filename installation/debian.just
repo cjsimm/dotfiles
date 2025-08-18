@@ -5,7 +5,7 @@ ARCHITECTURE := `dpkg --print-architecture`
 
 # Install a full developer environment on a debian-based distro
 [linux]
-_install: system-update install-packages install-mise install-docker install-neovim install-pastel zsh-setup
+_install: system-update install-packages install-mise install-docker install-neovim install-pastel install-starship zsh-setup
 
 # Perform standard debian system package update and upgrade
 [linux]
@@ -79,6 +79,18 @@ install-pastel:
 	#!/usr/bin/env sh
 	@echo "Installing pastel via cargo..."
 	cargo install pastel
+
+# install nerdfonts
+[linux]
+install-nerdfonts:
+    echo "Installing nerdfonts"
+
+# install starship through the auto-install script
+[linux]
+install-starship:
+    # also need a nerdfont here
+    curl -sS https://starship.rs/install.sh | sh
+
 
 # Download latest versions of zsh and set as default shell
 [linux]
