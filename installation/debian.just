@@ -72,7 +72,7 @@ install-neovim:
 # install pastel (colour picker tool). Managed by cargo
 [linux]
 install-pastel:
-    @echo "Installing pastel..."
+    @echo "Installing pastel via cargo..."
     cargo install pastel
 
 # Download latest versions of zsh and set as default shell
