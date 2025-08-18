@@ -5,7 +5,7 @@ ARCHITECTURE := `dpkg --print-architecture`
 
 # Install a full developer environment on a debian-based distro
 [linux]
-_install: system-update install-packages install-mise install-docker install-neovim
+_install: system-update install-packages zsh-setup install-mise install-docker install-neovim install-pastel
 
 # Perform standard debian system package update and upgrade
 [linux]
@@ -68,6 +68,12 @@ install-neovim:
     echo "build complete. removing src from system..."
     cd ../..
     rm -rf neovim
+
+# install pastel (colour picker tool). Managed by cargo
+[linux]
+install-pastel:
+    @echo "Installing pastel..."
+    cargo install pastel
 
 # Download latest versions of zsh and set as default shell
 [linux]
