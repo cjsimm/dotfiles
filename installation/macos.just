@@ -20,12 +20,12 @@ install-homebrew:
 
 # Install taps defined in packages/taps.txt for use with brew
 install-taps:
-    #!/usr/bin/env sh
-    echo 'Adding homebrew taps listed in taps.txt...'
-    while read -r tap; do
-        brew tap "$tap"
-        echo "Added '$tap' tap."
-    done < {{BREW_TAP_FILE}}
+	#!/usr/bin/env sh
+	echo 'Adding homebrew taps listed in taps.txt...'
+	while read -r tap; do
+		brew tap "$tap"
+		echo "Added '$tap' tap."
+	done < {{BREW_TAP_FILE}}
 
 # Install brew packages defined in packages/brew.txt
 [macos]
@@ -44,39 +44,39 @@ install-packages:
 
 # Set path for any packages that require overriding native macos versions
 _set-path:
-    #!/usr/bin/env sh
-    lines=(
-        '# PATH'
-        'export PATH="/opt/homebrew/opt/bison/bin:$PATH"'
-    )
-    for line in "${lines[@]}"; do
-        echo "$line" >> {{ZSHRC_FILE}}
-    done
-    source {{ZSHRC_FILE}}
+	#!/usr/bin/env sh
+	lines=(
+		'# PATH'
+		'export PATH="/opt/homebrew/opt/bison/bin:$PATH"'
+	)
+	for line in "${lines[@]}"; do
+		echo "$line" >> {{ZSHRC_FILE}}
+	done
+	source {{ZSHRC_FILE}}
 
 # Install brew casks defined in packages/brew_cask.txt
 install-casks:
-    #!/usr/bin/env sh
-    echo 'Installing applications listed in cask.txt file...'
-    while read -r cask; do
-        echo "installing $cask..."
-        brew install --cask "$cask"
-    done < {{BREW_CASK_FILE}}
+	#!/usr/bin/env sh
+	echo 'Installing applications listed in cask.txt file...'
+	while read -r cask; do
+		echo "installing $cask..."
+		brew install --cask "$cask"
+	done < {{BREW_CASK_FILE}}
 
 [macos]
 change-hostname hostname="":
-    #!/usr/bin/env sh
-    if [ -z "{{hostname}}" ]; then
-        echo "Failed to change hostname. Add a hostname argument."
-        exit 1
-    fi
-    echo "Changing hostname on system to '{{hostname}}'"
-    system_names=(
-        ComputerName
-        HostName
-        LocalHostName
-    )
-    for name in "${system_names[@]}"; do
-        sudo scutil --set "$name" {{hostname}}
-    done
-    sudo dscacheutil -flushcache
+	#!/usr/bin/env sh
+	if [ -z "{{hostname}}" ]; then
+		echo "Failed to change hostname. Add a hostname argument."
+		exit 1
+	fi
+	echo "Changing hostname on system to '{{hostname}}'"
+	system_names=(
+		ComputerName
+		HostName
+		LocalHostName
+	)
+	for name in "${system_names[@]}"; do
+		sudo scutil --set "$name" {{hostname}}
+	done
+	sudo dscacheutil -flushcache
