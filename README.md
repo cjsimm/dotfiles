@@ -70,18 +70,12 @@ sudo apt install build-essential -y
 
 - find out how to handle multiple flavours of linux and package managers
 - Update readme with any linux specific information required
+- docker recommends docccker desktop for wsl
+
+
 
 ## Linux specifc implementations
 
-- _install (master command in debian.just) 
-
-- configure-rc-file (can be factored out into own file)
-    - add command that downloads or updates zsh
-    - add command that ensure zsh is the default shell
-
-- change-hostname
-
-- install docker via a build from source
 
 ## Notes
 
