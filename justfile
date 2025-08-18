@@ -1,3 +1,5 @@
+ZSHRC_FILE := home_dir() + "/.zshrc"
+
 import 'installation/macos.just'
 import 'installation/debian.just'
 import 'installation/shell.just'

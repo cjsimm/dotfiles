@@ -2,7 +2,6 @@ HEAD_FORMULAE := "neovim"
 BREW_TAP_FILE := source_dir() + "/packages/taps.txt"
 BREW_PACKAGE_FILE := source_dir() + "/packages/brew.txt"
 BREW_CASK_FILE := source_dir() + "/packages/brew_cask.txt"
-ZSHRC_FILE := home_dir() + "/.zshrc"
 
 
 # Install a full developer environment on MacOS
@@ -29,6 +28,7 @@ install-taps:
     done < {{BREW_TAP_FILE}}
 
 # Install brew packages defined in packages/brew.txt
+[macos]
 install-packages:
     #!/usr/bin/env sh
     echo 'Installing brew packages listed in brew.txt...'
