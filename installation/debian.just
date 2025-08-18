@@ -5,7 +5,7 @@ ARCHITECTURE := `dpkg --print-architecture`
 
 # Install a full developer environment on a debian-based distro
 [linux]
-_install: system-update install-packages zsh-setup install-mise install-docker install-neovim install-pastel
+_install: system-update install-packages install-mise install-docker install-neovim install-pastel zsh-setup
 
 # Perform standard debian system package update and upgrade
 [linux]
@@ -34,12 +34,6 @@ install-packages:
         fi
     done < {{DEBIAN_PACKAGE_FILE}}
 
-# Install docker engine and related packages via the docker install convenience script
-[linux]
-install-docker:
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
-
 # Install mise for debian based system via non-official apt repo signed with mise gpgp key
 [linux]
 install-mise:
@@ -48,6 +42,12 @@ install-mise:
     echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch={{ARCHITECTURE}}] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
     sudo apt update
     sudo apt install -y mise
+
+# Install docker engine and related packages via the docker install convenience script
+[linux]
+install-docker:
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
 
 # build neovim from source for debian-based systems
 [linux]
@@ -80,8 +80,12 @@ install-pastel:
 zsh-setup:
     echo "Setting zsh as default shell"
     chsh -s $(which zsh)
-    just configure-zshrc-file
 
+#################################
+# Debian-based commands not included in the _install recipe
+#################################
+
+# Change the hostname of the debian system
 [linux]
 change-hostname hostname="":
     #!/usr/bin/env sh
@@ -106,5 +110,10 @@ change-hostname hostname="":
         echo "You may need to manually verify /etc/hosts if issues arise, though 'hostnamectl' usually manages the primary system hostname."
     fi
 
+# Install alacritty. Included in a separate command as not useful for a headless setup
+[linux]
+install-alacritty:
+    apt install cmake g++ pkg-config libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+    cargo install alacritty
         
 
