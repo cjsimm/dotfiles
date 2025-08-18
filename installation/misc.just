@@ -3,7 +3,7 @@ ZSHRC_FILE := home_dir() + "/.zshrc"
 
 # Install the global tools defined in dotfiles mise.toml config file
 install-globals:
-    mise install --force --verbose
+    source {{ZSHRC_FILE}} && mise install --force --verbose
 
 # Pull the alacritty themes to support alacritty theme setup
 install-alacritty-themes:
