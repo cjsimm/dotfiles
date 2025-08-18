@@ -11,7 +11,7 @@ configure-zshrc-file:
 # Adds zshrc plugin initialization to the .zshrc file
 [linux]
 _zsh-plugins:
-	#!/usr/bin/env sh
+	#!/usr/bin/env zsh
 	echo "Adding configuration for zsh plugins to source file..."
 	lines=(
 		"source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -25,7 +25,7 @@ _zsh-plugins:
 # Adds zshrc plugin initialization to the .zshrc file
 [macos]
 _zsh-plugins:
-	#!/usr/bin/env sh
+	#!/usr/bin/env zsh
 	echo "Adding configuration for zsh plugins to source file..."
 	lines=(
 		"source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -38,7 +38,7 @@ _zsh-plugins:
 	
 # Adds eval commands required by packages to the .zshrc file. This should be factored out so that some kind of starship command takes care of getting this into the zshrc file
 _zsh-eval:
-	#!/usr/bin/env sh
+	#!/usr/bin/env zsh
 	echo "Adding binary evaluations to source file..."
 	echo 'eval "$(starship init zsh)"' >> {{ZSHRC_FILE}}
 	echo 'eval "$(mise activate zsh)"' >> {{ZSHRC_FILE}}
@@ -46,7 +46,7 @@ _zsh-eval:
 
 # Enables tab complete and directory cycling in zsh shell
 _zsh-tab-complete:
-	#!/usr/bin/env sh
+	#!/usr/bin/env zsh
 	echo "Enabling tab-complete..."
 	lines=(
 		"autoload -Uz compinit"
@@ -59,7 +59,7 @@ _zsh-tab-complete:
 
 # Adds alias changes appropriate for the zsh config to the .zshrc file
 _zsh-alias:
-	#!/usr/bin/env sh
+	#!/usr/bin/env zsh
 	echo "Setting aliases in .zshrc file..."
 	lines=(
 		"# Aliases"
@@ -78,7 +78,7 @@ _zsh-alias:
 	
 # Adds configuration into .zshrc to use historical commands when scrolling up and down through suggested commands
 _zsh-history:
-	#!/usr/bin/env sh
+	#!/usr/bin/env zsh
 	echo "Enabling zsh history on arrow u/d..."
 	HOME="/Users/$(whoami)"
 	lines=(
