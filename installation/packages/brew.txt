@@ -13,6 +13,7 @@ mise
 ncspot
 neofetch
 neovim
+pastel
 ripgrep
 starship
 syncthing
