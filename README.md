@@ -72,6 +72,7 @@ sudo apt install build-essential -y
 - docker recommends docccker desktop for wsl
 
 - starship isnt being installed
+- probably need to direct the user to install nerdfont on wsl 
 
 
 
