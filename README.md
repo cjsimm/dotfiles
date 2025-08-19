@@ -73,6 +73,7 @@ sudo apt install build-essential -y
 
 - starship isnt being installed
 - probably need to direct the user to install nerdfont on wsl 
+- need to remove get_docker.sh at end of docker install
 
 
 
