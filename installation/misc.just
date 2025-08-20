@@ -1,6 +1,6 @@
 # Install the global tools defined in dotfiles mise.toml config file
 install-globals:
-	shell := ["zsh", "-cu"]
+	#!/usr/bin/env zsh
 	mise activate
 	source {{ZSHRC_FILE}} && mise install --force --verbose
 

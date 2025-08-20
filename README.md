@@ -72,6 +72,8 @@ sudo apt install build-essential -y
 - docker recommends docccker desktop for wsl
 - probably need to direct the user to install nerdfont on wsl 
 
+- rust needs some kind of .zshrc command appended. rustup on the initial install adds it to the bashrc instead
+
 
 
 ## Linux specifc implementations
