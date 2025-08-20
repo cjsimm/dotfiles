@@ -14,7 +14,7 @@ _zsh-plugins:
 	#!/usr/bin/env zsh
 	echo "Adding configuration for zsh plugins to source file..."
 	lines=(
-		"source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+		"source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 		"source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 	)
 	for line in "${lines[@]}"; do
