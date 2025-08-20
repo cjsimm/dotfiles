@@ -2,7 +2,7 @@
 install-globals:
 	#!/usr/bin/env zsh
 	mise activate
-	source {{ZSHRC_FILE}} && mise install --force --verbose
+	source {{ZSHRC_FILE}} && mise install
 
 # Pull the alacritty themes to support alacritty theme setup
 install-alacritty-themes:
