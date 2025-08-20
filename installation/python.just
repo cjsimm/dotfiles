@@ -3,6 +3,7 @@ PYTHON_PACKAGE_FILE := source_dir() + "/packages/python.txt"
 # Install common python packages for the global python installation
 install-pypi:
 	#!/usr/bin/env zsh
+    pip install --upgrade pip
 	echo 'Installing python packages listed in python.txt...'
 	while read -r package; do
 	pip install "$package"
