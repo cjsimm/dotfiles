@@ -2,7 +2,7 @@ PYTHON_PACKAGE_FILE := source_dir() + "packages/python.txt"
 
 # Install common python packages for the global python installation
 install-pypi:
-	source {{ZSHRC_FILE}}
+	#!/usr/bin/env zsh
 	echo 'Installing python packages listed in python.txt...'
 	while read -r package; do
 	pip install "$package"
