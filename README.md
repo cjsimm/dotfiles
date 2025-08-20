@@ -70,10 +70,7 @@ sudo apt install build-essential -y
 
 - find out how to handle multiple flavours of linux and package managers
 - docker recommends docccker desktop for wsl
-
-- starship isnt being installed
 - probably need to direct the user to install nerdfont on wsl 
-- need to remove get_docker.sh at end of docker install
 
 
 
