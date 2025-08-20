@@ -109,6 +109,7 @@ zsh-setup:
 	#!/usr/bin/env sh
 	echo "Setting zsh as default shell"
 	chsh -s $(which zsh)
+	echo . "$HOME/.cargo/env" >> {{ZSHRC_FILE}}
 
 #################################
 # Debian-based commands not included in the _install recipe
