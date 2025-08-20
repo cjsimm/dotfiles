@@ -6,7 +6,6 @@ configure-zshrc-file:
 	just _zsh-alias
 	just _zsh-history
 	just _zsh-plugins
-	source {{ZSHRC_FILE}}
 
 # Adds zshrc plugin initialization to the .zshrc file
 [linux]
