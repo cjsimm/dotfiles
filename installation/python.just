@@ -1,4 +1,4 @@
-PYTHON_PACKAGE_FILE := source_dir() + "packages/python.txt"
+PYTHON_PACKAGE_FILE := source_dir() + "/packages/python.txt"
 
 # Install common python packages for the global python installation
 install-pypi:
