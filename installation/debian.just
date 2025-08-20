@@ -5,7 +5,7 @@ ARCHITECTURE := `dpkg --print-architecture`
 
 # Install a full developer environment on a debian-based distro
 [linux]
-_install: system-update install-packages install-mise install-docker install-neovim install-pastel install-starship zsh-setup
+_install: system-update install-packages install-mise install-docker install-neovim install-pastel install-eza install-starship zsh-setup
 
 # Perform standard debian system package update and upgrade
 [linux]
@@ -80,6 +80,16 @@ install-pastel:
 	#!/usr/bin/env sh
 	@echo "Installing pastel via cargo..."
 	cargo install pastel
+
+#install the eza command line tool (ls replacement)
+[linux]
+install-eza:
+	sudo mkdir -p /etc/apt/keyrings
+	wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+	echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+	sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+	sudo apt update
+	sudo apt install -y eza
 
 # install nerdfonts
 [linux]
