@@ -51,6 +51,7 @@ install-docker:
 	#!/usr/bin/env sh
 	curl -fsSL https://get.docker.com -o get-docker.sh
 	sudo sh get-docker.sh
+    rm get-docker.sh
 
 # build neovim from source for debian-based systems
 [linux]
