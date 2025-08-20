@@ -1,3 +1,4 @@
+bat
 bison
 build-essential
 cmake
