@@ -57,7 +57,7 @@ install-docker:
 [linux]
 install-neovim:
 	#!/usr/bin/env sh
-	@just divider "Building and Installing Neovim From Source..."
+	just divider "Building and Installing Neovim From Source..."
 	echo "cloning into neovim repo..."
 	git clone https://github.com/neovim/neovim
 	# nvim build arg requires different value for amd64
@@ -78,7 +78,7 @@ install-neovim:
 [linux]
 install-pastel:
 	#!/usr/bin/env sh
-	@echo "Installing pastel via cargo..."
+	echo "Installing pastel via cargo..."
 	cargo install pastel
 
 #install the eza command line tool (ls replacement)
@@ -108,7 +108,7 @@ install-starship:
 zsh-setup:
 	#!/usr/bin/env sh
 	echo "Setting zsh as default shell"
-	chsh -s $(which zsh)
+	sudo chsh -s $(which zsh)
 	echo . "$HOME/.cargo/env" >> {{ZSHRC_FILE}}
 
 #################################
