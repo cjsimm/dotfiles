@@ -1,8 +1,10 @@
+apt-utils
 bat
 bison
 build-essential
 cmake
 curl
+file
 gettext
 git
 gpg
@@ -19,8 +21,10 @@ libxmlsec1-dev
 neofetch
 ninja-build
 unzip
+sudo
 tk-dev
 tmux
+wget
 xz-utils
 zlib1g-dev
 zsh
