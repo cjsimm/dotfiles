@@ -7,6 +7,11 @@ install-globals:
 
 # Pull the alacritty themes to support alacritty theme setup
 install-alacritty-themes:
+	#!/usr/bin/env zsh
+	if ! command -v alacritty &> /dev/null; then
+		echo "Alacritty is not installed. Skipping theme installation."
+		exit 0
+	fi
 	echo "Installing a selection of open source alacritty themes..."
 	THEME_DIR="$HOME/.config/alacritty/themes"
 	mkdir -p "$THEME_DIR"
