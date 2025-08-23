@@ -12,13 +12,13 @@ _install: system-update install-packages install-mise install-docker install-neo
 system-update:
 	#!/usr/bin/env sh
 	echo "Updating package lists..."
-	@sudo apt update
+	sudo apt update
 	echo "Upgrading installed packages..."
-	@sudo apt upgrade -y
+	sudo apt upgrade -y
 	echo "Removing unneeded packages..."
-	@sudo apt autoremove -y
+	sudo apt autoremove -y
 	echo "Cleaning up cached package files..."
-	@sudo apt clean
+	sudo apt clean
 	echo "System update complete!"
 
 # Install packages defined in packages/debian.txt
@@ -100,7 +100,7 @@ install-nerdfonts:
 [linux]
 install-starship:
     # also need a nerdfont here
-    curl -sS https://starship.rs/install.sh | sh
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
 
 
 # Download latest versions of zsh and set as default shell
