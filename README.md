@@ -25,7 +25,6 @@ sudo apt install build-essential -y
 
 ## Todo
 
-- implement an ubuntu/linux version of the installation flow, refactoring if required
 - set tmux text bar to use a lighter colour to offset the blue
 - introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
@@ -34,17 +33,12 @@ sudo apt install build-essential -y
     - font doesnt show up
     - terminal is set to tmux instead of alacritty or Terminal: /dev/ttys004 if outside tmux
 - consider swapping python lanfuage server to ruff instead of pyright
-- add beancount to software list
 - add shbang universal snippet to all file editing, or .just, .sh files
 - add nvim keybind that adds merge conflict cycling, preferebly mixed with LSP error/issue cycling
+- telescope shows .git folder - recently made a change to get . files into the finder, but ive brought too much in
 
-*Big todo: * Implement the dotfile setup for wsl/debian
+## Outstanding issues (MacOS)
 
-
-## Outstanding issues
-
-- rust installer isnt auto installable
-- the env doesnt reload after rust is installed so that cargo is useable
 - the install packages loop seems to jump over to other iteration before the command has finished working (macos)
 - ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
     - this seems to be a problem in an underlying library that is quite hard to fix
@@ -69,16 +63,10 @@ sudo apt install build-essential -y
 ## Todo
 
 - find out how to handle multiple flavours of linux and package managers
-- docker recommends docccker desktop for wsl
-- probably need to direct the user to install nerdfont on wsl 
+- wsl linux improvements
+    - docker recommends docker desktop for wsl
+    - probably need to direct the user to install nerdfont on wsl 
 
-- rust needs some kind of .zshrc command appended. rustup on the initial install adds it to the bashrc instead
-
-
-
-## Linux specifc implementations
-
-
-## Notes
-
-- just implement debian for now, and figure out how to refactor for other flavours and package managers at a later date
+- .zhistory doesnt get made - it's pointing to a folder that doesnt exist in 
+the docker image /Users/devuser/.zsh_history
+why? on macos it lives in the home directory
