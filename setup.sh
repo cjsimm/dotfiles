@@ -8,7 +8,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 echo 'Installing just commandline tool to enable further execution'
 cargo install just
 echo "##################################"
-echo "System ready for further installation. Run \`just installation\` to proceed with a standard developer installation for your system. Execute \`just -l\` to see further recipe options"
+echo "System ready for further installation. Run \`just setup-dev\` to proceed with a standard developer installation for your system. Execute \`just -l\` to see further recipe options"
 echo "##################################"
 if [[ "$SHELL" == *"zsh"* ]]; then
     echo "Please run \`source ~/.zshrc\` before continuing"
