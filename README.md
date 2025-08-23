@@ -37,6 +37,11 @@ sudo apt install build-essential -y
 - add nvim keybind that adds merge conflict cycling, preferebly mixed with LSP error/issue cycling
 - telescope shows .git folder - recently made a change to get . files into the finder, but ive brought too much in
 
+### Neovim
+
+- add a chat history for code companion
+- get the default llm moved to gemini on code companion 
+
 ## Outstanding issues (MacOS)
 
 - the install packages loop seems to jump over to other iteration before the command has finished working (macos)
