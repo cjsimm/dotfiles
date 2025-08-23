@@ -1,5 +1,8 @@
+ZSHRC_FILE := home_dir() + "/.zshrc"
+
 import 'installation/macos.just'
 import 'installation/debian.just'
+import 'installation/shell.just'
 import 'installation/misc.just'
 import 'installation/python.just'
 import 'misc/utils.just'
@@ -18,13 +21,12 @@ setup-dev:
     just symlink-config -f
     just divider "Installing packages, toolchains, and applications"
     just installation
-    just divider "System Settings"
+    just divider "System Setting Configuration"
     just change-hostname hostname="$hostname"
-    just configure-rc-file
     just install-alacritty-themes
     just divider "Setup Complete!"
-    echo "call the ssh-keygen command to gen keys for ssh connections!" 
+    echo "call the `ssh-keygen` command to gen keys for ssh connections!" 
 
 # Install packages, toolchains, and applications for development
-installation: _install install-globals install-pypi
+installation: _install configure-zshrc-file install-globals install-pypi
 

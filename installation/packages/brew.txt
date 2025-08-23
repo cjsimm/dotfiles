@@ -1,7 +1,9 @@
 bison
 cat
+colima
 curl
 docker
+docker-compose
 eza
 ffmpeg
 git

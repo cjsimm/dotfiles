@@ -15,27 +15,31 @@ executing `setup.sh` on your machine. This will rustup your system, install `jus
 
 Run `xcode-select --install` in your terminal to get access to a version of git. It's recommended to install all offered toolchains with this command to act as system fallbacks. Brew will install and manage newer versions of many of these tools (including git). Brew-managed versions will be found and invoked first when called on the command-line.
 
+## Debian
+
+Run the following commands before executing setup.sh:
+```shell
+sudo apt update
+sudo apt install build-essential -y
+```
+
 ## Todo
 
 - set tmux text bar to use a lighter colour to offset the blue
 - introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
 - adapt gitconfig file with some minor changes
 - store api keys in the apple keychain and pull them from there during shell init
-- add stylua to the install list for lua linting. integrate it with the nvim lua lsp on save
 - get font and other additional information into neofetch correctly 
     - font doesnt show up
     - terminal is set to tmux instead of alacritty or Terminal: /dev/ttys004 if outside tmux
 - consider swapping python lanfuage server to ruff instead of pyright
-- add beancount to software list
+- add shbang universal snippet to all file editing, or .just, .sh files
+- add nvim keybind that adds merge conflict cycling, preferebly mixed with LSP error/issue cycling
+- telescope shows .git folder - recently made a change to get . files into the finder, but ive brought too much in
 
-*Big todo: * Implement the dotfile setup for wsl/debian
+## Outstanding issues (MacOS)
 
-
-## Outstanding issues
-
-- rust installer isnt auto installable
-- the env doesnt reload after rust is installed so that cargo is useable
-- the install packages loop seems to jump over to other iteration before the command has finished working
+- the install packages loop seems to jump over to other iteration before the command has finished working (macos)
 - ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
     - this seems to be a problem in an underlying library that is quite hard to fix
 - dont know how to use ncspot or how the keybinds work. figure them out
@@ -47,9 +51,22 @@ Run `xcode-select --install` in your terminal to get access to a version of git.
     - something to do with neofetch not being able to read the terminal through macos
     - neofetch was discontinued, go looking for a new program instead maybe that forks it
     
-- ssh keys are removed from the agent on restart
+- ssh keys are removed from the agent on restart (macos)
     - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
 
 ## Installation automation improvements
 
 - Pull macos settings from somewhere (first research whether theyre persisted over icloud)
+
+## Linux Setup Feature
+
+## Todo
+
+- find out how to handle multiple flavours of linux and package managers
+- wsl linux improvements
+    - docker recommends docker desktop for wsl
+    - probably need to direct the user to install nerdfont on wsl 
+
+- .zhistory doesnt get made - it's pointing to a folder that doesnt exist in 
+the docker image /Users/devuser/.zsh_history
+why? on macos it lives in the home directory
