@@ -5,5 +5,4 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      # Mount your whole dotfiles repo
       - ~/dotfiles:/home/devuser/dotfiles
