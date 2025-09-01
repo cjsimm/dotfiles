@@ -17,10 +17,11 @@ neofetch
 neovim
 pastel
 ripgrep
-tealdeer
 starship
 syncthing
+tealdeer
 tmux
+uv
 wget
 zsh-autosuggestions
 zsh-syntax-highlighting
