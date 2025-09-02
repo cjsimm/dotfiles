@@ -69,6 +69,7 @@ _zsh-alias:
 		"alias lg='lazygit'"
 		"alias venv-new='python -m venv .venv'"
 		"alias venv='source .venv/bin/activate'"
+		"alias jl='jupyter lab --ContentsManager.allow_hidden=True'"
 	)
 	for line in "${lines[@]}"; do
 		echo "$line" >> {{ZSHRC_FILE}}
