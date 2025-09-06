@@ -8,6 +8,7 @@ eza
 ffmpeg
 git
 gpg
+httpie
 just
 lazygit
 mackup
