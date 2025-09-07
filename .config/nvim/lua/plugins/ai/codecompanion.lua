@@ -4,25 +4,28 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
     },
-    opts = {
-        --Define which model to be used for each functionality
-        strategies = {
-            chat = {
-                adapter = "gemini",
-            },
-            inline = {
-                adapter = "gemini",
-            },
-            cmd = {
-                adapter = "gemini",
-            },
-        },
-        opts = {
-            log_level = "DEBUG",
-        },
-    },
     config = function()
-        require("codecompanion").setup({})
+        -- default adapter with no token cost for all behaviours by default
+        local gemini_default = {
+            name = "gemini",
+            model = "gemini-2.5-flash",
+        }
+        require("codecompanion").setup({
+            strategies = {
+                chat = {
+                    adapter = gemini_default
+                },
+                inline = {
+                    adapter = gemini_default
+                },
+                cmd = {
+                    adapter = gemini_default
+                },
+            },
+            opts = {
+                log_level = "DEBUG",
+            },
+        })
         vim.keymap.set(
             { "n", "v" },
             "<leader>a",
