@@ -5,3 +5,9 @@ go = "1.20"
 lua = "latest"
 stylua = "latest"
 uv = "latest"
+
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = []
+# Mise defaults to UV .venv if it's present
+python.uv_venv_auto = true

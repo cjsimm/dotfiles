@@ -8,6 +8,7 @@ eza
 ffmpeg
 git
 gpg
+httpie
 just
 lazygit
 mackup
@@ -17,10 +18,11 @@ neofetch
 neovim
 pastel
 ripgrep
-tealdeer
 starship
 syncthing
+tealdeer
 tmux
+uv
 wget
 zsh-autosuggestions
 zsh-syntax-highlighting

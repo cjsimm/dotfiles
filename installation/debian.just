@@ -5,7 +5,7 @@ ARCHITECTURE := `dpkg --print-architecture`
 
 # Install a full developer environment on a debian-based distro
 [linux]
-_install: system-update install-packages install-mise install-docker install-neovim install-pastel install-eza install-starship zsh-setup
+_install: system-update install-packages install-mise install-docker install-neovim install-pastel install-eza install-httpie install-starship zsh-setup
 
 # Perform standard debian system package update and upgrade
 [linux]
@@ -52,6 +52,15 @@ install-docker:
 	curl -fsSL https://get.docker.com -o get-docker.sh
 	sudo sh get-docker.sh
 	rm get-docker.sh
+
+# Install HTTPie for easy CLI API calls
+[linux]
+install-httpie:
+	#!/usr/bin/env sh
+	curl -SsL https://packages.httpie.io/deb/KEY.gpg | sudo gpg --dearmor -o /usr/share/keyrings/httpie.gpg
+	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/httpie.gpg] https://packages.httpie.io/deb ./" | sudo tee /etc/apt/sources.list.d/httpie.list > /dev/null
+	sudo apt update
+	sudo apt install httpie
 
 # build neovim from source for debian-based systems
 [linux]
