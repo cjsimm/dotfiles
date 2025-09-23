@@ -1,0 +1,7 @@
+[user]
+	name = cjsimm
+	email = 14805972+cjsimm@users.noreply.github.com
+[core]
+    editor = nvim
+[push]
+    autoSetupRemote = true
