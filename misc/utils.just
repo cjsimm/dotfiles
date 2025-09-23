@@ -46,3 +46,8 @@ ssh-keygen:
     rm "$HOME/.ssh/$host_alias.pub"
     echo "Public key deleted from the system."
     echo "Setup complete.'$host_alias' key-pair genned."
+
+# Create a standard Python pytest test directory
+python-test-directory:
+	mkdir -p tests/{unit,integration} && touch tests/{__init__.py,conftest.py} tests/unit/{__init__.py,conftest.py} tests/integration/{__init__.py,conftest.py}
+
