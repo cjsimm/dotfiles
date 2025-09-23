@@ -1,7 +1,7 @@
 import '../misc/formatting.just'
 
 DEBIAN_PACKAGE_FILE := source_dir() + "/packages/debian.txt"
-ARCHITECTURE := `dpkg --print-architecture` 
+ARCHITECTURE := if os() == "linux" { `dpkg --print-architecture` } else { `uname -m` }
 
 # Install a full developer environment on a debian-based distro
 [linux]
