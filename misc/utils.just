@@ -52,7 +52,7 @@ python-test-directory:
 	mkdir -p tests/{unit,integration} && touch tests/{__init__.py,conftest.py} tests/unit/{__init__.py,conftest.py} tests/integration/{__init__.py,conftest.py}
 
 # Pull/push obsidian vault to version control
-obsidian-sync:
+obsidian-backup:
 	#!/usr/bin/env sh
 	cd ~/obsidian
 	git pull
