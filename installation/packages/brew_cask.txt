@@ -7,3 +7,4 @@ firefox
 font-fira-code-nerd-font
 obsidian
 spotify
+stremio
