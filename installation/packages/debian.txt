@@ -22,6 +22,7 @@ neofetch
 ninja-build
 unzip
 sudo
+tealdeer
 tk-dev
 tmux
 wget
