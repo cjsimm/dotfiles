@@ -16,6 +16,7 @@ mise
 ncspot
 neofetch
 neovim
+ngrok
 pastel
 ripgrep
 starship
