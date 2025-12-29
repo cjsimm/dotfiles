@@ -20,6 +20,7 @@ libxml2-dev
 libxmlsec1-dev
 neofetch
 ninja-build
+proton-vpn-cli
 unzip
 sudo
 tealdeer
