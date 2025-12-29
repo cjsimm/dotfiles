@@ -6,4 +6,5 @@ eloston-chromium
 firefox
 font-fira-code-nerd-font
 obsidian
+protonvpn
 spotify
