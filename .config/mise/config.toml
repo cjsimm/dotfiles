@@ -1,9 +1,10 @@
 [tools]
 node = "latest"
 python = "latest"
-go = "1.20"
+go = "1.20" # final version before telemetry
 lua = "latest"
 stylua = "latest"
+opencode = "latest"
 
 [settings]
 experimental = true
