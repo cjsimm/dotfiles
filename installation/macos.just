@@ -8,9 +8,9 @@ BREW_CASK_FILE := source_dir() + "/packages/brew_cask.txt"
 [macos]
 _install: install-homebrew install-taps install-packages install-casks link-compose-binary
 
-# make symboilic link form docker-compsoe binary to docker plugins folder to get 'docker compose' command working on MacOS without the hyphen
+# make symboilic link form docker-compose binary to docker plugins folder to get 'docker compose' command working on MacOS without the hyphen
 link-compose-binary:
-    #!/usr/bin/env sh
+	#!/usr/bin/env sh
 	mkdir -p ~/.docker/cli-plugins/
 	ln $(which docker-compose) ~/.docker/cli-plugins/
 
