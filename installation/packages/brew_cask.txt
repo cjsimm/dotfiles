@@ -8,3 +8,4 @@ font-fira-code-nerd-font
 obsidian
 protonvpn
 spotify
+stremio@beta
