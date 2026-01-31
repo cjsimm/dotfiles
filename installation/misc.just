@@ -16,3 +16,10 @@ install-alacritty-themes:
 	THEME_DIR="$HOME/.config/alacritty/themes"
 	mkdir -p "$THEME_DIR"
 	git clone https://github.com/alacritty/alacritty-theme.git "$THEME_DIR"
+
+# Install bulletty rss feed
+install-bulletty:
+	#!/usr/bin/env zsh
+	# IMPROVEMENT - Get my feeds into a single file and also import them
+	cargo install bulletty
+
