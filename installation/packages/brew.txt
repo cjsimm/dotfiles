@@ -9,6 +9,7 @@ ffmpeg
 git
 gpg
 hcloud
+htop
 httpie
 just
 lazygit
