@@ -71,7 +71,7 @@ _zsh-alias:
 		"alias venv='source .venv/bin/activate'"
 		"alias jl='jupyter lab --ContentsManager.allow_hidden=True'"
 		"alias justdot='just --justfile ~/dotfiles/justfile --working directory .'"
-		"alias rss='bulletty'
+		"alias rss='bulletty'"
 	)
 	for line in "${lines[@]}"; do
 		echo "$line" >> {{ZSHRC_FILE}}
