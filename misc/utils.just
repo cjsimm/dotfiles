@@ -24,7 +24,7 @@ ssh-keygen:
     echo "Q. What is the username assigned to this key?: "
     read -r user_name
 
-    ssh-keygen -t rsa -b 4096 -f "$HOME/.ssh/$host_alias" -N ""
+    ssh-keygen -t ed25519 -f "$HOME/.ssh/$host_alias" -N ""
 
     {
       echo ""
