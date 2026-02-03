@@ -2,6 +2,7 @@ alacritty
 anki
 calibre
 discord
+gcloud-cli
 eloston-chromium
 firefox
 font-fira-code-nerd-font
