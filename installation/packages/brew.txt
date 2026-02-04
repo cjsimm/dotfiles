@@ -1,6 +1,5 @@
 bison
 cat
-codex
 colima
 curl
 docker

@@ -1,6 +1,7 @@
 alacritty
 anki
 calibre
+codex
 discord
 gcloud-cli
 eloston-chromium
