@@ -70,7 +70,7 @@ _zsh-alias:
 		"alias venv-new='python -m venv .venv'"
 		"alias venv='source .venv/bin/activate'"
 		"alias jl='jupyter lab --ContentsManager.allow_hidden=True'"
-		"alias justdot='just --justfile ~/dotfiles/justfile --working directory .'"
+		"alias justdot='just --justfile ~/dotfiles/justfile --working-directory .'"
 		"alias rss='bulletty'"
 	)
 	for line in "${lines[@]}"; do
