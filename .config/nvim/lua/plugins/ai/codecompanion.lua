@@ -2,16 +2,17 @@ return {
     "olimorris/codecompanion.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
+        'nvim-treesitter/nvim-treesitter',
     },
     config = function()
         -- default adapter with no token cost for all behaviours by default
         local gemini_default = {
             name = "gemini",
             model = "gemini-2.5-flash",
+            thinkingLevel = "none"
         }
         require("codecompanion").setup({
-            strategies = {
+            interactions = {
                 chat = {
                     adapter = gemini_default
                 },
