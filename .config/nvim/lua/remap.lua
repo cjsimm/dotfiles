@@ -2,7 +2,14 @@ vim.g.mapleader = " "
 ------------------------------------------------------
 --- Normal Mode
 ------------------------------------------------------
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex) -- open directory for currently open file ( p[roject]v[iew] )
+vim.keymap.set("n", "<leader>pv", function()
+    local dir = vim.fn.expand("%:p:h")
+    if dir == "" then
+        dir = vim.fn.getcwd()
+    end
+
+    vim.cmd.Ex(dir)
+end, { desc = "Open buffer directory" })
 -- always center cursor in middle of screen on page jumps
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
