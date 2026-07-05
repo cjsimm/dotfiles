@@ -1,0 +1,25 @@
+return {}
+-- require("rose-pine").setup({
+--     variant = "dawn",
+--     styles = {
+--         transparency = false,
+--         italic = false,
+--         bold = true,
+--     },
+--     palette = {
+--         dawn = {
+--             base = "#1f1d2e",
+--             surface = "#26233a",
+--             overlay = "#312f46",
+--             muted = "#6e6a86",
+--             subtle = "#908caa",
+--         },
+--     },
+--     highlight_groups = {
+--         Normal = { bg = "#1f1d2e" },
+--         NormalNC = { bg = "#1f1d2e" },
+--         SignColumn = { bg = "#1f1d2e" },
+--         EndOfBuffer = { fg = "#1f1d2e" },
+--     },
+-- })
+-- vim.cmd("colorscheme rose-pine")
