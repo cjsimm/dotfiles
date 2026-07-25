@@ -37,6 +37,8 @@ sudo apt install build-essential -y
 - add nvim keybind that adds merge conflict cycling, preferebly mixed with LSP error/issue cycling
 - telescope shows .git folder - recently made a change to get . files into the finder, but ive brought too much in
 
+- add hcloud install for for linux machines using a build from source
+
 ### Neovim
 
 - add a chat history for code companion
