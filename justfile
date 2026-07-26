@@ -5,6 +5,7 @@ import 'installation/debian.just'
 import 'installation/shell.just'
 import 'installation/misc.just'
 import 'installation/python.just'
+import 'installation/agents.just'
 import 'misc/utils.just'
 import 'misc/formatting.just'
 
@@ -24,9 +25,10 @@ setup-dev:
     just divider "System Setting Configuration"
     just change-hostname hostname="$hostname"
     just install-alacritty-themes
+    just divider "Agentic Workflow Setup"
+    just setup-agent-workflows
     just divider "Setup Complete!"
     echo "call the `ssh-keygen` command to gen keys for ssh connections!" 
 
 # Install packages, toolchains, and applications for development
 installation: _install configure-zshrc-file install-globals install-pypi
-
