@@ -2,3 +2,8 @@ nextjs-nodejs/
 .ssh/
 github-copilot/
 .config/ncspot/userstate.cbor
+
+# Herdr
+.config/herdr/*
+!.config/herdr/config.toml
+!.config/herdr/KEYBINDINGS.md
