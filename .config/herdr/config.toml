@@ -1,0 +1,48 @@
+onboarding = false
+[[keys.command]]
+key = "ctrl+h"
+
+# Keep the tmux muscle memory while using Herdr's workspace/tab model.
+[keys]
+prefix = "ctrl+space"
+
+# tmux: Alt-Shift-h/l move between windows.  Herdr tabs are the equivalent
+# within a workspace, so retain those direct shortcuts.
+previous_tab = "alt+shift+h"
+next_tab = "alt+shift+l"
+
+# tmux: prefix + _ / | create top/bottom and left/right splits respectively.
+# Herdr matches shifted punctuation by its produced character.
+split_vertical = ["prefix+v", "prefix+|"]
+split_horizontal = ["prefix+minus", "prefix+_"]
+
+# Herdr does not bind this by default; it is the prefix equivalent of tmux's
+# last-pane command. Herdr reserves direct Ctrl-\\ for terminal applications.
+last_pane = "prefix+backslash"
+
+# Ctrl-h/j/k/l are deliberately handled through plugin actions below instead
+# of focus_pane_*. The actions forward the key to Neovim first, and only move
+# the Herdr pane when Neovim is at a split edge.
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "Navigate left (Neovim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "Navigate down (Neovim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "Navigate up (Neovim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "Navigate right (Neovim/Herdr)"
