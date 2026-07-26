@@ -6,6 +6,7 @@ lua = "latest"
 stylua = "latest"
 opencode = "latest"
 fzf = "latest"
+herdr = "latest"
 
 [settings]
 experimental = true
