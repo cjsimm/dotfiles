@@ -14,7 +14,7 @@
 | `Alt-Shift-h/l` | Previous/next Herdr tab. |
 | `Prefix _` | Split top/bottom. |
 | `Prefix |` | Split left/right. |
-| `Prefix \\` | Return to the last focused pane. |
+| `Prefix \` | Return to the last focused pane. |
 
 ### Useful built-ins (not custom-configured)
 
