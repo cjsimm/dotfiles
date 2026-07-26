@@ -1,0 +1,4 @@
+interface:
+  display_name: "Remember Keybindings"
+  short_description: "Recall your developmet workflow keymaps"
+  default_prompt: "Use $remember-keybindings to show my keybindings for the requested tool or plugin."
