@@ -5,6 +5,8 @@ return {
         'nvim-treesitter/nvim-treesitter',
     },
     config = function()
+        local codecompanion_herdr = require("config.codecompanion_herdr")
+
         -- Chat-buffer built-ins (active while the CodeCompanion chat is focused):
         --   <C-s> in Insert mode / <CR> in Normal mode: submit the current message.
         --   q: stop the active request.  ga: choose an adapter/model.
@@ -24,9 +26,11 @@ return {
                             defaults = {
                                 auth_method = "chat-gpt",
                             },
-                            env = {
+                            -- Keep Neovim as Herdr's sole lifecycle authority;
+                            -- the nested Codex ACP process must not claim the pane.
+                            env = codecompanion_herdr.codex_env({
                                 CODEX_PATH = "/opt/homebrew/bin/codex",
-                            },
+                            }),
                         })
                     end,
                 },
@@ -68,6 +72,9 @@ return {
                 log_level = "DEBUG",
             },
         })
+        -- Subscribe after CodeCompanion has defined its adapters and events.
+        codecompanion_herdr.setup()
+
         -- Codex Keymaps
         vim.keymap.set(
             { "n", "v" },
