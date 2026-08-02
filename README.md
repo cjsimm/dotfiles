@@ -1,79 +1,175 @@
-Dotfiles and installation commands for new machines
+# Dotfiles
 
+Personal developer-environment configuration and installation recipes for macOS and Debian-based Linux systems.
 
-# Installation
+The repository uses [`just`](https://github.com/casey/just) to coordinate installation. It manages shell configuration, terminal and editor settings, command-line tools, language tooling, Python packages, and portable Codex skills from one version-controlled directory.
 
-For a fresh machine, begin the installation by getting Git onto your system, cloning the repo, and
-executing `setup.sh` on your machine. This will rustup your system, install `just` via cargo, and then execute the appropriate install for the system via the `just install-dev` command
+## What is included
 
-- Clone the repo
-- `cd dotfiles`
-- `chmod +x setup.sh`
-- `./setup.sh`
+- zsh configuration with completions, syntax highlighting, autosuggestions, history search, aliases, Starship, and mise
+- Neovim, tmux, Alacritty, WezTerm, btop, ncspot, neofetch, and Git configuration
+- Common command-line tools such as `eza`, `bat`, `lazygit`, `ripgrep`, `tealdeer`, and `httpie`
+- mise-managed versions of Node.js, Python, Go, Lua, fzf, stylua, OpenCode, and Herdr
+- Python packages for data work, Jupyter, HTTP requests, and terminal utilities
+- Docker tooling and Alacritty themes
+- Portable Codex skills from the [`skills/`](skills/) directory
+- Utility recipes for SSH keys, Python test directories, and Obsidian backups
 
-## MacOS
+## Installation
 
-Run `xcode-select --install` in your terminal to get access to a version of git. It's recommended to install all offered toolchains with this command to act as system fallbacks. Brew will install and manage newer versions of many of these tools (including git). Brew-managed versions will be found and invoked first when called on the command-line.
+The bootstrap process has two stages:
 
-## Debian
+1. `setup.sh` installs Rust and the `just` command.
+2. `just setup-dev` performs the platform-specific installation and configuration.
 
-Run the following commands before executing setup.sh:
-```shell
-sudo apt update
-sudo apt install build-essential -y
+### Prerequisites
+
+You need Git, curl, and an account with permission to install software. The installation also requires network access and may prompt for `sudo` credentials.
+
+On macOS, install Apple’s command-line tools first:
+
+```sh
+xcode-select --install
 ```
 
-## Todo
+On Debian or Ubuntu, install the basic build tools first:
 
-- set tmux text bar to use a lighter colour to offset the blue
-- introduce more extreme starship settings with fg and bg colours, or some kind of cool separator between the prompt and the cmdline (dotted line of something
-- adapt gitconfig file with some minor changes
-- store api keys in the apple keychain and pull them from there during shell init
-- get font and other additional information into neofetch correctly 
-    - font doesnt show up
-    - terminal is set to tmux instead of alacritty or Terminal: /dev/ttys004 if outside tmux
-- consider swapping python lanfuage server to ruff instead of pyright
-- add shbang universal snippet to all file editing, or .just, .sh files
-- add nvim keybind that adds merge conflict cycling, preferebly mixed with LSP error/issue cycling
-- telescope shows .git folder - recently made a change to get . files into the finder, but ive brought too much in
+```sh
+sudo apt update
+sudo apt install -y build-essential curl git
+```
 
-- add hcloud install for for linux machines using a build from source
+### Bootstrap a machine
 
-### Neovim
+```sh
+git clone <repository-url> ~/dotfiles
+cd ~/dotfiles
+chmod +x setup.sh
+./setup.sh
+source "$HOME/.cargo/env"
+just setup-dev
+```
 
-- add a chat history for code companion
-- get the default llm moved to gemini on code companion 
+`setup-dev` asks for a hostname, then:
 
-## Outstanding issues (MacOS)
+1. Links the repository’s `.config` directory to `~/.config`.
+2. Installs platform-specific packages and tools.
+3. Configures zsh and installs global mise and Python dependencies.
+4. Changes the hostname.
+5. Installs Alacritty themes when Alacritty is available.
+6. Links the repository’s portable Codex skills.
 
-- the install packages loop seems to jump over to other iteration before the command has finished working (macos)
-- ncspot doesnt swap audio devices alongside macos if it's swapped (for example airpods connecting)
-    - this seems to be a problem in an underlying library that is quite hard to fix
-- dont know how to use ncspot or how the keybinds work. figure them out
+After installation, restart the shell or source the generated shell configuration:
 
-- api keys arent being stored securely. should be able to get them into the apple keychain and store them there.
-    - export LLM_API_KEY=$(security find-generic-password -a "$USER" -s "LLM_API_KEY" -w)
+```sh
+source ~/.zshrc
+```
 
-- neofetch doesnt show the correct terminal or font
-    - something to do with neofetch not being able to read the terminal through macos
-    - neofetch was discontinued, go looking for a new program instead maybe that forks it
-    
-- ssh keys are removed from the agent on restart (macos)
-    - mac os needs extra config settings - add to agent and use keychain. probably also needs to be added manually during creation, too
+## Platform support
 
-## Installation automation improvements
+### macOS
 
-- Pull macos settings from somewhere (first research whether theyre persisted over icloud)
+The macOS recipes install Homebrew, Brew formulae, and GUI applications from the package lists in [`installation/packages/`](installation/packages/). The current Homebrew paths assume Apple Silicon (`/opt/homebrew`). Docker Compose is additionally linked into Docker’s CLI plugin directory so that `docker compose` is available.
 
-## Linux Setup Feature
+### Debian-based Linux
 
-## Todo
+The Linux recipes target Debian-based distributions with `apt`, `dpkg`, and systemd. They update the system, install packages, configure mise, install Docker Engine, build Neovim from source, and install tools such as eza, HTTPie, Starship, and pastel.
 
-- find out how to handle multiple flavours of linux and package managers
-- wsl linux improvements
-    - docker recommends docker desktop for wsl
-    - probably need to direct the user to install nerdfont on wsl 
+The Linux installation is intended primarily for a development workstation or VM. Alacritty and Nerd Fonts are not part of the default Linux installation; `just install-alacritty` is available as a separate recipe.
 
-- .zhistory doesnt get made - it's pointing to a folder that doesnt exist in 
-the docker image /Users/devuser/.zsh_history
-why? on macos it lives in the home directory
+This repository does not currently provide equivalent recipes for Arch, Fedora, Alpine, WSL-specific Docker setups, or non-systemd Linux environments.
+
+## Package lists and configuration
+
+Platform-specific packages are declared in:
+
+- [`installation/packages/brew.txt`](installation/packages/brew.txt) — macOS command-line tools
+- [`installation/packages/brew_cask.txt`](installation/packages/brew_cask.txt) — macOS GUI applications and fonts
+- [`installation/packages/debian.txt`](installation/packages/debian.txt) — Debian packages
+- [`installation/packages/python.txt`](installation/packages/python.txt) — Python packages installed with pip
+- [`installation/packages/taps.txt`](installation/packages/taps.txt) — Homebrew taps
+
+The shared configuration lives under [`.config/`](.config/). `setup-dev` symlinks the entire directory into `~/.config`, so changes made in the repository are immediately used by applications.
+
+## Useful recipes
+
+Run `just --list` to see every available recipe. Common commands include:
+
+```sh
+just setup-dev
+just symlink-config -f
+just configure-zshrc-file
+just install-globals
+just install-pypi
+just install-alacritty-themes
+just link-codex-skills
+just install-alacritty       # Linux, optional
+just ssh-keygen
+just python-test-directory
+just obsidian-backup
+```
+
+### SSH keys
+
+`just ssh-keygen` creates an Ed25519 key, appends a host entry to `~/.ssh/config`, copies the public key to the clipboard when `pbcopy` or `xclip` is available, and removes the public-key file afterward. It does not configure an SSH agent or platform keychain.
+
+### Configuration safety
+
+`just symlink-config -f` removes the existing `~/.config` directory before creating the symlink. Back up any configuration you want to keep before using the `-f` option.
+
+The repository ignores machine-local credentials, including `.config/gcloud/`. Do not commit cloud credentials, API keys, tokens, or generated application state.
+
+## macOS/Linux parity
+
+The shared shell, application configuration, mise tools, Python package list, and Codex skill setup are intended to work on both platforms. The installation mechanisms and available applications differ:
+
+| Area | macOS | Debian-based Linux |
+| --- | --- | --- |
+| Package manager | Homebrew | apt plus external repositories and installers |
+| Neovim | Homebrew HEAD build | Latest source build |
+| Docker | Docker formulae plus Compose plugin link | Docker Engine installer |
+| GUI applications | Brew casks, including Alacritty and fonts | Not installed by default |
+| Shell plugins | Homebrew paths | `/usr/share` paths |
+| Hostname | `scutil` | `hostnamectl` and `/etc/hosts` |
+| Codex skills | Symlinked from `skills/` | Symlinked from `skills/` |
+
+Parity is currently partial. Linux has a working Debian-oriented path, but it does not yet match the macOS application set or all workstation conveniences. See the TODO list below for known gaps.
+
+## Known issues and TODO
+
+### Installation and portability
+
+- Add a shebang and portable shell behavior to `setup.sh`; its current `[[ ... ]]` syntax assumes Bash even though the script has no shebang.
+- Replace hardcoded `~/dotfiles` and `/Users/...` paths with paths derived from the repository and current user.
+- Make the zsh history path portable; Linux currently receives a macOS `/Users/<user>/.zhistory` path.
+- Make repeated setup runs idempotent instead of appending duplicate entries to `.zshrc`.
+- Add explicit checks for required commands, supported architectures, and failed package installations.
+- Decide whether to support only Debian/Ubuntu or add package-manager implementations for other Linux distributions.
+- Support Intel macOS as well as Apple Silicon Homebrew paths.
+
+### macOS/Linux parity
+
+- Add Linux installation and configuration for Nerd Fonts and Alacritty.
+- Decide on a consistent Docker strategy between Docker Desktop/Colima on macOS and Docker Engine on Linux.
+- Add Linux equivalents for important macOS cask applications where applicable.
+- Remove the amd64-only HTTPie repository configuration or make it architecture-aware.
+- Make Neovim installation reproducible by pinning versions or using the same installation strategy on both platforms.
+- Ensure Python and pip installation works with Debian’s externally managed Python environments.
+- Install or remove the `bulletty`/`rss` alias consistently on both platforms.
+- Add `bat` to the macOS package list, since the shared shell aliases `cat` to `bat`.
+
+### Shell, security, and tooling
+
+- Replace destructive `~/.config` replacement with a backup or merge-based approach.
+- Add further ignore rules for generated credentials and application state as new tools are adopted.
+- Add macOS Keychain support for API keys and SSH-agent persistence.
+- Improve SSH key-agent setup on Linux and macOS.
+- Replace discontinued neofetch or document an alternative.
+- Document ncspot keybindings and investigate audio-device switching.
+- Add tests or dry-run validation for the `just` recipes.
+- Expand Neovim documentation, including CodeCompanion history, LLM defaults, merge-conflict navigation, and Telescope filtering.
+- Document terminal font requirements for Nerd Font icons used by Starship and Neovim.
+
+## License
+
+This is a personal configuration repository. Review the files and installation commands before using them on another machine.

@@ -2,6 +2,7 @@ nextjs-nodejs/
 .ssh/
 github-copilot/
 .config/ncspot/userstate.cbor
+.config/gcloud/
 
 # Herdr
 .config/herdr/*
