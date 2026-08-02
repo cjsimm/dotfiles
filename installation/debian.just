@@ -57,10 +57,28 @@ install-docker:
 [linux]
 install-httpie:
 	#!/usr/bin/env sh
-	curl -SsL https://packages.httpie.io/deb/KEY.gpg | sudo gpg --dearmor -o /usr/share/keyrings/httpie.gpg
-	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/httpie.gpg] https://packages.httpie.io/deb ./" | sudo tee /etc/apt/sources.list.d/httpie.list > /dev/null
-	sudo apt update
-	sudo apt install httpie
+	set -eu
+	if [ "{{ARCHITECTURE}}" = "amd64" ]; then
+		echo "Installing HTTPie from the upstream amd64 repository..."
+		sudo install -dm 755 /usr/share/keyrings
+		curl -fsSL https://packages.httpie.io/deb/KEY.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/httpie.gpg > /dev/null
+		echo "deb [arch=amd64 signed-by=/usr/share/keyrings/httpie.gpg] https://packages.httpie.io/deb ./" | sudo tee /etc/apt/sources.list.d/httpie.list > /dev/null
+	else
+		echo "Installing HTTPie from the native Debian repository for {{ARCHITECTURE}}..."
+		sudo rm -f /etc/apt/sources.list.d/httpie.list /usr/share/keyrings/httpie.gpg
+	fi
+	if ! sudo apt-get update; then
+		echo "Failed to update apt package lists for HTTPie installation." >&2
+		exit 1
+	fi
+	if ! sudo apt-get install -y httpie; then
+		echo "Failed to install HTTPie for {{ARCHITECTURE}}." >&2
+		exit 1
+	fi
+	if ! http --version; then
+		echo "HTTPie installation verification failed." >&2
+		exit 1
+	fi
 
 # build neovim from source for debian-based systems
 [linux]
