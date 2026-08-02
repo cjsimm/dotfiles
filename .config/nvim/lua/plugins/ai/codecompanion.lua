@@ -6,6 +6,61 @@ return {
     },
     config = function()
         local codecompanion_herdr = require("config.codecompanion_herdr")
+        local acp = require("codecompanion.acp")
+
+        local function change_reasoning(chat)
+            if not chat.acp_connection then
+                vim.notify("No active ACP connection", vim.log.levels.WARN)
+                return
+            end
+
+            local reasoning_option
+            for _, option in ipairs(chat.acp_connection:get_config_options()) do
+                if option.category == "thought_level"
+                    or option.id == "thought_level"
+                    or option.id == "reasoning_effort" then
+                    reasoning_option = option
+                    break
+                end
+            end
+
+            if not reasoning_option then
+                vim.notify("Codex did not advertise a reasoning-level option", vim.log.levels.WARN)
+                return
+            end
+
+            local values = acp.flatten_config_options(reasoning_option.options or {})
+            local choices = {}
+            local value_map = {}
+            for index, value in ipairs(values) do
+                local prefix = value.value == reasoning_option.currentValue and "* " or "  "
+                choices[index] = prefix .. value.name
+                value_map[index] = value
+            end
+
+            vim.ui.select(choices, {
+                kind = "codecompanion.nvim",
+                prompt = "Reasoning effort",
+            }, function(_, index)
+                if not index then
+                    return
+                end
+
+                local selected = value_map[index]
+                if selected.value == reasoning_option.currentValue then
+                    return
+                end
+
+                if chat.acp_connection:set_config_option(reasoning_option.id, selected.value) then
+                    vim.notify("Codex reasoning effort: " .. selected.name, vim.log.levels.INFO)
+                    if chat.update_metadata then
+                        chat:update_metadata()
+                    end
+                else
+                    vim.notify("Failed to change Codex reasoning effort", vim.log.levels.ERROR)
+                end
+            end)
+        end
 
         -- Chat-buffer built-ins (active while the CodeCompanion chat is focused):
         --   <C-s> in Insert mode / <CR> in Normal mode: submit the current message.
@@ -60,6 +115,15 @@ return {
             interactions = {
                 chat = {
                     adapter = "codex",
+                    keymaps = {
+                        change_reasoning = {
+                            modes = {
+                                n = "<leader>ar",
+                            },
+                            callback = change_reasoning,
+                            description = "Change Codex reasoning effort",
+                        },
+                    },
                 },
                 inline = {
                     adapter = gemini_default
