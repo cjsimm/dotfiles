@@ -75,7 +75,14 @@ The macOS recipes install Homebrew, Brew formulae, and GUI applications from the
 
 The Linux recipes target Debian-based distributions with `apt`, `dpkg`, and systemd. They update the system, install packages, configure mise, install Docker Engine, build Neovim from source, and install tools such as eza, HTTPie, Starship, and pastel.
 
-The Linux installation is intended primarily for a development workstation or VM. Alacritty and Nerd Fonts are not part of the default Linux installation; `just install-alacritty` is available as a separate recipe. If a native `codex` executable is already available, the generated zsh configuration uses it; otherwise the ACP adapter keeps using its bundled Codex.
+The Linux installation is intended primarily for a headless development workstation or VM. GUI support remains optional and is not part of the default Linux installation. On a graphical Debian-based Linux system, install the terminal font and terminal emulator separately:
+
+```sh
+just install-nerdfonts
+just install-alacritty
+```
+
+`install-nerdfonts` installs the pinned FiraCode Nerd Font release under `~/.local/share/fonts/FiraCode`. The Alacritty configuration expects the `FiraCode Nerd Font Mono` family, so the Mono Regular and Bold font files are verified and `fc-cache` is run when available. Restart the terminal after installation if the new font is not immediately available. `install-alacritty` installs Alacritty from Cargo after installing its native Debian build dependencies; it does not alter the existing `.config/alacritty` configuration. If a native `codex` executable is already available, the generated zsh configuration uses it; otherwise the ACP adapter keeps using its bundled Codex.
 
 This repository does not currently provide equivalent recipes for Arch, Fedora, Alpine, WSL-specific Docker setups, or non-systemd Linux environments.
 
@@ -105,7 +112,8 @@ just install-pypi
 just install-alacritty-themes
 just install-herdr-plugin
 just link-codex-skills
-just install-alacritty       # Linux, optional
+just install-nerdfonts       # Linux GUI support, optional
+just install-alacritty       # Linux GUI support, optional
 just ssh-keygen
 just python-test-directory
 just obsidian-backup
@@ -151,7 +159,6 @@ Parity is currently partial. Linux has a working Debian-oriented path, but it do
 
 ### macOS/Linux parity
 
-- Add Linux installation and configuration for Nerd Fonts and Alacritty.
 - Decide on a consistent Docker strategy between Docker Desktop/Colima on macOS and Docker Engine on Linux.
 - Add Linux equivalents for important macOS cask applications where applicable.
 - Remove the amd64-only HTTPie repository configuration or make it architecture-aware.
