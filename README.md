@@ -54,7 +54,7 @@ just setup-dev
 
 1. Links the repository’s `.config` directory to `~/.config`.
 2. Installs platform-specific packages and tools.
-3. Configures zsh and installs global mise and Python dependencies.
+3. Configures zsh, installs the mise-managed tools, and installs Codex ACP globally through the mise-managed Node.js runtime.
 4. Changes the hostname.
 5. Installs Alacritty themes when Alacritty is available.
 6. Links the repository’s portable Codex skills.
@@ -69,13 +69,13 @@ source ~/.zshrc
 
 ### macOS
 
-The macOS recipes install Homebrew, Brew formulae, and GUI applications from the package lists in [`installation/packages/`](installation/packages/). The current Homebrew paths assume Apple Silicon (`/opt/homebrew`). Docker Compose is additionally linked into Docker’s CLI plugin directory so that `docker compose` is available.
+The macOS recipes install Homebrew, Brew formulae, and GUI applications from the package lists in [`installation/packages/`](installation/packages/). The current Homebrew paths assume Apple Silicon (`/opt/homebrew`). The generated zsh configuration points `CODEX_PATH` at the Homebrew Codex binary so the ACP adapter uses the same Codex installation. Docker Compose is additionally linked into Docker’s CLI plugin directory so that `docker compose` is available.
 
 ### Debian-based Linux
 
 The Linux recipes target Debian-based distributions with `apt`, `dpkg`, and systemd. They update the system, install packages, configure mise, install Docker Engine, build Neovim from source, and install tools such as eza, HTTPie, Starship, and pastel.
 
-The Linux installation is intended primarily for a development workstation or VM. Alacritty and Nerd Fonts are not part of the default Linux installation; `just install-alacritty` is available as a separate recipe.
+The Linux installation is intended primarily for a development workstation or VM. Alacritty and Nerd Fonts are not part of the default Linux installation; `just install-alacritty` is available as a separate recipe. If a native `codex` executable is already available, the generated zsh configuration uses it; otherwise the ACP adapter keeps using its bundled Codex.
 
 This repository does not currently provide equivalent recipes for Arch, Fedora, Alpine, WSL-specific Docker setups, or non-systemd Linux environments.
 
@@ -100,6 +100,7 @@ just setup-dev
 just symlink-config -f
 just configure-zshrc-file
 just install-globals
+just install-codex-acp
 just install-pypi
 just install-alacritty-themes
 just link-codex-skills

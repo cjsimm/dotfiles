@@ -2,6 +2,7 @@
 configure-zshrc-file:
 	echo >> {{ZSHRC_FILE}}
 	just _zsh-eval
+	just _zsh-codex-path
 	just _zsh-tab-complete
 	just _zsh-alias
 	just _zsh-history
@@ -34,7 +35,33 @@ _zsh-plugins:
 		echo "$line" >> {{ZSHRC_FILE}}
 	done
 	source {{ZSHRC_FILE}}
-	
+
+# Configure the Codex executable used by the ACP adapter on macOS. The
+# Homebrew cask exposes the binary from Homebrew's prefix.
+[macos]
+_zsh-codex-path:
+	#!/usr/bin/env zsh
+	CODEX_PATH="$(brew --prefix)/bin/codex"
+	if [[ ! -x "$CODEX_PATH" ]]; then
+		echo "Homebrew Codex binary not found at $CODEX_PATH." >&2
+		exit 1
+	fi
+	echo "export CODEX_PATH=\"$CODEX_PATH\"" >> {{ZSHRC_FILE}}
+	source {{ZSHRC_FILE}}
+
+# Linux uses the adapter's bundled Codex by default, but supports an existing
+# native Codex installation without introducing a Homebrew dependency.
+[linux]
+_zsh-codex-path:
+	#!/usr/bin/env zsh
+	if command -v codex >/dev/null 2>&1; then
+		CODEX_PATH="$(command -v codex)"
+		echo "export CODEX_PATH=\"$CODEX_PATH\"" >> {{ZSHRC_FILE}}
+		source {{ZSHRC_FILE}}
+	else
+		echo "No native Codex binary found; ACP will use its bundled Codex."
+	fi
+
 # Adds eval commands required by packages to the .zshrc file. This should be factored out so that some kind of starship command takes care of getting this into the zshrc file
 _zsh-eval:
 	#!/usr/bin/env zsh
@@ -99,4 +126,3 @@ _zsh-history:
 		echo "$line" >> {{ZSHRC_FILE}}
 	done
 	source {{ZSHRC_FILE}}
-

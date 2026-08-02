@@ -31,4 +31,4 @@ setup-dev:
     echo "call the `ssh-keygen` command to gen keys for ssh connections!" 
 
 # Install packages, toolchains, and applications for development
-installation: _install configure-zshrc-file install-globals install-pypi
+installation: _install configure-zshrc-file install-globals install-codex-acp install-pypi
