@@ -22,4 +22,3 @@ install-bulletty:
 	#!/usr/bin/env zsh
 	# IMPROVEMENT - Get my feeds into a single file and also import them
 	cargo install bulletty
-

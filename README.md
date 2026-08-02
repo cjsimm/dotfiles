@@ -9,7 +9,7 @@ The repository uses [`just`](https://github.com/casey/just) to coordinate instal
 - zsh configuration with completions, syntax highlighting, autosuggestions, history search, aliases, Starship, and mise
 - Neovim, tmux, Alacritty, WezTerm, btop, ncspot, neofetch, and Git configuration
 - Common command-line tools such as `eza`, `bat`, `lazygit`, `ripgrep`, `tealdeer`, and `httpie`
-- mise-managed versions of Node.js, Python, Go, Lua, fzf, stylua, OpenCode, and Herdr
+- mise-managed versions of tree-sitter, Node.js, Python, Go, Lua, fzf, stylua, OpenCode, and Herdr
 - Python packages for data work, Jupyter, HTTP requests, and terminal utilities
 - Docker tooling and Alacritty themes
 - Portable Codex skills from the [`skills/`](skills/) directory
