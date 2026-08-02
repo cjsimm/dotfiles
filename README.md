@@ -177,7 +177,7 @@ Parity is currently partial. Linux has a working Debian-oriented path, but it do
 
 ## Skills
 
-- Firstmate is not placing worktrees in the right location.
+- First Mate keeps agent worktrees in the isolated `~/.local/share/worktrees/<repository>/<task>` hierarchy. Set `WORKTREE_ROOT` to override the root for a different local layout.
 
 ## License
 

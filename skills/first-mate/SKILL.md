@@ -44,16 +44,38 @@ herdr worktree list --cwd "$PWD" --json
 
 Use opaque IDs returned by Herdr. Keep the manager's focus unchanged with `--no-focus` unless the user asks otherwise.
 
+## Worktree location
+
+Keep agent worktrees outside the project checkout and outside a project-specific
+sibling directory. Use a neutral, per-user root grouped by repository:
+
+```text
+default root: ~/.local/share/worktrees
+layout:       ~/.local/share/worktrees/<repository>/<task>
+```
+
+If the user has chosen another location, use `WORKTREE_ROOT` for the root.
+Resolve it to an absolute path before creating anything. Derive the repository
+name from the main checkout's basename, and make task names sanitized and
+unique. Never create a worktree directly in the root or reuse a path belonging
+to another repository. This keeps worktrees easy to find and removes them from
+the repository's normal sibling directory listing while preserving normal Git
+worktree behavior.
+
+Before creating a worktree, inspect the target path and the existing Git
+worktree list. If the task path or branch already exists, stop and ask the user
+whether to reuse it; do not overwrite, remove, or repoint it.
+
 ## Worktree-first delegation
 
 For each approved editing task:
 
 1. Check `git status --short --branch` in the main checkout and record unrelated changes.
-2. Choose a unique branch and sibling worktree path, for example:
+2. Choose a unique branch and isolated worktree path, for example:
 
    ```text
    branch: codex/task-linux-fonts
-   path:   ../dotfiles-worktrees/task-linux-fonts
+   path:   ~/.local/share/worktrees/dotfiles/task-linux-fonts
    ```
 
 3. Create and open the worktree through Herdr, preserving the approved base ref:
@@ -63,7 +85,7 @@ For each approved editing task:
      --cwd "$PWD" \
      --branch codex/task-name \
      --base master \
-     --path "$(dirname "$PWD")/dotfiles-worktrees/task-name" \
+     --path "${WORKTREE_ROOT:-$HOME/.local/share/worktrees}/dotfiles/task-name" \
      --label "Task name" \
      --no-focus
    ```
@@ -143,7 +165,7 @@ When the user requests a review:
      --cwd "$PWD" \
      --branch codex/review/task-name \
      --base codex/task-name \
-     --path "$(dirname "$PWD")/dotfiles-worktrees/review-task-name" \
+     --path "${WORKTREE_ROOT:-$HOME/.local/share/worktrees}/dotfiles/review-task-name" \
      --label "Review: Task name" \
      --no-focus
    ```
