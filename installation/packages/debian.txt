@@ -7,6 +7,7 @@ curl
 file
 gettext
 git
+jq
 gpg
 htop
 libbz2-dev
