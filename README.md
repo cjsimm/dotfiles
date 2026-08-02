@@ -57,7 +57,7 @@ just setup-dev
 3. Configures zsh, installs the mise-managed tools, and installs Codex ACP globally through the mise-managed Node.js runtime.
 4. Changes the hostname.
 5. Installs Alacritty themes when Alacritty is available.
-6. Links the repository’s portable Codex skills.
+6. Links the repository’s portable Codex skills and installs the Herdr navigation plugin required by `config.toml`.
 
 After installation, restart the shell or source the generated shell configuration:
 
@@ -103,6 +103,7 @@ just install-globals
 just install-codex-acp
 just install-pypi
 just install-alacritty-themes
+just install-herdr-plugin
 just link-codex-skills
 just install-alacritty       # Linux, optional
 just ssh-keygen
