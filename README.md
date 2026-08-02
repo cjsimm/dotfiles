@@ -161,11 +161,9 @@ Parity is currently partial. Linux has a working Debian-oriented path, but it do
 
 - Decide on a consistent Docker strategy between Docker Desktop/Colima on macOS and Docker Engine on Linux.
 - Add Linux equivalents for important macOS cask applications where applicable.
-- Remove the amd64-only HTTPie repository configuration or make it architecture-aware.
 - Make Neovim installation reproducible by pinning versions or using the same installation strategy on both platforms.
 - Ensure Python and pip installation works with Debian’s externally managed Python environments.
 - Install or remove the `bulletty`/`rss` alias consistently on both platforms.
-- Add `bat` to the macOS package list, since the shared shell aliases `cat` to `bat`.
 
 ### Shell, security, and tooling
 
@@ -177,7 +175,10 @@ Parity is currently partial. Linux has a working Debian-oriented path, but it do
 - Document ncspot keybindings and investigate audio-device switching.
 - Add tests or dry-run validation for the `just` recipes.
 - Expand Neovim documentation, including CodeCompanion history, LLM defaults, merge-conflict navigation, and Telescope filtering.
-- Document terminal font requirements for Nerd Font icons used by Starship and Neovim.
+
+## Skills
+
+- Firstmate is not placing worktrees in the right location.
 
 ## License
 
