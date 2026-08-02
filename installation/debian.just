@@ -2,6 +2,9 @@ import '../misc/formatting.just'
 
 DEBIAN_PACKAGE_FILE := source_dir() + "/packages/debian.txt"
 ARCHITECTURE := if os() == "linux" { `dpkg --print-architecture` } else { `uname -m` }
+NERD_FONTS_VERSION := "v3.3.0"
+NERD_FONTS_URL := "https://github.com/ryanoasis/nerd-fonts/releases/download/" + NERD_FONTS_VERSION + "/FiraCode.zip"
+NERD_FONTS_DIR := home_dir() + "/.local/share/fonts/FiraCode"
 
 # Install a full developer environment on a debian-based distro
 [linux]
@@ -118,10 +121,58 @@ install-eza:
 	sudo apt update
 	sudo apt install -y eza
 
-# install nerdfonts
+# Install the pinned FiraCode Nerd Font release used by the Alacritty config
 [linux]
 install-nerdfonts:
-    echo "Installing nerdfonts"
+	#!/usr/bin/env sh
+	set -eu
+
+	FONT_DIR="{{NERD_FONTS_DIR}}"
+	EXPECTED_FONTS="FiraCodeNerdFontMono-Regular.ttf FiraCodeNerdFontMono-Bold.ttf"
+	mkdir -p "$FONT_DIR"
+
+	fonts_are_installed=true
+	for font in $EXPECTED_FONTS; do
+		if [ ! -f "$FONT_DIR/$font" ]; then
+			fonts_are_installed=false
+			break
+		fi
+	done
+
+	if [ "$fonts_are_installed" = true ]; then
+		echo "FiraCode Nerd Font {{NERD_FONTS_VERSION}} is already installed in $FONT_DIR."
+	else
+		if ! command -v curl >/dev/null 2>&1 || ! command -v unzip >/dev/null 2>&1; then
+			echo "Failed to install FiraCode Nerd Font: curl and unzip are required." >&2
+			exit 1
+		fi
+
+		tmp_dir=$(mktemp -d)
+		trap 'rm -rf "$tmp_dir"' EXIT
+		archive="$tmp_dir/FiraCode.zip"
+
+		echo "Downloading FiraCode Nerd Font {{NERD_FONTS_VERSION}}..."
+		if ! curl --fail --location --silent --show-error --retry 3 "{{NERD_FONTS_URL}}" --output "$archive"; then
+			echo "Failed to download FiraCode Nerd Font {{NERD_FONTS_VERSION}}." >&2
+			exit 1
+		fi
+		unzip -q "$archive" -d "$tmp_dir/fonts"
+
+		for font in $EXPECTED_FONTS; do
+			if [ ! -f "$tmp_dir/fonts/$font" ]; then
+				echo "Failed to install FiraCode Nerd Font: expected $font was not in the archive." >&2
+				exit 1
+			fi
+			install -m 644 "$tmp_dir/fonts/$font" "$FONT_DIR/$font"
+		done
+	fi
+
+	if command -v fc-cache >/dev/null 2>&1; then
+		fc-cache -f "$FONT_DIR"
+		echo "FiraCode Nerd Font is ready in $FONT_DIR (font cache refreshed)."
+	else
+		echo "FiraCode Nerd Font files verified in $FONT_DIR. fc-cache was not found; refresh the cache after installing fontconfig."
+	fi
 
 # install starship through the auto-install script
 [linux]
@@ -167,10 +218,25 @@ change-hostname hostname="":
 		echo "You may need to manually verify /etc/hosts if issues arise, though 'hostnamectl' usually manages the primary system hostname."
 	fi
 
-# Install alacritty. Included in a separate command as not useful for a headless setup
+# Install Alacritty as an optional Linux GUI recipe; it is intentionally not part of _install.
 [linux]
 install-alacritty:
 	#!/usr/bin/env sh
-	apt install cmake g++ pkg-config libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
-	cargo install alacritty
-	
+	set -eu
+
+	if ! command -v cargo >/dev/null 2>&1; then
+		echo "Cargo is required to install Alacritty. Install Rust/Cargo and try again." >&2
+		exit 1
+	fi
+
+	echo "Installing Alacritty native build dependencies..."
+	sudo apt-get update
+	sudo apt-get install -y cmake g++ pkg-config libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+	echo "Installing Alacritty with Cargo..."
+	cargo install --locked alacritty
+
+	if ! command -v alacritty >/dev/null 2>&1; then
+		echo "Alacritty installation completed but alacritty is not on PATH." >&2
+		exit 1
+	fi
+	alacritty --version
