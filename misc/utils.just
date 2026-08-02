@@ -1,16 +1,39 @@
-# Symlink the .config dir to the appropriate system location. Takes -f as an argument to force
+DOTFILES_CONFIG_DIR := justfile_directory() + "/.config"
+
+# Symlink the repository .config directory to the appropriate system location. Takes -f as an argument to force.
 symlink-config override_flag="":
-    @if [ -e ~/.config ] && [ "{{override_flag}}" != "-f" ]; then \
-    echo "Warning: ~/.config already exists."; \
-    echo "This command will remove the existing ~/.config directory"; \
-    echo "A symlink to the 'dotfiles/.config' directory will be made in its place."; \
-    echo "Ensure you have backedup any files you with to preserve in '~/.config', then run 'just symlink-config -f' to proceed with overwrite."; \
-    exit 1; \
-    else \
-    rm -rf ~/.config; \
-    ln -s ~/dotfiles/.config ~/.config; \
-    echo 'Symlinked dotfiles config directory to system config'; \
+    #!/usr/bin/env sh
+    set -eu
+    config_path="$HOME/.config"
+    repository_config="{{DOTFILES_CONFIG_DIR}}"
+
+    if [ -L "$config_path" ] && [ "$config_path" -ef "$repository_config" ]; then
+        echo "~/.config already links to $repository_config"
+        exit 0
     fi
+
+    if [ -e "$config_path" ] || [ -L "$config_path" ]; then
+        if [ "{{override_flag}}" != "-f" ]; then
+            echo "Refusing to replace existing ~/.config without -f." >&2
+            echo "Run 'just symlink-config -f' to move it to a timestamped backup before linking." >&2
+            exit 1
+        fi
+
+        backup_base="$HOME/.config.backup-$(date +%Y%m%d-%H%M%S)"
+        backup_path="$backup_base"
+        backup_suffix=1
+        while [ -e "$backup_path" ] || [ -L "$backup_path" ]; do
+            backup_path="${backup_base}-${backup_suffix}"
+            backup_suffix=$((backup_suffix + 1))
+        done
+
+        mv "$config_path" "$backup_path"
+        echo "Backed up existing ~/.config to $backup_path"
+        echo "To recover: rm \"$config_path\" && mv \"$backup_path\" \"$config_path\""
+    fi
+
+    ln -s "$repository_config" "$config_path"
+    echo "Symlinked $repository_config to ~/.config"
 
 # Generate an RSA4096 public/private key pair. Add host information to .ssh/config, copy public key to clipboard and delete from system
 ssh-keygen:

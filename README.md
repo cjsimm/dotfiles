@@ -96,7 +96,7 @@ Platform-specific packages are declared in:
 - [`installation/packages/python.txt`](installation/packages/python.txt) — Python packages installed with pip
 - [`installation/packages/taps.txt`](installation/packages/taps.txt) — Homebrew taps
 
-The shared configuration lives under [`.config/`](.config/). `setup-dev` symlinks the entire directory into `~/.config`, so changes made in the repository are immediately used by applications.
+The shared configuration lives under [`.config/`](.config/). `setup-dev` symlinks the entire directory into `~/.config`, so changes made in the repository are immediately used by applications. The link target is derived from the location of the repository’s `justfile`, so the repository does not need to be cloned to `~/dotfiles`.
 
 ## Useful recipes
 
@@ -125,7 +125,7 @@ just obsidian-backup
 
 ### Configuration safety
 
-`just symlink-config -f` removes the existing `~/.config` directory before creating the symlink. Back up any configuration you want to keep before using the `-f` option.
+`just symlink-config` is safe by default: it succeeds without changes when `~/.config` already links to this repository’s `.config`, creates the link when `~/.config` is absent, and otherwise refuses to replace the existing path. Use `just symlink-config -f` to proceed. It renames the existing file, directory, or symlink with `mv` to `~/.config.backup-YYYYMMDD-HHMMSS` (adding `-1`, `-2`, and so on if necessary), then creates the new link. The recipe prints the exact recovery command; it has the form `rm ~/.config && mv ~/.config.backup-YYYYMMDD-HHMMSS ~/.config`.
 
 The repository ignores machine-local credentials, including `.config/gcloud/`. Do not commit cloud credentials, API keys, tokens, or generated application state.
 
@@ -167,7 +167,6 @@ Parity is currently partial. Linux has a working Debian-oriented path, but it do
 
 ### Shell, security, and tooling
 
-- Replace destructive `~/.config` replacement with a backup or merge-based approach.
 - Add further ignore rules for generated credentials and application state as new tools are adopted.
 - Add macOS Keychain support for API keys and SSH-agent persistence.
 - Improve SSH key-agent setup on Linux and macOS.
