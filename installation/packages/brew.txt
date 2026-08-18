@@ -5,6 +5,7 @@ curl
 docker
 docker-compose
 eza
+fastfetch
 ffmpeg
 git
 jq
@@ -17,7 +18,6 @@ lazygit
 mackup
 mise
 ncspot
-neofetch
 neovim
 ngrok
 pastel
