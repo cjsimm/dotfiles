@@ -10,6 +10,7 @@ prefix = "ctrl+space"
 # within a workspace, so retain those direct shortcuts.
 previous_tab = "alt+shift+h"
 next_tab = "alt+shift+l"
+rename_tab = "prefix+comma"
 
 # tmux: prefix + _ / | create top/bottom and left/right splits respectively.
 # Herdr matches shifted punctuation by its produced character.
