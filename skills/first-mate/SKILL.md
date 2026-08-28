@@ -30,7 +30,7 @@ Record a compact execution contract containing:
 
 Prefer useful categories such as “install project dependencies,” “run targeted tests,” or “use the approved evaluation service” over an exhaustive command allowlist. Approval of the contract authorizes ordinary steps needed to carry it out, but never grants undeclared credentials, destructive actions, publication, material spend, or a change of objective.
 
-For an experiment, include the full experiment and test plan in the initial worker prompt: hypothesis, intervention, baseline and treatment, cases or datasets, metrics, comparison method, expected commands, output expectations, limits, and adaptation rules. Do not make the worker rediscover a plan First Mate already knows.
+For an experiment, include the full experiment and test plan in the initial worker prompt: hypothesis, intervention, baseline and treatment, cases or datasets, metrics, comparison method, expected commands, output expectations, limits, adaptation rules, and the required lightweight lineage record. Do not make the worker rediscover a plan First Mate already knows.
 
 If the configured model or reasoning is not specified, preserve the current configuration unless the choice materially changes cost, speed, or risk. State the proposed choice in the plan; use native per-agent arguments instead of editing global configuration.
 
@@ -54,7 +54,15 @@ For each editing agent:
 4. Start the agent with the approved model and reasoning.
 5. Send one self-contained prompt and begin supervision.
 
-The prompt should include the approved task and test plan, worktree and branch, scope and non-goals, autonomy envelope, human gates, relevant worker skills to invoke, validation, completion format, and prohibitions on unrelated edits, merging, and publication.
+The prompt should include the approved task and test plan, worktree and branch, scope and non-goals, autonomy envelope, human gates, the experiment's required and recommended assistance, validation, completion format, and prohibitions on unrelated edits, merging, and publication. Preserve the assistance categories and exact capability names from the approved brief instead of asking the worker to rediscover them.
+
+## Baseline preflight
+
+For an approved experiment, take the baseline yourself before launching the treatment agent when practical; do not spawn a baseline subagent by default. Create a separate clean worktree at the approved origin, keep evaluated product behavior unchanged, and use the approved assistance and recovery authority to make the environment and evaluation path work. A shared harness workaround is acceptable when it is recorded and applied consistently to baseline and treatment.
+
+Preserve `BASELINE_RECORD.yaml`, a concise `REPORT.md`, and non-overwritten decisive evidence in the baseline worktree. Record the source, environment discoveries, working setup and commands, inputs and configuration, attempts and retries, results, runtime or cost, workarounds, and comparability constraints. Partial baseline evidence remains useful and should not block agent launch unless proceeding would require new authority or make the experiment meaningless.
+
+Inject a concise baseline handoff into the initial treatment prompt: artifact paths or remote identifiers, result summary, working setup and commands, required environment names with secrets omitted, known issues, assistance used, and conditions the treatment must preserve. Keep the baseline worktree until the user approves archival disposition or cleanup.
 
 ## Shared command approvals
 
@@ -96,6 +104,6 @@ At a gate, provide the agent and pane, current state, one concrete decision, con
 
 ## Completion
 
-Inspect the worktree and diff, confirm the promised validation and artifacts, and report changed files, results, risks, and remaining decisions. Do not require hashes, manifests, immutable message identities, or duplicated provenance unless the user or a domain requirement specifically needs them.
+Inspect the worktree and diff, confirm the promised validation and artifacts, and report changed files, results, risks, and remaining decisions. For experiments, verify that material report claims link to preserved evidence, the run record connects the tested code, inputs, attempts, outputs, and derived artifacts, and results are presented against the baseline in the clearest form the evidence supports. Missing fields or an inapplicable table shape should be explained and adapted, not treated as completion failure. Do not require hashes, manifests, immutable message identities, or duplicated provenance unless the user or a domain requirement specifically needs them.
 
 For an independent review, pause editing, create a separate reviewer worktree from the implementation branch, and instruct the reviewer to inspect and test without editing. The user decides the disposition of the reviewed work.
