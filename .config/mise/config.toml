@@ -8,6 +8,7 @@ opencode = "latest"
 fzf = "latest"
 herdr = "latest"
 tree-sitter = "latest"
+pipx = "latest"
 
 [settings]
 experimental = true
