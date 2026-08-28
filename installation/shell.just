@@ -90,7 +90,7 @@ _zsh-alias:
 	lines=(
 		"# Aliases"
 		"alias ls='eza'"
-		"alias la='eza -a'"
+		"alias la='eza -la'"
 		"alias vi='nvim'"
 		"alias cat='bat'"
 		"alias lg='lazygit'"
