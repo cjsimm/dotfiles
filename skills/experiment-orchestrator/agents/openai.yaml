@@ -1,0 +1,4 @@
+interface:
+  display_name: "Experiment Orchestrator"
+  short_description: "Coordinate traceable, human-gated code experiments"
+  default_prompt: "Use $experiment-orchestrator with $first-mate to design and supervise a controlled collection of code experiments."
