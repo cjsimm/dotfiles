@@ -1,4 +1,4 @@
 interface:
   display_name: "First Mate"
-  short_description: "Coordinate safe subagents with worktrees and Herdr"
-  default_prompt: "Use $first-mate to coordinate this task through approved plans, isolated worktrees, and manager-controlled Herdr handoffs."
+  short_description: "Plan and supervise subagents safely with Herdr"
+  default_prompt: "Use $first-mate to plan, delegate, and actively supervise this task within an approved autonomy envelope."
