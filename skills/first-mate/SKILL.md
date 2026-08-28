@@ -34,9 +34,13 @@ Treat planning as a collaborative agreement phase, not a formality. First Mate a
 - each human-owned gate, its decision criteria, and the evidence the user should receive; and
 - actions and decisions reserved for explicit human approval.
 
+When an adjacent skill declares a versioned manager-worker protocol or artifact format, also agree its versions, identities, lifecycle states, signals, durable output boundary, approval-receipt fields, completion checks, and any authorized import destination. Treat these as run-specific contract data rather than generic First Mate defaults.
+
 Use adjacent active skills as inputs to this discussion. They may propose or require domain-specific gates, artifacts, limits, or workflow variables. First Mate should surface and reconcile those requirements with the user, who may add, refine, reorder, or, where the originating skill permits, remove them. Do not silently weaken a mandatory safety, platform, or skill constraint; explain conflicts during planning.
 
 The approved plan and autonomy envelope are the execution contract. Approval authorizes routine operations inside it, but does not expand task scope, grant undeclared permissions, or remove platform safeguards. If a material variable, gate, hypothesis, patch, evaluation design, or success criterion needs to change after launch, pause affected work and obtain the user's approval for the revised contract before continuing.
+
+Follow the adjacent protocol's amendment and invalidation rules. If it requires a fresh run after a particular phase, provision a new branch, worktree, agent, identity, and artifact location rather than reopening the existing run.
 
 ## Model and reasoning selection
 
@@ -134,6 +138,8 @@ Every implementation prompt must include:
 - a prohibition on merging, publishing, or modifying unrelated files; and
 - the gate and completion handoff format, including changed files, validation, artifact paths, risks, and decisions required.
 
+When an adjacent skill supplies a versioned protocol, the prompt must also include its exact protocol and artifact-format versions, immutable identities, current phase, permitted state transitions, exact durable-output directory and ownership boundary, approval-relay convention, and required terminal fields. Verify any required output directory resolves inside the assigned worktree before launch. Do not infer missing protocol values.
+
 Require the agent to notify First Mate at every human gate and at completion. A referenced worker skill supplies reusable behavior; the approved prompt remains the source of run-specific authority.
 
 For a plan-only assignment, explicitly say: inspect only, do not edit, and return a proposed execution plan for First Mate and user approval.
@@ -141,6 +147,8 @@ For a plan-only assignment, explicitly say: inspect only, do not edit, and retur
 ## Managed supervision
 
 Managed supervision is the default after launch. Track each agent's opaque identifiers, worktree, branch, current phase, autonomy envelope, retry consumption, and expected next gate. Use Herdr to inspect blocked or completed states and read enough output to understand a request before responding.
+
+For a versioned adjacent-skill workflow, also track the accepted protocol and artifact-format versions, immutable task or run identities, allowed phase transitions, pending approval identity, and durable artifact location. Validate these fields on every gate, triage, and completion handoff. A missing or conflicting version, identity, origin, worktree, path, or phase is a human-triage condition unless the approved protocol explicitly defines a routine repair. Do not act on a signal label without its accompanying handoff, or advance an agent through a transition the protocol does not permit.
 
 During routine supervision:
 
@@ -181,6 +189,8 @@ Safe options: <available choices and material tradeoffs>
 
 Wait for the user's decision. Do not imply that managed supervision authorizes the gate. Record an approved decision in the execution contract before resuming.
 
+If the active protocol defines an approval receipt, relay the user's decision using that exact schema. Preserve at least the decision owner, First Mate or direct-user relay identity, gate, decision, bound plan or revision-and-digest identity, and an available message, pane, or trace reference. Attribute the decision to the user; never rewrite it as First Mate's approval. A generic instruction to continue, silence, or a routine command approval is not a semantic-gate receipt.
+
 ## Interactive takeover
 
 The user may take direct control of a particular agent or phase. Mark that pane as interactive and stop steering it, approving its requests, or answering its questions until the user explicitly returns control. Continue supervising other managed agents and keep their panes unfocused. When control returns, inspect the current state and reconcile any changes with the approved contract before acting.
@@ -188,6 +198,10 @@ The user may take direct control of a particular agent or phase. Mark that pane 
 ## Completion and review
 
 When an agent reports completion, inspect its worktree and diff, verify the promised artifacts and validation results, and request any missing approved handoff information. Report the outcome without merging, publishing, archiving, or deleting anything.
+
+When the active protocol requires a self-contained bundle or manifest, complete its declared verification before presenting disposition: check versions and identities, origin and worktree, approval receipts, current patch or evaluation identities, terminal status, domain outcome, path containment, symlinks, inventory sizes and digests, and consistency among the manifest, report, and handoff. Keep a workflow's interruption signals distinct from terminal statuses and keep execution status distinct from its domain outcome. If a permitted correction changes an inventoried file, require a regenerated manifest and corrected terminal handoff before relying on it.
+
+After explicit user authorization for a named bundle import, follow the adjacent protocol's canonical destination and transfer rules. Refuse collisions, copy the complete source bundle unchanged, verify any required manifest byte-for-byte, and recompute the destination inventory before updating manager-owned navigation or synthesis. Authorization to import does not authorize another import, code integration, publication, source-bundle deletion, or worktree cleanup.
 
 When the approved workflow calls for independent review:
 
@@ -218,3 +232,5 @@ approved -> merged | archived | retained
 ```
 
 Domain skills may name or specialize human gates, but First Mate owns their generic tracking and presentation. Never skip the initial `approved` or `worktree-ready` states for implementation work.
+
+An approved adjacent protocol may refine this state model for its workflow. Preserve its distinction between resumable interruptions and terminal states, and map its states into First Mate's generic task record without discarding protocol-specific phase or approval identity.
