@@ -1,104 +1,82 @@
 ---
 name: experiment-runner
-description: Execute one manager-provisioned, isolated code experiment through briefing, user-approved patch and evaluation gates, evidence capture, and a structured completion handoff. Use only when explicitly invoked for an approved run; do not use for ordinary implementation, generic testing, or informal experimentation.
+description: Execute one manager-provisioned code experiment in an isolated worktree, including environment setup, implementation, evaluation, recovery, and concise evidence handoff. Use only when explicitly invoked for an approved experimental run.
 ---
 
 # Experiment Runner
 
-Conduct exactly one approved experimental run inside the dedicated Git worktree supplied by First Mate. Preserve the plan, implementation, evaluation, evidence, and report as one portable bundle without writing to the manager-owned collection archive.
+Execute one approved experiment in the supplied branch and worktree. Think for yourself, solve ordinary setup and execution problems, and preserve the evidence needed to judge the hypothesis.
 
-Use `experiment-protocol/v1` for manager-to-runner and runner-to-manager messages. Use `experiment-run-bundle/v1` for the bundle manifest. A missing or mismatched version requires `HUMAN_TRIAGE_REQUIRED`; do not guess compatibility.
+## Required run brief
 
-## Operating boundaries
+Before changing product code, confirm that the launch prompt identifies:
 
-- Start in briefing-only mode. Read and discuss, but do not change product code or run substantive evaluation until the user explicitly approves the final run plan.
-- Treat the launch prompt as run-specific authority and this skill as reusable behavior. Never invent a baseline, identity, path, approval, command, service, cost allowance, retry allowance, or archive authority.
-- Treat each semantic gate as user-owned. First Mate may supervise routine work and relay an explicitly attributed user decision, but may not approve a gate itself.
-- Work only in the supplied branch and worktree. Preserve unrelated changes and do not merge, cherry-pick, publish, consolidate, delete a worktree, or edit collection-level documents.
-- Implement the smallest intervention that can test the approved hypothesis. Avoid unrelated cleanup, refactoring, production hardening, fixture repair, and evaluation-specific overfitting.
-- Report negative, inconclusive, invalid, failed, and abandoned outcomes accurately. A completed execution is not evidence that its hypothesis succeeded.
+- the objective, hypothesis, baseline, treatment, and causal intervention;
+- worktree, branch, origin commit, scope, and non-goals;
+- an explicit test plan with cases or datasets, commands or entry points, metrics, comparison method, and success criteria;
+- allowed tools, services, data, credentials, costs, runtime, and stopping boundaries;
+- which routine adaptations and command approvals First Mate may handle;
+- human-owned decisions and requested completion evidence; and
+- relevant skills to invoke for the implementation or evaluation domain.
 
-## Required launch contract
+Do not demand protocol versions, run identities, schemas, hashes, receipts, or a pre-created artifact tree. If a missing detail materially changes the experiment, ask First Mate or the user. Otherwise make a reasonable, stated assumption and proceed.
 
-Before implementation, obtain and verify:
+Read repository instructions and explicitly invoke every relevant skill named in the brief. Also use other available domain skills when they clearly govern the code or evaluation being changed; tell First Mate what you are using and why.
 
-- protocol version, bundle format, collection ID, experiment ID, immutable run ID, and current phase;
-- repository, exact origin commit, dedicated branch, absolute worktree, and supervising First Mate identity or pane;
-- exact run directory beneath that worktree and the `experiment-run-bundle/v1` format;
-- initial plan path or complete initial plan, hypothesis, scope, non-goals, and expected implementation area;
-- approved model and reasoning effort;
-- permitted commands, tools, services, data access, credentials boundaries, and routine approval authority;
-- runtime, cost, concurrency, retry, and stopping limits;
-- human-owned gates, decision criteria, approval-receipt fields, approval-relay convention, required artifacts, terminal handoff fields, and disposition options; and
-- baseline source and comparison method, including who provisions a separate baseline worktree when one is required.
+## Set up the environment
 
-If an essential field is absent or inconsistent, remain in briefing mode and request a corrected launch contract through First Mate. Read [protocol v1](references/protocol-v1.md) before validating launch inputs, emitting any signal, or interpreting an approval.
+Treat environment preparation as part of the job:
 
-## Non-negotiable bundle boundary
+1. Inspect repository setup instructions, package managers, tool versions, environment files, and existing test or evaluation entry points.
+2. Reuse existing environments and caches when safe; install or configure missing project dependencies within the approved boundaries.
+3. Run a cheap preflight that proves the intended path is reachable before expensive evaluation.
+4. Diagnose failures from their output instead of immediately escalating.
 
-The complete run bundle must remain inside the supplied worktree. The plan, manifest, patch, report, configs, outputs, and artifacts must all resolve beneath the exact run directory. Do not put bundle content in the main checkout, sibling worktrees, the manager archive, `/tmp`, a home-directory cache, or another external path. Do not use symlinks or traversal to escape the boundary.
+For sandbox, network, package, authentication, or filesystem restrictions, use the platform's native approval request with the exact command and purpose. First Mate or the user may approve it. After the prompt resolves, inspect the actual state and continue; do not require an approval receipt or a separate manager message.
 
-Resolve and check the real worktree and run-directory paths during briefing, before evaluation, and before completion. Treat an escaping path or symlink as `HUMAN_TRIAGE_REQUIRED`. Direct every approved command's durable outputs into the run bundle.
+Ask First Mate for concrete help when it can inspect or repair the surrounding environment. Escalate to the user only for missing authority, new credentials or sensitive data, meaningful cost, destructive action, or a material change to the experiment.
 
-Remote services may retain source records when approved. Export evidence into the bundle when possible; otherwise record stable remote identifiers, access assumptions, retention risk, and the resulting reproducibility limitation. Never capture credentials or secrets in snapshots or artifacts.
+## Implement and evaluate
 
-Read [run bundle contract](references/experiment-run-bundle-v1.md) when creating the run directory, freezing provenance, recording retries, or finalizing `RUN_MANIFEST.json`.
+Implement the smallest intervention that tests the hypothesis. Preserve unrelated changes and do not merge, publish, edit manager-owned archives, or perform consequential external mutations.
 
-## Lifecycle
+Follow the approved test plan, but use judgment over mechanics. You may correct bugs, adjust commands or output paths, add targeted checks, tune concurrency, and retry transient failures when those changes preserve the intervention, comparison, cost boundary, and validity. Explain material deviations in the report.
 
-### 1. Brief and freeze the plan
+Return to the user before proceeding when a change would alter the hypothesis, causal intervention, baseline or treatment meaning, decision metric, material spend, sensitive-data use, or evidential validity. A patch-review or evaluation-review pause is optional unless the run brief or user requires it.
 
-Read repository instructions and inspect only enough code and configuration to verify the plan's assumptions. Confirm the identity, origin, branch, worktree, bundle boundary, hypothesis, intervention, scope, non-goals, expected evidence, risks, and autonomy envelope.
+Persist through ordinary failures:
 
-During First Mate's interactive-takeover phase, discuss ambiguities with the user and record only explicitly agreed amendments in the in-worktree `EXPERIMENT_PLAN.md`. Present the reconciled plan and pause. Do not interpret silence, routine command approval, or collection approval as execution approval.
+- distinguish environment failure from evidence about the hypothesis;
+- preserve useful partial output;
+- change tactics rather than repeating the same failing action;
+- retry flaky network or service calls within the approved limits;
+- repair setup and harness issues when they do not change the experiment; and
+- keep a blocked run resumable instead of declaring it abandoned.
 
-When the user explicitly approves execution, record a complete approval receipt bound to the plan freeze reference and freeze `EXPERIMENT_PLAN.md`. Do not rewrite it to match later outcomes. Record deviations in `REPORT.md`; a material change to the hypothesis or intended intervention normally requires a new run.
+If substantive execution has started, an honest repair and rerun may remain in the same run when attempts are separately recorded and comparison stays valid. Ask for a new run only when combining the evidence would be misleading.
 
-### 2. Construct and present the patch
+## Evidence and report
 
-Implement only the approved causal intervention. Do not change datasets, evaluators, graders, metrics, fixtures, or success criteria unless they are the approved subject of the experiment. A minimal smoke check is permitted only when the plan or autonomy envelope allows it and it establishes that the patch can execute; do not begin substantive evaluation.
+Keep working artifacts lightweight. At minimum retain:
 
-Generate `implementation.patch` against the recorded origin, including every behavior-relevant added, modified, deleted, or binary file while excluding the run bundle itself. Assign a monotonically increasing patch revision and a SHA-256 digest to the exact patch. Emit `PATCH_REVIEW_REQUIRED` with the required packet, then pause.
+- the approved brief, preferably as `EXPERIMENT_PLAN.md`;
+- the implementation diff against the origin;
+- decisive configuration and raw output; and
+- a concise, outcome-first `REPORT.md`.
 
-User-requested revisions before substantive evaluation may remain in this run when they preserve the approved hypothesis and intervention. Each produces a new patch revision, digest, and handoff. Patch approval binds only the identified revision and digest. Confirm that the current implementation still matches the approved patch immediately before evaluation; any behavior-changing difference invalidates patch and evaluation approval.
+Do not create a manifest, checksum inventory, approval ledger, or elaborate directory hierarchy unless the brief specifically requires it. Tool-native temporary locations and approved remote systems are acceptable during execution. Before handoff, identify the evidence that must be copied into an archive if the run is selected. Never store secrets.
 
-### 3. Propose the evaluation
+The report should state:
 
-After patch approval, write an exact evaluation proposal covering baseline and treatment conditions, commands, cases, datasets, samples, controls, metrics, decision criteria, repetitions, concurrency, output paths, targeted checks, runtime, model usage, external cost, retry allowance, and validity risks.
+- the hypothesis and intervention;
+- what actually ran, including baseline and treatment;
+- key observed results and their evidence paths or remote identifiers;
+- interpretation, validity concerns, retries, and material deviations;
+- outcome: supported, not supported, or unresolved; and
+- recommended next action.
 
-Prefer direct evidence from the relevant end-to-end path or evaluation harness. Do not run broad PyTest suites by default. Use targeted tests only when they show that the patch is active or the relevant functional path works. Record incidental failures without repairing them unless they prevent target execution, corrupt evidence, or make baseline and treatment incomparable.
+## Handoff
 
-Assign an evaluation revision and SHA-256 digest to the proposal. Emit `EVALUATION_REVIEW_REQUIRED`, then pause. A proposal revision before substantive execution may remain in this run, but it requires a new revision, digest, handoff, and user decision. Evaluation approval binds only that evaluation revision and digest together with the current approved patch identity.
+Report one of `complete`, `inconclusive`, `invalid`, or `blocked`. `blocked` is resumable and should include the exact obstacle, attempts made, preserved state, and authority or change needed. Do not use “abandoned” for ordinary execution trouble.
 
-Do not switch the treatment worktree between origin and patched states to manufacture a baseline. Use the approved harness mechanism, approved preserved baseline evidence, or a separately provisioned baseline worktree. Escalate when the approved baseline cannot be obtained comparably.
-
-### 4. Execute only the approved evaluation
-
-Before execution, verify the approved patch digest, evaluation digest, bundle boundary, remaining limits, and required destinations. Snapshot relevant configuration, prompts, parameters, dataset identity, software versions, and environment metadata with secrets redacted.
-
-Run only the approved commands and preserve raw outputs before transformation. Give retries and reruns distinct paths and record their reasons; never overwrite an earlier attempt. Ask First Mate to resolve routine permissions or transient failures only within the approved envelope.
-
-Before substantive execution begins, a material patch change returns to patch review and then evaluation review, and an evaluation-proposal change returns to evaluation review. Once substantive execution begins, any material patch or evaluation change, additional evaluation, or rerun that would create new evidence requires `HUMAN_TRIAGE_REQUIRED` and a separately provisioned run. Do not repair unrelated failures unless they invalidate the target execution and the user approves the changed contract through the appropriate new run.
-
-### 5. Analyze and report
-
-Create an informative but concise `REPORT.md` from the observed evidence. Lead with the outcome, make the report easy to scan, and link to detailed provenance and raw evidence instead of duplicating them. Keep run status separate from hypothesis outcome, distinguish direct observations, interpretation, and untested ideas, and use relative links so the bundle remains portable.
-
-Read [report format](references/report-format.md) before writing or materially correcting the report.
-
-### 6. Finalize and hand off
-
-Finalize valid `RUN_MANIFEST.json`, inventory and hash all regular bundle files except the manifest itself, reject symlinks, verify the inventory against the source files, recheck the worktree boundary and patch identity, and emit exactly one terminal status:
-
-- `RUN_COMPLETE`
-- `RUN_INCONCLUSIVE`
-- `RUN_INVALID`
-- `RUN_ABANDONED`
-
-Send the structured completion handoff to First Mate and stop. `HUMAN_TRIAGE_REQUIRED` is a resumable interruption, not a terminal result. Do not import the bundle, update collection documentation, or continue into another run.
-
-## Iteration and corrections
-
-Before substantive execution, user-requested patch revisions that preserve the approved hypothesis and intervention, and evaluation-proposal revisions, may remain in the same run with new identities and renewed approval. A changed hypothesis or intended intervention, post-execution material patch or evaluation change, additional evaluation, or substantive rerun requires a new immutable run ID, worktree, agent, and bundle. A later run may cite an earlier run but must not mutate or reuse its writable directory.
-
-A reporting-only correction may update a not-yet-archived `REPORT.md` when it does not change evidence or materially reinterpret the result. Regenerate and verify the manifest inventory, then send a corrected terminal handoff so First Mate verifies the current source bundle. Any material reinterpretation returns to user disposition rather than being silently edited.
+Send First Mate a compact handoff with branch, worktree, origin, changed files, validation and evaluation results, evidence locations, limitations, and recommended disposition. Stop before merge, publication, archival copy, or cleanup.

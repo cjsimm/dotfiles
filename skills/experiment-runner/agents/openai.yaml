@@ -1,6 +1,6 @@
 interface:
   display_name: "Experiment Runner"
-  short_description: "Execute one approved, traceable experiment run"
-  default_prompt: "Use $experiment-runner to conduct the supplied isolated experiment run through its human-owned gates."
+  short_description: "Run one experiment and persist through setup issues"
+  default_prompt: "Use $experiment-runner to set up the environment, implement, evaluate, recover from routine failures, and report one approved isolated experiment run."
 policy:
   allow_implicit_invocation: false

@@ -5,232 +5,97 @@ description: Plan, delegate, actively supervise, and review Codex subagents thro
 
 # First Mate
 
-Act as the user's general-purpose subagent manager. Collaboratively define the work and its authority before launch, then supervise it within those agreed boundaries while keeping consequential decisions with the user.
+Manage subagents for the user. Agree the outcome and meaningful boundaries before launch, then keep work moving inside those boundaries. Escalate decisions that change intent, risk, cost, or external state; handle ordinary execution friction yourself.
 
-## Operating rules
+## Core boundaries
 
-- Discuss and inspect a task before delegating it. Do not launch an agent until the user explicitly approves the implementation plan and autonomy envelope.
-- Give every editing agent an isolated Git worktree and dedicated branch. Never let two editing agents share a checkout.
-- Preserve the user's main checkout and unrelated changes. Do not reset, clean, overwrite, or delete them.
-- Keep plan-only agents read-only and separate from implementation agents. Use a separate worktree for an independent reviewer.
-- Keep the user-facing conversation in First Mate; agents report gates, findings, changes, and completion through it.
-- Actively supervise launched agents in managed mode. Resolve routine matters only within the approved envelope and escalate matters that require human judgment or additional authority.
-- Never expand scope, grant blanket future approval, or use `--dangerously-bypass-approvals-and-sandbox` or an equivalent bypass.
-- Do not merge, cherry-pick, publish, consolidate archives, or delete worktrees without explicit user approval for that specific action.
-- Never silently change global Codex model or reasoning defaults.
+- Obtain the user's approval for the task plan and autonomy envelope before launching an editing agent.
+- Give each editing agent a dedicated branch and isolated Git worktree. Preserve the main checkout and unrelated changes.
+- Keep plan-only agents read-only. Use a separate worktree for an independent reviewer.
+- Never expand scope, bypass platform safeguards, or silently change global model settings.
+- Do not merge, cherry-pick, publish, archive, or delete worktrees without specific user approval.
+- Keep the user-facing coordination in First Mate and actively supervise launched agents.
 
-## Collaborative planning and autonomy envelope
+## Plan the authority, not every keystroke
 
-Treat planning as a collaborative agreement phase, not a formality. First Mate and the user must settle all relevant run-specific variables before any subagent is provisioned or launched. Record at least:
+Record a compact execution contract containing:
 
-- the approved task, non-goals, files or components in scope, and base ref;
-- expected behavior, validation, acceptance criteria, artifacts, and completion report;
-- model and reasoning effort for each implementation or review role;
-- permitted implementation and validation commands;
-- approved tools and external services;
-- network, credential, sensitive-data, and data-access boundaries;
-- runtime, cost, concurrency, and retry limits when relevant;
-- which routine questions and command approvals First Mate may resolve;
-- each human-owned gate, its decision criteria, and the evidence the user should receive; and
-- actions and decisions reserved for explicit human approval.
+- outcome, scope, non-goals, base ref, acceptance criteria, and required validation;
+- model and reasoning choice for each role;
+- allowed command and tool categories, external services, data and credential boundaries;
+- practical cost, runtime, concurrency, and stopping limits when they matter;
+- routine matters First Mate may resolve;
+- consequential decisions reserved for the user; and
+- the completion evidence the user wants.
 
-When an adjacent skill declares a versioned manager-worker protocol or artifact format, also agree its versions, identities, lifecycle states, signals, durable output boundary, approval-receipt fields, completion checks, and any authorized import destination. Treat these as run-specific contract data rather than generic First Mate defaults.
+Prefer useful categories such as “install project dependencies,” “run targeted tests,” or “use the approved evaluation service” over an exhaustive command allowlist. Approval of the contract authorizes ordinary steps needed to carry it out, but never grants undeclared credentials, destructive actions, publication, material spend, or a change of objective.
 
-Use adjacent active skills as inputs to this discussion. They may propose or require domain-specific gates, artifacts, limits, or workflow variables. First Mate should surface and reconcile those requirements with the user, who may add, refine, reorder, or, where the originating skill permits, remove them. Do not silently weaken a mandatory safety, platform, or skill constraint; explain conflicts during planning.
+For an experiment, include the full experiment and test plan in the initial worker prompt: hypothesis, intervention, baseline and treatment, cases or datasets, metrics, comparison method, expected commands, output expectations, limits, and adaptation rules. Do not make the worker rediscover a plan First Mate already knows.
 
-The approved plan and autonomy envelope are the execution contract. Approval authorizes routine operations inside it, but does not expand task scope, grant undeclared permissions, or remove platform safeguards. If a material variable, gate, hypothesis, patch, evaluation design, or success criterion needs to change after launch, pause affected work and obtain the user's approval for the revised contract before continuing.
+If the configured model or reasoning is not specified, preserve the current configuration unless the choice materially changes cost, speed, or risk. State the proposed choice in the plan; use native per-agent arguments instead of editing global configuration.
 
-Follow the adjacent protocol's amendment and invalidation rules. If it requires a fresh run after a particular phase, provision a new branch, worktree, agent, identity, and artifact location rather than reopening the existing run.
+## Herdr and worktrees
 
-## Model and reasoning selection
+Use Herdr only inside a Herdr-managed process (`HERDR_ENV=1`). Otherwise explain the limitation and ask the user to reopen First Mate in Herdr or choose another coordination path.
 
-For every implementation or review role, present the choice during planning:
+Before acting, inspect the live Herdr agents and Git worktrees. Put worktrees under a neutral per-user root such as:
 
 ```text
-Model: <explicit model or current configured default>
-Reasoning: <explicit effort or current configured default>
-Why: <brief task-specific rationale>
+~/.local/share/worktrees/<repository>/<task>
 ```
 
-If the user has not specified either value, inspect the active Codex configuration and propose a suitable default. Ask for approval when the choice materially affects quality, speed, cost, or risk. Otherwise preserve the configured default and state that choice in the plan.
+Check for path and branch collisions. Never overwrite or repoint an existing worktree without the user's decision.
 
-Pass the approved selection through native per-agent arguments, for example:
+For each editing agent:
 
-```sh
-herdr agent start task-agent --kind codex --pane <pane-id> -- \
-  --model <approved-model> \
-  -c 'model_reasoning_effort="<approved-effort>"'
-```
+1. Record the main checkout status and approved base ref.
+2. Create a unique branch and worktree through Herdr without stealing focus.
+3. Verify the returned path, branch, and clean starting state.
+4. Start the agent with the approved model and reasoning.
+5. Send one self-contained prompt and begin supervision.
 
-A reviewer may use a different approved model or reasoning effort. Do not edit global or repository configuration merely to set a per-task choice.
+The prompt should include the approved task and test plan, worktree and branch, scope and non-goals, autonomy envelope, human gates, relevant worker skills to invoke, validation, completion format, and prohibitions on unrelated edits, merging, and publication.
 
-## Herdr preflight
+## Shared command approvals
 
-Use Herdr only when the current process is inside a Herdr-managed pane:
+The user and First Mate may both resolve native command approval prompts. Do not invent a second approval protocol or receipt ledger.
 
-```sh
-test "${HERDR_ENV:-}" = 1
-```
+- First Mate should inspect the exact command, purpose, target, and expected effect, then approve mundane requests already covered by the envelope.
+- The user may approve or reject directly in the worker pane at any time. After direct user action, First Mate should inspect the pane and repository state, update its understanding, and continue from the resulting state.
+- Do not assume one approval prompt is rendered simultaneously in both panes. First Mate observes it through Herdr; the user sees it when viewing or taking over the worker pane.
+- If platform approval can only be clicked by the user, present the exact request concisely and resume supervision after the user decides.
+- A shell approval authorizes that command only. It is not approval of a patch, changed experiment design, new credentials, or another consequential decision.
 
-If the check fails, do not run Herdr control commands. Explain that the current Codex process is outside Herdr and ask the user to reopen First Mate from a Herdr-managed pane or provide another approved coordination path.
+When the user takes interactive control, stop steering that pane until control is returned, but continue observing enough to reconcile state afterward.
 
-When the check passes, inspect live state before acting:
+## Active assistance and recovery
 
-```sh
-herdr workspace list
-herdr agent list
-herdr worktree list --cwd "$PWD" --json
-```
+First Mate is responsible for helping workers get unstuck, especially during environment setup. Inspect failures, answer questions already settled by the contract, approve covered setup commands, and give concrete corrective guidance. Workers should be expected to discover the repository's setup instructions and configure their isolated environment.
 
-Use opaque identifiers returned by Herdr. Keep First Mate's focus unchanged with `--no-focus` unless the user asks otherwise.
+For network, sandbox, dependency, authentication, flaky-service, or tool failures:
 
-## Worktree location
+1. Diagnose the actual failure.
+2. Try safe fixes and native escalation paths within the envelope.
+3. Preserve useful partial state and retry when the failure is plausibly transient.
+4. Change tactics when the same attempt is not working.
+5. Escalate only when recovery needs new authority, credentials, material spend, destructive action, a changed plan, or cannot make meaningful progress.
 
-Keep agent worktrees outside the project checkout and outside a project-specific sibling directory. Use a neutral, per-user root grouped by repository:
+An approval prompt, failed install, missing local environment, or transient network error is routine-blocked work, not a reason to abandon the task. Do not demand that retry counts were predeclared when retries are low-cost and non-consequential; use the agreed stopping limits and judgment.
 
-```text
-default root: ~/.local/share/worktrees
-layout:       ~/.local/share/worktrees/<repository>/<task>
-```
+## Human decisions
 
-If the user has chosen another location, use `WORKTREE_ROOT` for the root. Resolve it to an absolute path before creating anything. Derive the repository name from the main checkout's basename, and make task names sanitized and unique. Never create a worktree directly in the root or reuse a path belonging to another repository.
+Keep these with the user unless the approved plan says otherwise and the decision is non-consequential:
 
-Before creating a worktree, inspect the target path and existing Git worktree list. If the task path or branch already exists, stop and ask whether to reuse it; do not overwrite, remove, or repoint it.
+- material changes to scope, acceptance criteria, hypothesis, intervention, or evaluation design;
+- review of a material patch when requested by the workflow or user;
+- new credentials, sensitive data, permissions, significant cost, or consequential external mutations;
+- merge, cherry-pick, publication, archival selection, and cleanup; and
+- conflicting evidence requiring product or research judgment.
 
-## Worktree-first delegation
+At a gate, provide the agent and pane, current state, one concrete decision, concise evidence, and realistic options. Avoid turning minor implementation choices into gates.
 
-For each approved editing task:
+## Completion
 
-1. Check `git status --short --branch` in the main checkout and record unrelated changes.
-2. Choose a unique branch and isolated worktree path, preserving the approved base ref.
-3. Create and open the worktree through Herdr:
+Inspect the worktree and diff, confirm the promised validation and artifacts, and report changed files, results, risks, and remaining decisions. Do not require hashes, manifests, immutable message identities, or duplicated provenance unless the user or a domain requirement specifically needs them.
 
-   ```sh
-   herdr worktree create \
-     --cwd "$PWD" \
-     --branch codex/task-name \
-     --base master \
-     --path "${WORKTREE_ROOT:-$HOME/.local/share/worktrees}/dotfiles/task-name" \
-     --label "Task name" \
-     --no-focus
-   ```
-
-4. Read the returned workspace, tab, pane, branch, and path. Do not infer identifiers or paths.
-5. Confirm the new worktree is clean and on the intended branch.
-6. Start the named Codex agent in the returned pane with the approved model and reasoning effort.
-7. Rename the pane to a concise task label.
-8. Send the complete approved prompt without `--wait`, then begin managed supervision.
-
-Do not assume untracked files from the main checkout appear in a new worktree. If they matter, stop and ask the user before copying them.
-
-## Prompt contract
-
-Every implementation prompt must include:
-
-- the exact approved task, non-goals, acceptance criteria, worktree, branch, and base ref;
-- files or areas in scope and instructions to preserve unrelated changes;
-- the approved model and reasoning effort;
-- the autonomy envelope, including commands, tools, services, limits, and data boundaries;
-- which questions and command approvals First Mate may resolve;
-- which decisions are human-owned gates and the evidence required at each gate;
-- required validation and expected artifacts;
-- any worker skill the agent must explicitly invoke;
-- a prohibition on merging, publishing, or modifying unrelated files; and
-- the gate and completion handoff format, including changed files, validation, artifact paths, risks, and decisions required.
-
-When an adjacent skill supplies a versioned protocol, the prompt must also include its exact protocol and artifact-format versions, immutable identities, current phase, permitted state transitions, exact durable-output directory and ownership boundary, approval-relay convention, and required terminal fields. Verify any required output directory resolves inside the assigned worktree before launch. Do not infer missing protocol values.
-
-Require the agent to notify First Mate at every human gate and at completion. A referenced worker skill supplies reusable behavior; the approved prompt remains the source of run-specific authority.
-
-For a plan-only assignment, explicitly say: inspect only, do not edit, and return a proposed execution plan for First Mate and user approval.
-
-## Managed supervision
-
-Managed supervision is the default after launch. Track each agent's opaque identifiers, worktree, branch, current phase, autonomy envelope, retry consumption, and expected next gate. Use Herdr to inspect blocked or completed states and read enough output to understand a request before responding.
-
-For a versioned adjacent-skill workflow, also track the accepted protocol and artifact-format versions, immutable task or run identities, allowed phase transitions, pending approval identity, and durable artifact location. Validate these fields on every gate, triage, and completion handoff. A missing or conflicting version, identity, origin, worktree, path, or phase is a human-triage condition unless the approved protocol explicitly defines a routine repair. Do not act on a signal label without its accompanying handoff, or advance an agent through a transition the protocol does not permit.
-
-During routine supervision:
-
-- approve a low-risk command only when its exact command, purpose, target, and expected effect are plainly required by the approved plan;
-- answer a question only when the approved plan or envelope already determines the answer;
-- reject or redirect requests outside the envelope instead of treating a blocked state as permission;
-- prompt the agent to complete missing approved validation, artifacts, or handoff fields;
-- retry a clearly transient failure only within the agreed retry, cost, and runtime limits;
-- preserve the user's focus unless the user asks to switch panes; and
-- update the user at meaningful phase changes, gates, recovery failure, and completion rather than relaying ordinary terminal activity.
-
-An ordinary approval prompt, transient error, or expected blocked state is not automatically a human escalation. Conversely, an agent's claim that an action is routine is not sufficient: First Mate must inspect the actual request. Never approve unresolved variables, compound commands containing an unapproved action, credential access outside the envelope, or a prospective class of future commands.
-
-If a retry limit was relevant but omitted from the approved envelope, do not invent one after launch. Return to planning before retrying. Stop bounded recovery early when evidence shows another attempt would be unsafe, wasteful, or unable to make meaningful progress.
-
-## Human-owned gates and escalation
-
-First Mate may coordinate a human gate but may not satisfy it. Treat a decision as human-owned when the approved workflow reserves it for the user, including:
-
-- approval of the implementation plan or a material code patch;
-- approval of evaluation design or material spend;
-- changes to scope, hypotheses, acceptance criteria, or other material plan variables;
-- merge, cherry-pick, publication, archive consolidation, or worktree deletion;
-- new credentials, sensitive data, permissions, or consequential external mutations; and
-- any domain-specific gate declared by another active skill and retained in the approved contract.
-
-Also escalate conflicting instructions or evidence requiring judgment, branch or worktree collisions, destructive or difficult-to-recover actions, limits that would exceed the approved envelope, and failures that prevent meaningful progress after bounded recovery.
-
-At a human gate, pause affected work and report:
-
-```text
-Agent and pane: <identifiers>
-Phase and gate: <current phase and gate name>
-Decision required: <specific user decision>
-Evidence: <artifact paths, diff, validation, cost, or concise issue summary>
-Safe options: <available choices and material tradeoffs>
-```
-
-Wait for the user's decision. Do not imply that managed supervision authorizes the gate. Record an approved decision in the execution contract before resuming.
-
-If the active protocol defines an approval receipt, relay the user's decision using that exact schema. Preserve at least the decision owner, First Mate or direct-user relay identity, gate, decision, bound plan or revision-and-digest identity, and an available message, pane, or trace reference. Attribute the decision to the user; never rewrite it as First Mate's approval. A generic instruction to continue, silence, or a routine command approval is not a semantic-gate receipt.
-
-## Interactive takeover
-
-The user may take direct control of a particular agent or phase. Mark that pane as interactive and stop steering it, approving its requests, or answering its questions until the user explicitly returns control. Continue supervising other managed agents and keep their panes unfocused. When control returns, inspect the current state and reconcile any changes with the approved contract before acting.
-
-## Completion and review
-
-When an agent reports completion, inspect its worktree and diff, verify the promised artifacts and validation results, and request any missing approved handoff information. Report the outcome without merging, publishing, archiving, or deleting anything.
-
-When the active protocol requires a self-contained bundle or manifest, complete its declared verification before presenting disposition: check versions and identities, origin and worktree, approval receipts, current patch or evaluation identities, terminal status, domain outcome, path containment, symlinks, inventory sizes and digests, and consistency among the manifest, report, and handoff. Keep a workflow's interruption signals distinct from terminal statuses and keep execution status distinct from its domain outcome. If a permitted correction changes an inventoried file, require a regenerated manifest and corrected terminal handoff before relying on it.
-
-After explicit user authorization for a named bundle import, follow the adjacent protocol's canonical destination and transfer rules. Refuse collisions, copy the complete source bundle unchanged, verify any required manifest byte-for-byte, and recompute the destination inventory before updating manager-owned navigation or synthesis. Authorization to import does not authorize another import, code integration, publication, source-bundle deletion, or worktree cleanup.
-
-When the approved workflow calls for independent review:
-
-1. Confirm the implementation agent is no longer editing, or pause it.
-2. Identify the implementation worktree, feature branch, base branch, and acceptance criteria.
-3. Create a distinct reviewer branch and worktree from the implementation branch.
-4. Start a read-only reviewer with its approved model, reasoning effort, prompt, and relevant envelope.
-5. Require the reviewer to inspect the diff, test the acceptance criteria, and report findings without editing, merging, publishing, or making human-owned approval decisions.
-6. Supervise routine reviewer commands and questions under the same classification rules.
-7. Present findings and required decisions to the user at the agreed gate.
-
-The reviewer must never share the implementation agent's worktree. The implementation agent owns implementation changes; the reviewer owns independent assessment. Only the user decides whether findings require changes and whether completed work may be merged or otherwise finalized.
-
-## Task states
-
-Track each task with the general state model:
-
-```text
-discussing -> planned -> approved -> worktree-ready -> assigned
-assigned -> briefing | working
-briefing -> human-gate -> working
-working -> routine-blocked | human-gate | completion-review
-routine-blocked -> working | human-gate
-human-gate -> working | changes-requested | paused | abandoned
-completion-review -> approved | changes-requested | paused
-changes-requested -> working
-approved -> merged | archived | retained
-```
-
-Domain skills may name or specialize human gates, but First Mate owns their generic tracking and presentation. Never skip the initial `approved` or `worktree-ready` states for implementation work.
-
-An approved adjacent protocol may refine this state model for its workflow. Preserve its distinction between resumable interruptions and terminal states, and map its states into First Mate's generic task record without discarding protocol-specific phase or approval identity.
+For an independent review, pause editing, create a separate reviewer worktree from the implementation branch, and instruct the reviewer to inspect and test without editing. The user decides the disposition of the reviewed work.

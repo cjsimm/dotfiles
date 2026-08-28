@@ -1,124 +1,94 @@
 ---
 name: experiment-orchestrator
-description: Design and supervise controlled code-experiment collections with explicit hypotheses, isolated runs, human-gated patches and evaluations, preserved evidence, and cross-run synthesis. Use with First Mate for deliberate variants or iterative experimental runs; do not use for ordinary implementation, generic tests, production monitoring, or informal exploration.
+description: Design and supervise isolated code experiments with explicit hypotheses, useful controls, human control of consequential decisions, and concise archived evidence. Use with First Mate for deliberate variants or iterative experimental runs; do not use for ordinary implementation or generic testing.
 ---
 
 # Experiment Orchestrator
 
-Supply experiment semantics while First Mate supplies generic coordination. Turn an experimental question into an approved collection of isolated runs whose patches, evaluations, evidence, reports, and conclusions remain traceable.
+Use First Mate for coordination and this skill for experimental reasoning. Design experiments that produce comparable evidence without burdening workers with a transaction protocol.
 
-Use `experiment-protocol/v1` as the shared manager-runner message contract and accept only `experiment-run-bundle/v1` source bundles. If either version is missing or mismatched, pause with `HUMAN_TRIAGE_REQUIRED`; do not guess compatibility.
+## What must remain controlled
 
-## Boundaries and ownership
+- State the question, hypothesis, causal intervention, baseline, treatment, evaluation method, and decision criteria before launch.
+- Give each concurrently editing run its own agent, branch, and worktree. A baseline may use preserved evidence or a separate worktree when switching states would contaminate comparison.
+- Keep unrelated refactors, fixture repair, metric changes, and case-specific overfitting out of the intervention unless they are the subject of the experiment.
+- Keep credentials and disallowed sensitive data out of artifacts.
+- Let the user control material changes, consequential spend or external effects, archival selection, code integration, publication, and cleanup.
 
-- First Mate owns Herdr preflight, worktree and agent creation, model selection, routine supervision, approval classification, bounded recovery, human-gate presentation, user-decision relay, and verification or import of user-selected bundles. Follow `$first-mate`; this skill supplies the experiment-specific protocol data and must not duplicate or weaken its generic safeguards.
-- This skill owns collection design, hypotheses and variants, experiment gates, provenance requirements, run disposition, archival selection, comparison, and synthesis.
-- Each agent explicitly invokes `$experiment-runner`, produces and validates one `experiment-run-bundle/v1` source bundle, and owns one isolated run. It may edit only its worktree and must never edit the manager-owned collection archive or collection-level reports.
-- The orchestrator defines bundle acceptance and archival placement. First Mate verifies and imports only a user-selected bundle; the user alone authorizes disposition and import.
-- The user owns collection and variant approval, final run-plan approval, every material patch approval, evaluation design and spend approval, run disposition, archival selection, synthesis approval, and consequential repository actions.
+Everything else should be optimized for finishing the experiment and learning from it.
 
-One gate never authorizes a later gate. First Mate may supervise routine operations between gates but may never satisfy a semantic experiment gate.
+## Approve one useful run brief
 
-## Non-negotiable isolation
+Collaborate with the user and First Mate on a compact collection plan and a self-contained brief for each run. The brief is the source of authority and must contain:
 
-Give every editing run its own branch, worktree, agent, immutable run ID, and run directory. A later iteration is a new run even when it tests the same hypothesis.
+- objective, hypothesis, variant, baseline, and smallest useful intervention;
+- scope, non-goals, origin commit, branch, and worktree;
+- an explicit test plan: baseline and treatment conditions, cases or datasets, commands or entry points, metrics, repetitions when useful, comparison and success criteria;
+- expected outputs and the evidence needed for a decision;
+- model, reasoning, relevant domain skills the runner should invoke, tools, services, and data boundaries;
+- authority for dependency installation, environment repair, network or sandbox escalation, low-cost retries, and reasonable test-plan adaptations;
+- meaningful runtime, cost, concurrency, and stopping limits; and
+- the decisions that must return to the user.
 
-The complete working run bundle must remain inside its agent's worktree. Its manifest, plan, patch, report, configs, outputs, and artifacts must resolve beneath the approved worktree path; do not use symlinks, traversal, sibling worktrees, the main checkout, the collection archive, or external temporary directories to hold bundle content. First Mate verifies this boundary before launch and at completion.
+The user's approval of this brief authorizes the runner to inspect, prepare its environment, implement, run the stated evaluation, make non-material corrections, and report without pausing at artificial protocol checkpoints.
 
-Only First Mate may copy a user-selected completed bundle from its worktree into the manager-owned archive, and only after explicit consolidation approval. Read [collection structure and provenance](references/collection-structure.md) when choosing paths, verifying a bundle, iterating a run, or consolidating evidence.
+Use additional patch or evaluation gates only when the user asks for them or when the next action introduces a material change, material cost, new credentials or data, consequential external mutation, or a validity tradeoff the brief does not settle.
 
-## Collection planning
+## Let runs adapt and persist
 
-Before provisioning any editing agent, collaborate with the user under First Mate's autonomy-envelope workflow and approve:
+The runner may stay in the same run while it:
 
-- problem, motivation, objective, hypotheses, variants, controls, and baseline;
-- repository, origin commit, scope, non-goals, and expected minimal intervention;
-- datasets, evaluation principles, metrics, comparison conditions, and decision criteria;
-- model and reasoning effort for each role;
-- tools, services, credentials, data boundaries, commands, and routine authority;
-- runtime, cost, concurrency, retries, and stopping conditions;
-- collection archive location and manager-only write ownership;
-- canonical archive hierarchy, in-worktree bundle root, run identities, `experiment-run-bundle/v1`, required artifacts, and provenance fields;
-- all human gates, including requirements contributed by adjacent active skills; and
-- expected collection reports, synthesis review, and consequential actions.
+- fixes environment and dependency setup;
+- resolves sandbox or network problems through native approval paths;
+- corrects implementation mistakes that do not change the causal intervention;
+- refines commands, output locations, concurrency, or retry mechanics without changing what is being measured;
+- repeats failed or flaky attempts within the approved cost and validity limits; and
+- adds targeted checks needed to establish that the intervention actually ran.
 
-Gate 1 approval permits First Mate to initialize the manager-owned collection directory with `STATEMENT_OF_WORK.md` and optional navigation only; it does not permit run import or synthesis. Preserve the approved statement of work without rewriting it to fit later results. Record deviations in run or collection reports.
+Record material deviations in the report. Create a distinct run when the hypothesis or causal intervention changes, or when mixing new evidence into the old run would make the comparison misleading. Do not terminate or “abandon” a run merely because an initial command, setup attempt, or evaluation failed.
 
-## Experiment design
+First Mate should actively help with environment recovery and covered approvals. The runner should solve ordinary setup problems itself and request a native command approval when needed. Either the user or First Mate may satisfy such a prompt; no separate approval receipt is required.
 
-Design each patch as the smallest intervention capable of testing one causal idea. Avoid unrelated cleanup, refactoring, production hardening, fixture repair, and changes to datasets, graders, metrics, or success criteria unless those are the experiment's subject. Treat experimental code as disposable unless the user later selects it for production work.
+## Minimal evidence during the run
 
-Do not overfit prompts or implementation logic to known evaluation cases. A score increase produced by special-casing observed examples is not evidence of a general improvement unless the approved hypothesis explicitly tests that behavior.
+Do not require protocol versions, immutable message identities, approval receipts, per-file hashes, a manifest, or a complete inventory.
 
-Prefer direct evidence from the relevant end-to-end or evaluation path. Do not run broad PyTest suites by default. Use targeted tests to establish that the patch is active or the relevant path executes. Record incidental failures without repairing them unless they prevent target behavior, corrupt the evaluation, invalidate evidence, or make baseline and treatment incomparable.
+During execution, preserve enough evidence to avoid fooling yourself:
 
-## Human-gated lifecycle
+- the approved run brief or `EXPERIMENT_PLAN.md`;
+- the actual code diff;
+- decisive configuration and raw results;
+- a concise `REPORT.md` describing commands, deviations, results, limitations, and conclusion.
 
-Use six user-owned gates:
+Working files may live wherever the approved tools naturally create them, including temporary directories or remote evaluation services. Before cleanup or archival, copy the decision-relevant evidence into the selected archive and record stable remote links or identifiers when export is impractical. Never archive secrets.
 
-1. Collection and variant approval.
-2. Agent understanding and final run-plan approval.
-3. Material patch approval.
-4. Evaluation design and spend approval.
-5. Run disposition.
-6. Collection-synthesis approval after separately authorized run imports.
+## Completion and archive
 
-During Gate 2, place that pane into First Mate's interactive-takeover mode so the user can brief the agent directly. The agent may inspect and discuss but may not implement. Return the pane to managed supervision only after the user approves the final `EXPERIMENT_PLAN.md` and execution.
+Use plain states: `running`, `blocked`, `complete`, `inconclusive`, or `invalid`. A blocked run is resumable. Stop only when the user ends it, the stopping limit is reached, recovery needs unavailable authority, or further execution cannot produce interpretable evidence.
 
-A material patch change invalidates patch approval. A material evaluation change invalidates evaluation approval. A changed hypothesis, intervention, evaluation design, or substantive execution normally creates a new run rather than mutating prior evidence.
+At handoff, provide:
 
-An evaluation proposal may be revised before substantive execution within the same run, but every revision requires a new digest-bound Gate 4 decision. After substantive execution begins, any material patch or evaluation change, additional evaluation, or rerun with new evidence requires a new run. Reporting-only corrections may remain in an unarchived run only when evidence and material interpretation do not change.
+- outcome and whether the hypothesis was supported, not supported, or unresolved;
+- branch, worktree, origin, and changed files;
+- evaluation actually run, key results, retries, and material deviations;
+- paths or remote identifiers for the plan, diff, report, and decisive evidence;
+- limitations, remaining risks, and recommended next action.
 
-Read [gated lifecycle and protocol](references/gated-lifecycle.md) before provisioning agents, presenting any gate, interpreting a worker signal, or changing an approved run.
+The user decides whether to retain, continue, rerun, integrate, or archive the result.
 
-## Provisioning and prompt contract
+For a selected run, First Mate creates or updates a readable collection archive. Prefer this small structure unless the user needs more:
 
-For each approved editing run, First Mate should create the isolated branch, worktree, Herdr location, and named agent from the approved origin commit without stealing focus. Start the agent in briefing-only mode and explicitly invoke `$experiment-runner`.
+```text
+<archive>/<collection>/
+├── STATEMENT_OF_WORK.md
+├── REPORT.md
+└── runs/<run-id>/
+    ├── EXPERIMENT_PLAN.md
+    ├── implementation.patch
+    ├── REPORT.md
+    └── evidence/
+```
 
-The launch prompt must include:
+Copy only decision-relevant evidence, preserve raw results that support material claims, refuse accidental overwrite, and link synthesis claims to their run. The archive—not a perfect working bundle—is the durable record. Archive approval does not authorize merge, publication, source deletion, or worktree cleanup.
 
-- protocol version, bundle format, collection ID, experiment ID, immutable run ID, and current phase;
-- repository, origin commit, branch, worktree, and supervising First Mate identity or pane;
-- initial plan path or complete plan, hypothesis, scope, non-goals, and expected implementation area;
-- model and reasoning effort;
-- autonomy envelope, permitted commands, tools, services, data and credential boundaries, routine decisions First Mate may resolve, and the approval-relay convention;
-- runtime, cost, concurrency, retry, and stopping limits;
-- baseline source and comparison method, including who provisions a separate baseline worktree when required;
-- exact in-worktree run directory and the prohibition on writing bundle content elsewhere;
-- gate ownership, required signals, approval receipt fields, and terminal handoff fields;
-- required artifacts and expected disposition options; and
-- an explicit instruction to start in briefing-only mode.
-
-Before launch, First Mate should register these values in its supervision record, including the accepted protocol and bundle versions, immutable identities, current phase, allowed transitions, pending gate, exact run directory, and expected archive destination. Do not launch when an essential value is missing. Do not infer paths, baselines, identities, approvals, or archive authority.
-
-## Signals and supervision
-
-Recognize only these phase signals:
-
-- `PATCH_REVIEW_REQUIRED`
-- `EVALUATION_REVIEW_REQUIRED`
-- `HUMAN_TRIAGE_REQUIRED`
-- `RUN_COMPLETE`
-- `RUN_INCONCLUSIVE`
-- `RUN_INVALID`
-- `RUN_ABANDONED`
-
-The label identifies the phase; it does not authorize an action. Read the accompanying handoff, inspect the referenced evidence, verify protocol and identity, and apply the gate rules. Ask the runner to complete missing fields instead of guessing.
-
-First Mate must also verify that the reported phase transition is permitted by `experiment-protocol/v1`. Treat `HUMAN_TRIAGE_REQUIRED` as a resumable interruption and retain the prior phase; do not classify it as a completed or abandoned run unless the user later chooses a terminal disposition.
-
-Accept a semantic decision only from the user directly or from First Mate explicitly relaying the user's decision. Preserve a receipt containing decision owner, relaying identity, gate, decision, bound plan or revision-and-digest identity, and an available decision reference. Silence, a generic instruction to continue, collection approval, an ordinary command approval, or First Mate's own decision is not semantic approval.
-
-After evaluation approval, let First Mate handle routine command approvals and bounded recovery inside the envelope. Escalate material changes to scope, patch, evaluation, cost, validity, or evidence comparability.
-
-## Completion, disposition, and synthesis
-
-At completion, require `RUN_MANIFEST.json` and verify the protocol and bundle versions, IDs, origin, branch, worktree, approval receipts, patch and evaluation identities, terminal status, hypothesis outcome, and file inventory. Confirm that every reported path exists inside the exact run directory, no bundle entry is a symlink, and every inventoried regular file has the recorded size and SHA-256 digest. Cross-check the manifest, report, and terminal handoff before disposition. Preserve negative, inconclusive, invalid, and abandoned outcomes when they provide meaningful information.
-
-If the user requests an allowed reporting-only correction before import, require the runner to regenerate and verify the manifest inventory and issue a corrected terminal handoff. First Mate must replace the superseded completion record rather than combining fields or hashes from both handoffs.
-
-The user decides whether to correct reporting, create a new run, approve another evaluation as a new run, abandon the investigation, or select the run for archival consolidation. Without selection, leave the bundle in its worktree and do not touch the collection archive.
-
-Consolidate selected runs progressively as they finish. Each selection authorizes only the named bundle import and associated draft navigation or synthesis updates; it does not approve later imports or finalize the collection conclusions. Copy the source bundle unchanged into the canonical ID-derived destination, reject collisions, and verify the imported inventory against the source manifest before updating manager-owned documents. Compare only compatible evidence and trace material claims to run reports.
-
-Read [consolidated reporting](references/consolidated-report.md) before creating or updating experiment-level or collection-level reports. Separate direct observations, cross-run inferences, and untested ideas, preserve disagreement, and present synthesis to the user for approval.
+In synthesis, distinguish observations, interpretations, and untested ideas. Compare only compatible conditions, retain negative or inconclusive results when informative, and surface contradictions rather than averaging them away.
