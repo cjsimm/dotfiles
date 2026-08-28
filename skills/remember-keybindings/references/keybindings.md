@@ -12,6 +12,7 @@
 | `Ctrl-h/j/k/l` | Shared Neovim/Herdr navigation. In Neovim, move through editor splits first; at an edge, move to the neighbouring Herdr pane. |
 | `Prefix h/j/k/l` | Focus Herdr pane left/down/up/right. |
 | `Alt-Shift-h/l` | Previous/next Herdr tab. |
+| `Prefix ,` | Rename the current Herdr tab. |
 | `Prefix _` | Split top/bottom. |
 | `Prefix |` | Split left/right. |
 | `Prefix \` | Return to the last focused pane. |
@@ -31,6 +32,14 @@
 
 `Prefix {` / `Prefix }` were discussed as tmux-style up/down pane swaps, but
 are not configured.
+
+## Codex CLI
+
+| Keys | Action |
+| --- | --- |
+| `Ctrl-t` | Enter the transcript/message-history view. |
+
+Once in the transcript, use the same navigation controls as `less`.
 
 ## Neovim
 
