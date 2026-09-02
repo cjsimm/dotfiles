@@ -15,6 +15,28 @@ return {
                 vim.keymap.set(mode, lhs, rhs, options)
             end
 
+            local function choose_comparison_base()
+                local actions = require("telescope.actions")
+                local action_state = require("telescope.actions.state")
+
+                require("telescope.builtin").git_branches({
+                    prompt_title = "Git comparison base",
+                    show_remote_tracking_branches = true,
+                    attach_mappings = function(prompt_bufnr)
+                        actions.select_default:replace(function()
+                            local selection = action_state.get_selected_entry()
+                            actions.close(prompt_bufnr)
+
+                            if selection then
+                                gitsigns.change_base(selection.value, true)
+                                vim.notify("Git comparison base: " .. selection.value)
+                            end
+                        end)
+                        return true
+                    end,
+                })
+            end
+
             map("n", "]c", function()
                 if vim.wo.diff then
                     return "]c"
@@ -39,6 +61,11 @@ return {
                 gitsigns.blame_line({ full = true })
             end, "Git: Full blame line")
             map("n", "<leader>gd", gitsigns.diffthis, "Git: Diff file")
+            map("n", "<leader>gc", choose_comparison_base, "Git: Choose comparison base")
+            map("n", "<leader>g0", function()
+                gitsigns.reset_base(true)
+                vim.notify("Git comparison base reset")
+            end, "Git: Reset comparison base")
         end,
     },
 }
