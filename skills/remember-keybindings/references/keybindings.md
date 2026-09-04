@@ -69,6 +69,19 @@ Once in the transcript, use the same navigation controls as `less`.
 | --- | --- | --- |
 | Normal | `Ctrl-l` | Refresh the netrw listing; this intentionally overrides shared right navigation. |
 
+### Gitsigns
+
+| Mode | Keys | Action |
+| --- | --- | --- |
+| Normal | `Leader gd` | Toggle the current file's tracked Git diff window(s). |
+| Normal | `Leader gs` | Stage the hunk at the cursor. |
+| Normal | `Leader gr` | Reset the hunk at the cursor. |
+| Normal | `Leader gp` | Preview the hunk at the cursor. |
+| Normal | `Leader gb` / `Leader gB` | Show short / full blame for the current line. |
+| Normal | `Leader gc` | Choose the Git comparison base. |
+| Normal | `Leader g0` | Reset the Git comparison base. |
+| Normal | `]c` / `[c` | Move to the next / previous hunk. |
+
 ### Telescope
 
 | Mode | Keys | Action |
