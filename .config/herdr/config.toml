@@ -1,7 +1,4 @@
 onboarding = false
-[[keys.command]]
-key = "ctrl+h"
-
 # Keep the tmux muscle memory while using Herdr's workspace/tab model.
 [keys]
 prefix = "ctrl+space"
