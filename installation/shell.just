@@ -90,7 +90,8 @@ _zsh-alias:
 	lines=(
 		"# Aliases"
 		"alias ls='eza'"
-		"alias la='eza -la'"
+		"alias la='eza -alh --icons --git --group-directories-first'"
+		"alias lt='eza --tree --level=2 --icons'"
 		"alias vi='nvim'"
 		"alias cat='bat'"
 		"alias lg='lazygit'"
