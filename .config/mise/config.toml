@@ -13,5 +13,4 @@ pipx = "latest"
 [settings]
 experimental = true
 idiomatic_version_file_enable_tools = []
-# Mise defaults to UV .venv if it's present
-python.uv_venv_auto = true
+python.uv_venv_auto = "create|source"
