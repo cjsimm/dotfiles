@@ -10,6 +10,7 @@ firefox
 font-fira-code-nerd-font
 handy
 obsidian
+pgadmin4
 protonvpn
 spotify
 stremio@beta
