@@ -28,13 +28,15 @@ return {
 
             vim.diagnostic.config({ jump = { float = true } })
 
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = bufnr,
-                callback = function()
-                    vim.lsp.buf.format({ async = false })
-                end,
-                desc = "Format on save",
-            })
+            if vim.bo[bufnr].filetype ~= "python" then
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.format({ async = false })
+                    end,
+                    desc = "Format on save",
+                })
+            end
         end
 
         local function enable(name, config)
