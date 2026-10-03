@@ -94,6 +94,7 @@ _zsh-alias:
 		"alias lt='eza --tree --level=2 --icons'"
 		"alias vi='nvim'"
 		"alias cat='bat'"
+		'gd() { git diff --color=never "$@" | bat --language=diff; }'
 		"alias lg='lazygit'"
 		"alias venv-new='python -m venv .venv'"
 		"alias venv='source .venv/bin/activate'"
