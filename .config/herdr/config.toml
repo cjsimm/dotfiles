@@ -24,6 +24,17 @@ split_horizontal = ["prefix+minus", "prefix+_"]
 # last-pane command. Herdr reserves direct Ctrl-\\ for terminal applications.
 last_pane = "prefix+backslash"
 
+# Keep a compact tmux-style status area on the bottom tab bar.
+[ui]
+tab_bar_position = "bottom"
+tab_bar_right = [
+    { type = "zoom" },
+    { type = "hostname" },
+    { type = "command", command = "git -C \"$HERDR_ACTIVE_PANE_CWD\" branch --show-current 2>/dev/null || true", interval_seconds = 15, timeout_seconds = 2 },
+    { type = "datetime", format = "%Y-%m-%d %H:%M" },
+]
+tab_bar_right_separator = "  ·  "
+
 # Ctrl-h/j/k/l are deliberately handled through plugin actions below instead
 # of focus_pane_*. The actions forward the key to Neovim first, and only move
 # the Herdr pane when Neovim is at a split edge.
