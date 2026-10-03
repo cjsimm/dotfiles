@@ -2,7 +2,7 @@
 
 Personal developer-environment configuration and installation recipes for macOS and Debian-based Linux systems.
 
-The repository uses [`just`](https://github.com/casey/just) to coordinate installation. It manages shell configuration, terminal and editor settings, command-line tools, language tooling, Python packages, and portable Codex skills from one version-controlled directory.
+The repository uses [`just`](https://github.com/casey/just) to coordinate installation. It manages shell configuration, terminal and editor settings, command-line tools, language tooling, Python packages, and agent-harness integrations from one version-controlled directory.
 
 ## What is included
 
@@ -12,7 +12,6 @@ The repository uses [`just`](https://github.com/casey/just) to coordinate instal
 - mise-managed versions of tree-sitter, Node.js, Python, Go, Lua, fzf, stylua, OpenCode, and Herdr
 - Python packages for data work, Jupyter, HTTP requests, and terminal utilities
 - Docker tooling and Alacritty themes
-- Portable Codex skills from the [`skills/`](skills/) directory
 - Utility recipes for SSH keys, Python test directories, and Obsidian backups
 
 ## Installation
@@ -57,7 +56,7 @@ just setup-dev
 3. Configures zsh, installs the mise-managed tools, and installs Codex ACP globally through the mise-managed Node.js runtime.
 4. Changes the hostname.
 5. Installs Alacritty themes when Alacritty is available.
-6. Links the repository’s portable Codex skills and installs the Herdr navigation plugin required by `config.toml`.
+6. Installs the Herdr navigation plugin required by `config.toml` and configures its agent integrations.
 
 After installation, restart the shell or source the generated shell configuration:
 
@@ -111,7 +110,6 @@ just install-codex-acp
 just install-pypi
 just install-alacritty-themes
 just install-herdr-plugin
-just link-codex-skills
 just install-nerdfonts       # Linux GUI support, optional
 just install-alacritty       # Linux GUI support, optional
 just ssh-keygen
@@ -131,7 +129,7 @@ The repository ignores machine-local credentials, including `.config/gcloud/`. D
 
 ## macOS/Linux parity
 
-The shared shell, application configuration, mise tools, Python package list, and Codex skill setup are intended to work on both platforms. The installation mechanisms and available applications differ:
+The shared shell, application configuration, mise tools, Python package list, and agent-harness integrations are intended to work on both platforms. The installation mechanisms and available applications differ:
 
 | Area | macOS | Debian-based Linux |
 | --- | --- | --- |
@@ -141,7 +139,6 @@ The shared shell, application configuration, mise tools, Python package list, an
 | GUI applications | Brew casks, including Alacritty and fonts | Not installed by default |
 | Shell plugins | Homebrew paths | `/usr/share` paths |
 | Hostname | `scutil` | `hostnamectl` and `/etc/hosts` |
-| Codex skills | Symlinked from `skills/` | Symlinked from `skills/` |
 
 Parity is currently partial. Linux has a working Debian-oriented path, but it does not yet match the macOS application set or all workstation conveniences. See the TODO list below for known gaps.
 
