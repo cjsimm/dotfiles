@@ -3,6 +3,12 @@ onboarding = false
 [keys]
 prefix = "ctrl+space"
 
+# Workspace picker: j/k select workspaces; Ctrl-j/k select vertical panes.
+navigate_workspace_down = "j"
+navigate_workspace_up = "k"
+navigate_pane_down = "ctrl+j"
+navigate_pane_up = "ctrl+k"
+
 # tmux: Alt-Shift-h/l move between windows.  Herdr tabs are the equivalent
 # within a workspace, so retain those direct shortcuts.
 previous_tab = "alt+shift+h"
