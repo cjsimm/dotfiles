@@ -2,6 +2,7 @@ onboarding = false
 # Keep the tmux muscle memory while using Herdr's workspace/tab model.
 [keys]
 prefix = "ctrl+space"
+open_worktree = "prefix+shift+o"
 
 # Workspace picker: j/k select workspaces; Ctrl-j/k select vertical panes.
 navigate_workspace_down = "j"
