@@ -6,6 +6,7 @@ cmake
 curl
 file
 gettext
+ghostty
 git
 jq
 gpg
