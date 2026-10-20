@@ -110,6 +110,7 @@ just install-codex-acp
 just install-pypi
 just install-alacritty-themes
 just install-herdr-plugin
+just apply-codex-settings
 just install-nerdfonts       # Linux GUI support, optional
 just install-alacritty       # Linux GUI support, optional
 just ssh-keygen
@@ -126,6 +127,8 @@ just obsidian-backup
 `just symlink-config` is safe by default: it succeeds without changes when `~/.config` already links to this repository’s `.config`, creates the link when `~/.config` is absent, and otherwise refuses to replace the existing path. Use `just symlink-config -f` to proceed. It renames the existing file, directory, or symlink with `mv` to `~/.config.backup-YYYYMMDD-HHMMSS` (adding `-1`, `-2`, and so on if necessary), then creates the new link. The recipe prints the exact recovery command; it has the form `rm ~/.config && mv ~/.config.backup-YYYYMMDD-HHMMSS ~/.config`.
 
 The repository ignores machine-local credentials, including `.config/gcloud/`. Do not commit cloud credentials, API keys, tokens, or generated application state.
+
+`just apply-codex-settings` merges the portable preferences in `.config/codex/config.toml` into `$CODEX_HOME/config.toml` (default `~/.codex/config.toml`). Tracked values win; unrelated local settings and comments remain. Existing files are backed up alongside the config before changes, and repeated runs do nothing when settings already match. Invalid TOML stops the update. `just setup-agent-workflows` applies these settings as part of agent setup, including when called by `just setup-dev`. You can also run the recipe directly; it requires `uv`, which manages the pinned `tomlkit` dependency.
 
 ## macOS/Linux parity
 
