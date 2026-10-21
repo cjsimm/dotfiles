@@ -5,6 +5,7 @@ configure-zshrc-file:
 	just _zsh-codex-path
 	just _zsh-tab-complete
 	just _zsh-alias
+	just _zsh-screenshot
 	just _zsh-history
 	just _zsh-plugins
 
@@ -107,7 +108,18 @@ _zsh-alias:
 		echo "$line" >> {{ZSHRC_FILE}}
 	done
 	source {{ZSHRC_FILE}}
-	
+# Copy the newest Desktop screenshot path to the macOS clipboard
+[macos]
+_zsh-screenshot:
+	#!/usr/bin/env zsh
+	print -r -- 'ss() { local files=( "$HOME"/Desktop/Screenshot\ *.png(N.om[1]) ); (( ${#files} )) || { print -u2 "No screenshots found"; return 1; }; printf "%s" "${files[1]}" | pbcopy; }' >> {{ZSHRC_FILE}}
+	source {{ZSHRC_FILE}}
+
+# Screenshot clipboard support is macOS-only.
+[linux]
+_zsh-screenshot:
+	@true
+
 # Adds configuration into .zshrc to use historical commands when scrolling up and down through suggested commands
 _zsh-history:
 	#!/usr/bin/env zsh
