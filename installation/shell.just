@@ -5,6 +5,7 @@ configure-zshrc-file:
 	just _zsh-codex-path
 	just _zsh-tab-complete
 	just _zsh-alias
+	just _zsh-screenshot
 	just _zsh-history
 	just _zsh-plugins
 
@@ -94,6 +95,7 @@ _zsh-alias:
 		"alias lt='eza --tree --level=2 --icons'"
 		"alias vi='nvim'"
 		"alias cat='bat'"
+		"alias gs='git status'"
 		'gd() { local output; output=$(git diff --color=never "$@"); local diff_status=$?; [[ -n "$output" ]] || return "$diff_status"; printf "%s\n" "$output" | bat --language=diff --style=numbers,grid; local bat_status=$?; (( bat_status == 0 )) || return "$bat_status"; return "$diff_status"; }'
 		"alias lg='lazygit'"
 		"alias venv-new='python -m venv .venv'"
@@ -107,7 +109,18 @@ _zsh-alias:
 		echo "$line" >> {{ZSHRC_FILE}}
 	done
 	source {{ZSHRC_FILE}}
-	
+# Copy the newest Desktop screenshot path to the macOS clipboard
+[macos]
+_zsh-screenshot:
+	#!/usr/bin/env zsh
+	print -r -- 'ss() { local files=( "$HOME"/Desktop/Screenshot\ *.png(N.om[1]) ); (( ${#files} )) || { print -u2 "No screenshots found"; return 1; }; printf "%s" "${files[1]}" | pbcopy; }' >> {{ZSHRC_FILE}}
+	source {{ZSHRC_FILE}}
+
+# Screenshot clipboard support is macOS-only.
+[linux]
+_zsh-screenshot:
+	@true
+
 # Adds configuration into .zshrc to use historical commands when scrolling up and down through suggested commands
 _zsh-history:
 	#!/usr/bin/env zsh

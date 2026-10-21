@@ -1,11 +1,23 @@
 nextjs-nodejs/
 .ssh/
 github-copilot/
+# Only include configs explicitly listed here.
+/.config/*
+!/.config/.gitconfig
+!/.config/alacritty/
+!/.config/btop/
+!/.config/codex/
+!/.config/ghostty/
+!/.config/git/
+!/.config/herdr/
+!/.config/mise/
+!/.config/ncspot/
+!/.config/neofetch/
+!/.config/nvim/
+!/.config/starship.toml
+!/.config/tmux/
+
 .config/ncspot/userstate.cbor
-.config/gcloud/
-.config/opencode/
-.config/marimo/
-.config/1[Pp]assword/
 
 # Herdr
 .config/herdr/*
