@@ -94,11 +94,13 @@ _zsh-alias:
 		"alias lt='eza --tree --level=2 --icons'"
 		"alias vi='nvim'"
 		"alias cat='bat'"
+		'gd() { local output; output=$(git diff --color=never "$@"); local diff_status=$?; [[ -n "$output" ]] || return "$diff_status"; printf "%s\n" "$output" | bat --language=diff --style=numbers,grid; local bat_status=$?; (( bat_status == 0 )) || return "$bat_status"; return "$diff_status"; }'
 		"alias lg='lazygit'"
 		"alias venv-new='python -m venv .venv'"
 		"alias venv='source .venv/bin/activate'"
 		"alias jl='jupyter lab --ContentsManager.allow_hidden=True'"
 		"alias justdot='just --justfile ~/dotfiles/justfile --working-directory .'"
+		"alias wt='cd ~/.herdr/worktrees'"
 		"alias rss='bulletty'"
 	)
 	for line in "${lines[@]}"; do

@@ -70,6 +70,18 @@ ssh-keygen:
     echo "Public key deleted from the system."
     echo "Setup complete.'$host_alias' key-pair genned."
 
+# Upgrade Homebrew packages and globally configured mise tools
+update-tools:
+    #!/usr/bin/env sh
+    set -eu
+    echo "Updating Homebrew packages..."
+    brew update
+    brew upgrade -y
+    echo "Updating mise tools..."
+    cd "$HOME"
+    mise --yes upgrade
+    echo "Updates complete."
+
 # Create a standard Python pytest test directory
 python-test-directory:
 	mkdir -p tests/{unit,integration} && touch tests/{__init__.py,conftest.py} tests/unit/{__init__.py,conftest.py} tests/integration/{__init__.py,conftest.py}

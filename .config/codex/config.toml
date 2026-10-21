@@ -1,0 +1,27 @@
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+approvals_reviewer = "auto_review"
+service_tier = "default"
+
+[agents]
+max_depth = 2
+max_threads = 10
+
+[memories]
+use_memories = true
+generate_memories = true
+extract_model = "gpt-6-luna"
+consolidation_model = "gpt-6.1-sol"
+
+[features]
+memories = true
+hooks = true
+js_repl = false
+
+[desktop]
+conversationDetailMode = "STEPS_PROSE"
+ambient-suggestions-enabled = false
+followUpQueueMode = "queue"
+
+[tui]
+session_picker_view = "comfortable"

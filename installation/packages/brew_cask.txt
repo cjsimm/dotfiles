@@ -2,6 +2,7 @@ alacritty
 ghostty
 anki
 calibre
+chatgpt
 codex
 discord
 gcloud-cli

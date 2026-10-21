@@ -3,6 +3,9 @@ nextjs-nodejs/
 github-copilot/
 .config/ncspot/userstate.cbor
 .config/gcloud/
+.config/opencode/
+.config/marimo/
+.config/1[Pp]assword/
 
 # Herdr
 .config/herdr/*

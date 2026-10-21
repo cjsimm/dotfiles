@@ -1,32 +1,57 @@
-DOTFILES_SKILLS_DIR := justfile_directory() + "/skills"
-CODEX_SKILLS_DIR := home_dir() + "/.codex/skills"
 HERDR_NAVIGATION_PLUGIN := "paulbkim-dev/vim-herdr-navigation"
 HERDR_NAVIGATION_PLUGIN_ID := "vim-herdr-navigation"
 HERDR_INTEGRATIONS := "codex"
 
-# Symlink every portable skill into Codex without replacing its system-managed skills.
-link-codex-skills:
-    #!/usr/bin/env sh
-    set -eu
-    source_dir="{{DOTFILES_SKILLS_DIR}}"
-    destination_dir="{{CODEX_SKILLS_DIR}}"
+# Merge portable preferences into the local config, preserving machine-specific settings.
+apply-codex-settings:
+    #!/usr/bin/env -S uv run --with tomlkit==0.13.3 python
+    import os
+    import shutil
+    import stat
+    import tempfile
+    from collections.abc import MutableMapping
+    from pathlib import Path
 
-    mkdir -p "$destination_dir"
-    for skill_dir in "$source_dir"/*; do
-        [ -d "$skill_dir" ] || continue
-        skill_name=$(basename "$skill_dir")
-        destination="$destination_dir/$skill_name"
+    import tomlkit
 
-        if [ -L "$destination" ]; then
-            rm "$destination"
-        elif [ -e "$destination" ]; then
-            echo "Refusing to replace existing non-symlink: $destination" >&2
-            exit 1
-        fi
+    def merge(existing, portable):
+        for key, value in portable.items():
+            if isinstance(existing.get(key), MutableMapping) and isinstance(value, MutableMapping):
+                merge(existing[key], value)
+            else:
+                existing[key] = value
 
-        ln -s "$skill_dir" "$destination"
-        echo "Linked Codex skill: $skill_name"
-    done
+    source = Path("{{justfile_directory()}}/.config/codex/config.toml")
+    target = (Path(os.environ.get("CODEX_HOME", Path.home() / ".codex")) / "config.toml").resolve()
+    portable = tomlkit.parse(source.read_text())
+    original = target.read_text() if target.exists() else ""
+    existing = tomlkit.parse(original)
+    merge(existing, portable)
+    updated = tomlkit.dumps(existing)
+    tomlkit.parse(updated)
+
+    if updated == original:
+        print("Codex settings already applied.")
+        raise SystemExit(0)
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    mode = stat.S_IMODE(target.stat().st_mode) if target.exists() else 0o600
+    if target.exists():
+        with tempfile.NamedTemporaryFile(prefix="config.toml.backup-", dir=target.parent, delete=False) as backup:
+            shutil.copyfile(target, backup.name)
+        print(f"Backup: {backup.name}")
+
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", dir=target.parent, delete=False) as output:
+            temporary = Path(output.name)
+            output.write(updated)
+        temporary.chmod(mode)
+        os.replace(temporary, target)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+    print(f"Applied settings to {target}")
 
 # Install the Herdr plugin referenced by .config/herdr/config.toml.
 # Herdr stores installed plugins globally, so make this safe to rerun.
@@ -76,5 +101,5 @@ install-herdr-integrations:
 
     mise exec -- herdr integration status
 
-# Set up portable skills and other agent-harness integrations.
-setup-agent-workflows: link-codex-skills install-herdr-plugin install-herdr-integrations
+# Set up agent-harness integrations.
+setup-agent-workflows: apply-codex-settings install-herdr-plugin install-herdr-integrations

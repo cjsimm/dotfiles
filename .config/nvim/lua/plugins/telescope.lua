@@ -45,6 +45,7 @@ return {
         end
         --keymaps
         vim.keymap.set('n', '<leader>ff', find_files, { desc = "Telescope find files" })
+        vim.keymap.set('n', '<leader>fd', builtin.git_status, { desc = "Telescope Git changes" })
         vim.keymap.set('n', '<leader>fg', live_grep, {})                    --grep for all files in directory
         vim.keymap.set('n', '<leader>fb', builtin.buffers, {})              -- show all currently open buffers
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})            --show all docs entries with defined vim :helptags
